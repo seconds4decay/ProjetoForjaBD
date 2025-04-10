@@ -89,7 +89,7 @@ CREATE TABLE Arma (
 	nome VARCHAR(40),
 	dano FLOAT,
 	tipo VARCHAR(40),
-	FOREIGN KEY(Item) REFERENCES Item(ID_item),
+	FOREIGN KEY(Item) REFERENCES Item(ID_item) ON DELETE CASCADE,
 	PRIMARY KEY(Item)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE Armadura (
 	nome VARCHAR(40),
 	defesa FLOAT,
 	tipo VARCHAR(40),
-	FOREIGN KEY(Item) REFERENCES Item(ID_item),
+	FOREIGN KEY(Item) REFERENCES Item(ID_item) ON DELETE CASCADE,
 	PRIMARY KEY(Item)
 );
 
