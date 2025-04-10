@@ -53,7 +53,7 @@ CREATE TABLE Material (
 );
 
 CREATE TABLE Fornecedor (
-	ID_material INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
+	ID_fornecedor INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
 	nome VARCHAR(40),
 	tipo_material VARCHAR(40)
 );CREATE DATABASE bd_forja
@@ -111,7 +111,7 @@ CREATE TABLE Material (
 );
 
 CREATE TABLE Fornecedor (
-	ID_material INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
+	ID_fornecedor INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
 	nome VARCHAR(40),
 	tipo_material VARCHAR(40)
 );

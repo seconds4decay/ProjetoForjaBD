@@ -5,7 +5,7 @@ import com.cesarschool.forjaapi.services.ItemService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/loja")
+@RequestMapping("/item")
 public class ItemController {
 
     private final ItemService service;
