@@ -27,8 +27,8 @@ public class ArmaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarArma(@PathVariable int id) {
-        service.deletarArma(id);
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
+        service.deletar(id);
 
         return ResponseEntity.noContent().build(); // HTTP 204
     }

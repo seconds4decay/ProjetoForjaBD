@@ -20,8 +20,8 @@ public class FerreiroService {
         this.repository = repository;
     }
 
-    public void salvar(Ferreiro ferreiro) {
-        repository.salvar(ferreiro);
+    public Ferreiro salvar(Ferreiro ferreiro) {
+        return repository.salvar(ferreiro);
     }
 
     public void deletar(int id) {

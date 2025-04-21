@@ -16,7 +16,7 @@ public class ArmaService {
         return armaRepository.salvar(arma);
     }
 
-    public void deletarArma(int id) {
+    public void deletar(int id) {
         armaRepository.deletar(id);
     }
 }
