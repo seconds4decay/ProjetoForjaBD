@@ -4,6 +4,7 @@ import { useState } from "react";
 interface Atributo {
   nome: string;
   tipo: string;
+  referencia?: string;
 }
 
 interface Entidade {
@@ -22,19 +23,32 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
+      [name]: type === "number" ? Number(value) : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const payload: { [key: string]: any } = {};
+
+    entidade.atributos.forEach((attr) => {
+      if (attr.tipo === "foreign") {
+        if(!formData[attr.nome]) {
+          payload[attr.nome] = null;  
+        } else {
+          payload[attr.nome] = formData[attr.nome];
+        }
+      } else {
+        payload[attr.nome] = formData[attr.nome];
+      }
+    });
+
+    console.log(payload)
+
     try {
-        const response = await ModelPost(formData, entidade.nome.toLowerCase())
+        const response = await ModelPost(payload, entidade.nome.toLowerCase())
         console.log(response)
-        
-        setFormData({
-            nome: '',  
-            especializacao: '',
-        })
 
         alert(entidade.nome.toLowerCase() + " adicionado com sucesso!")
     } catch (error) {
@@ -58,6 +72,16 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
             <option value="true">Verdadeiro</option>
             <option value="false">Falso</option>
           </select>
+        );
+      case "foreign":
+        return (
+          <input
+            type="number"
+            name={nome}
+            onChange={handleChange}
+            className="border p-1"
+            placeholder={`ID de ${atributo.referencia}`}
+          />
         );
       default:
         return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;

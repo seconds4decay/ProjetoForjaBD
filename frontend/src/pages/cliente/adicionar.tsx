@@ -1,11 +1,11 @@
 import AdicionarFormularioUniversal from "@/components/Formularios/AdicionarFormularioUniversal";
-import { Ferreiro } from "@/models/Ferreiro";
+import { Cliente } from "@/models/Cliente";
 
 export default function Adicionar() {
     return (
         <div>
-            <h1>Adicionar Ferreiro</h1>
-            <AdicionarFormularioUniversal entidade={Ferreiro}/>
+            <h1>Adicionar Cliente</h1>
+            <AdicionarFormularioUniversal entidade={Cliente}/>
         </div>
     );
 }

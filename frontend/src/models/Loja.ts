@@ -1,4 +1,4 @@
-export const Ferreiro = {
+export const Loja = {
     nome: "loja",
     atributos: [
       { nome: "nome", tipo: "string" },

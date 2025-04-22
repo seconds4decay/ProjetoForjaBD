@@ -7,7 +7,8 @@ export default function Ferreiro() {
             <Link href="/ferreiro/adicionar">Adicionar Ferreiro</Link>
             
             <Link href="/ferreiro/remover">Remover Ferreiro</Link>
-        
+
+            <Link href="/ferreiro/atualizar">Atualizar Ferreiro</Link>
         </div>
     );
 }
