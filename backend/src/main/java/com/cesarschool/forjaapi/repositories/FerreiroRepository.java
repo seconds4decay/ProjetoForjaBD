@@ -16,9 +16,12 @@ public class FerreiroRepository {
         this.jdbc = jdbc;
     }
 
-    public void salvar(Ferreiro ferreiro) {
+    public Ferreiro salvar(Ferreiro ferreiro) {
         jdbc.update("INSERT INTO Ferreiro (nome, especializacao) VALUES (?, ?)",
                 ferreiro.getNome(), ferreiro.getEspecializacao());
+
+        ferreiro.setId(jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class));
+        return ferreiro;
     }
 
     public void deletar(int id) {

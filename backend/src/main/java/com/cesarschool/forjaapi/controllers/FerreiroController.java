@@ -2,7 +2,10 @@ package com.cesarschool.forjaapi.controllers;
 
 import com.cesarschool.forjaapi.models.Ferreiro;
 import com.cesarschool.forjaapi.services.FerreiroService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/ferreiro")
@@ -15,12 +18,18 @@ public class FerreiroController {
     }
 
     @PostMapping
-    public void salvar(@RequestBody Ferreiro ferreiro) {
-        service.salvar(ferreiro);
+    public ResponseEntity<Ferreiro> salvar(@RequestBody Ferreiro ferreiro) {
+        Ferreiro novoFerreiro = service.salvar(ferreiro);
+
+        return ResponseEntity
+                .created(URI.create("/ferreiros/" + novoFerreiro.getId())) // HTTP 201 + Location header
+                .body(novoFerreiro); // JSON no corpo da resposta
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
+
+        return ResponseEntity.noContent().build(); // HTTP 204
     }
 }

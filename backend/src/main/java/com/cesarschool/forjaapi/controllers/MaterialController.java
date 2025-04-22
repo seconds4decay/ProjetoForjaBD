@@ -27,8 +27,10 @@ public class MaterialController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable int id) {
+    public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
+
+        return ResponseEntity.noContent().build(); // HTTP 204
     }
 
 }
