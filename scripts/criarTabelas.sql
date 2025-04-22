@@ -29,7 +29,8 @@ CREATE TABLE Item (
 	peso FLOAT,
 	raridade VARCHAR(40),
 	ferreiro INT,
-	FOREIGN KEY (ferreiro) REFERENCES Ferreiro(ID_ferreiro)
+	FOREIGN KEY (ferreiro) REFERENCES Ferreiro(ID_ferreiro),
+	data_fabricacao DATE
 );
 
 CREATE TABLE Arma (
