@@ -21,6 +21,10 @@ public class MaterialController {
     public ResponseEntity<Material> cadastrar(@RequestBody Material material) {
         Material novoMaterial = service.salvar(material);
 
+        if(novoMaterial == null) {
+            return ResponseEntity.badRequest().build(); // HTTP 400
+        }
+
         return ResponseEntity
                 .created(URI.create("/material/" + novoMaterial.getId()))
                 .body(novoMaterial);
@@ -31,6 +35,28 @@ public class MaterialController {
         service.deletar(id);
 
         return ResponseEntity.noContent().build(); // HTTP 204
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Material> buscarPorId(@PathVariable int id) {
+        Material material = service.buscarPorId(id);
+        if (material != null) {
+            return ResponseEntity.ok(material); // HTTP 200
+        } else {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Material> atualizar(@PathVariable int id, @RequestBody Material material) {
+        Material materialAtualizado = service.atualizar(id, material);
+
+        if (materialAtualizado != null) {
+            return ResponseEntity.ok(materialAtualizado); // HTTP 200
+        }
+
+        return ResponseEntity.notFound().build(); // HTTP 404
+
     }
 
 }

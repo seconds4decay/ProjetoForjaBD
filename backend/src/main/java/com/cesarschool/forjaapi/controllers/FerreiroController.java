@@ -21,6 +21,12 @@ public class FerreiroController {
     public ResponseEntity<Ferreiro> salvar(@RequestBody Ferreiro ferreiro) {
         Ferreiro novoFerreiro = service.salvar(ferreiro);
 
+        if (novoFerreiro == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(null); // HTTP 400
+        }
+
         return ResponseEntity
                 .created(URI.create("/ferreiros/" + novoFerreiro.getId())) // HTTP 201 + Location header
                 .body(novoFerreiro); // JSON no corpo da resposta
@@ -38,6 +44,17 @@ public class FerreiroController {
         Ferreiro ferreiro = service.buscarPorId(id);
         if (ferreiro != null) {
             return ResponseEntity.ok(ferreiro); // HTTP 200
+        } else {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Ferreiro> atualizar(@RequestBody Ferreiro ferreiro) {
+        Ferreiro ferreiroAtualizado = service.atualizar(ferreiro.getId(), ferreiro);
+
+        if (ferreiroAtualizado != null) {
+            return ResponseEntity.ok(ferreiroAtualizado); // HTTP 200
         } else {
             return ResponseEntity.notFound().build(); // HTTP 404
         }

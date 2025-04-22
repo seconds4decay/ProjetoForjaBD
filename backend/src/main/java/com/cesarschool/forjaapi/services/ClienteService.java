@@ -27,4 +27,23 @@ public class ClienteService {
     public void deletar(int id) {
         repository.deletar(id);
     }
+
+    public Cliente buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        return repository.buscarPorId(id);
+    }
+
+    public Cliente atualizar(int id, Cliente cliente) {
+        Cliente clienteExistente = repository.buscarPorId(id);
+
+        if (clienteExistente == null) {
+            return null;
+        }
+
+        cliente.setId(id);
+        return repository.atualizar(cliente);
+    }
 }

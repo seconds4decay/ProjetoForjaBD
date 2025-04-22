@@ -31,4 +31,24 @@ public class ClienteController {
 
         return ResponseEntity.noContent().build(); // HTTP 204
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable int id) {
+        Cliente cliente = service.buscarPorId(id);
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente); // HTTP 200
+        } else {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable int id, @RequestBody Cliente cliente) {
+        Cliente clienteAtualizado = service.atualizar(id, cliente);
+        if (clienteAtualizado != null) {
+            return ResponseEntity.ok(clienteAtualizado); // HTTP 200
+        }
+
+        return ResponseEntity.notFound().build(); // HTTP 404
+    }
 }

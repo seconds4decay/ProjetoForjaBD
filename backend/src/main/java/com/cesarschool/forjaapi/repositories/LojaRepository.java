@@ -37,4 +37,11 @@ public class LojaRepository {
                         rs.getString("rua")
                 ), id);
     }
+
+    public Loja atualizar(Loja loja) {
+        jdbc.update("UPDATE Loja SET nome = ?, cidade = ?, rua = ? WHERE ID_loja = ?",
+                loja.getNome(), loja.getCidade(), loja.getRua(), loja.getId());
+
+        return loja;
+    }
 }

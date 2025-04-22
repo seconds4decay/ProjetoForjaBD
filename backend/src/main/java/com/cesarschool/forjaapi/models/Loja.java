@@ -6,6 +6,8 @@ public class Loja {
     private String cidade;
     private String rua;
 
+    public Loja() {}
+
     public Loja(int id, String nome, String cidade, String rua) {
         this.id = id;
         this.nome = nome;
@@ -31,5 +33,17 @@ public class Loja {
 
     public String getRua() {
         return rua;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 }

@@ -5,6 +5,8 @@ public class Fornecedor {
     private String nome;
     private String tipo_material;
 
+    public Fornecedor() {}
+
     public Fornecedor(int id, String nome, String tipo_material) {
         this.id = id;
         this.nome = nome;
@@ -25,5 +27,13 @@ public class Fornecedor {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setTipo_material(String tipo_material) {
+        this.tipo_material = tipo_material;
     }
 }

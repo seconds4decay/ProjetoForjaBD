@@ -20,6 +20,11 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Item> salvar(Item item) {
         Item novoItem = service.salvar(item);
+
+        if(novoItem == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity
                 .created(URI.create("/itens/" + novoItem.getId()))
                 .body(novoItem);
@@ -30,6 +35,28 @@ public class ItemController {
         service.deletar(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> buscarPorId(@PathVariable int id) {
+        Item item = service.buscarPorId(id);
+
+        if(item == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(item);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Item> atualizar(@PathVariable int id, @RequestBody Item item) {
+        Item itemAtualizado = service.atualizar(id, item);
+
+        if(itemAtualizado == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(itemAtualizado);
     }
 
 }

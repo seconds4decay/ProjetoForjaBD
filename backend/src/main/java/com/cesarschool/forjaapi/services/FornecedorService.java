@@ -27,4 +27,23 @@ public class FornecedorService {
     public void deletar(int id) {
         repository.deletar(id);
     }
+
+    public Fornecedor buscarPorId(int id) {
+        if(id == 0) {
+            return null;
+        }
+
+        return repository.buscarPorId(id);
+    }
+
+    public Fornecedor atualizar(int id, Fornecedor fornecedor) {
+        Fornecedor fornecedorExistente = repository.buscarPorId(id);
+
+        if (fornecedorExistente == null) {
+            return null;
+        }
+
+        fornecedor.setId(id);
+        return repository.atualizar(fornecedor);
+    }
 }

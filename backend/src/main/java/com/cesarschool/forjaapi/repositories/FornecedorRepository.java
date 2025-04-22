@@ -27,4 +27,20 @@ public class FornecedorRepository {
     public void deletar(int id) {
         jdbc.update("DELETE FROM Fornecedor WHERE ID_fornecedor = ?", id);
     }
+
+    public Fornecedor buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Fornecedor WHERE ID_fornecedor = ?",
+                (rs, rowNum) -> new Fornecedor(
+                        rs.getInt("ID_fornecedor"),
+                        rs.getString("nome"),
+                        rs.getString("tipo_material")),
+                id);
+    }
+
+    public Fornecedor atualizar(Fornecedor fornecedor) {
+        jdbc.update("UPDATE Fornecedor SET nome = ?, tipo_material = ? WHERE ID_fornecedor = ?",
+                fornecedor.getNome(), fornecedor.getTipo_material(), fornecedor.getId());
+
+        return fornecedor;
+    }
 }

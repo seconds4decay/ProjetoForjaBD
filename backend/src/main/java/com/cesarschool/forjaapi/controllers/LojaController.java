@@ -18,7 +18,7 @@ public class LojaController {
     }
 
     @PostMapping
-    public ResponseEntity<Loja> salvar(Loja loja) {
+    public ResponseEntity<Loja> salvar(@RequestBody Loja loja) {
         Loja lojaSalva = service.salvar(loja);
 
         return ResponseEntity
@@ -38,9 +38,10 @@ public class LojaController {
         Loja loja = service.buscarPorId(id);
         if (loja != null) {
             return ResponseEntity.ok(loja);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
+
     }
 
 }

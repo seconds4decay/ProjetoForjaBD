@@ -13,10 +13,41 @@ public class ArmaduraService {
     }
 
     public Armadura salvar(Armadura armadura) {
+        if(armadura.getFerreiro() != null) {
+            armadura.setFerreiro(armadura.getFerreiro());
+        } else {
+            return null;
+        }
+
         return armaduraRepository.salvar(armadura);
     }
 
     public void deletar(int id) {
         armaduraRepository.deletar(id);
+    }
+
+    public Armadura buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        return armaduraRepository.buscarPorId(id);
+    }
+
+    public Armadura atualizar(int id, Armadura armadura) {
+        Armadura armaduraExistente = armaduraRepository.buscarPorId(id);
+
+        if (armaduraExistente == null) {
+            return null;
+        }
+
+        if(armadura.getFerreiro() != null) {
+            armadura.setFerreiro(armadura.getFerreiro());
+        } else {
+            return null;
+        }
+
+        armadura.setId(id);
+        return armaduraRepository.atualizar(armadura);
     }
 }

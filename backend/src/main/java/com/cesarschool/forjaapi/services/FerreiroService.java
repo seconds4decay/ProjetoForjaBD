@@ -30,6 +30,8 @@ public class FerreiroService {
 
         if(ferreiro.getLoja() != null) {
             ferreiro.setLoja(lojaRepository.buscarPorId(ferreiro.getLoja().getId()));
+        } else {
+            return null;
         }
 
         return repository.salvar(ferreiro);
@@ -39,7 +41,25 @@ public class FerreiroService {
         repository.deletar(id);
     }
 
-    public Ferreiro buscarPorId(int id) {
+    public Ferreiro buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
         return repository.buscarPorId(id);
+    }
+
+    public Ferreiro atualizar(int id, Ferreiro ferreiro) {
+        Ferreiro ferreiroExistente = repository.buscarPorId(id);
+
+        if (ferreiroExistente == null) {
+            return null;
+        }
+
+        if(ferreiro.getGerente() != null) {
+            ferreiro.setGerente(repository.buscarPorId(ferreiro.getGerente().getId()));
+        }
+
+        return repository.atualizar(ferreiro);
     }
 }

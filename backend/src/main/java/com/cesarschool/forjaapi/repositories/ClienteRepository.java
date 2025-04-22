@@ -26,4 +26,18 @@ public class ClienteRepository {
     public void deletar(int id) {
         jdbc.update("DELETE FROM Cliente WHERE ID_cliente = ?", id);
     }
+
+    public Cliente buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Cliente WHERE ID_cliente = ?", new Object[]{id}, (rs, rowNum) -> {
+            Cliente cliente = new Cliente();
+            cliente.setId(rs.getInt("ID_cliente"));
+            cliente.setNome(rs.getString("nome"));
+            return cliente;
+        });
+    }
+
+    public Cliente atualizar(Cliente cliente) {
+        jdbc.update("UPDATE Cliente SET nome = ? WHERE ID_cliente = ?", cliente.getNome(), cliente.getId());
+        return cliente;
+    }
 }

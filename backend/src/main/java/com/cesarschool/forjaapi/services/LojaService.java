@@ -28,7 +28,22 @@ public class LojaService {
         repository.deletar(id);
     }
 
-    public Loja buscarPorId(int id) {
+    public Loja buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
         return repository.buscarPorId(id);
+    }
+
+    public Loja atualizar(int id, Loja loja) {
+        Loja lojaAtualizada = repository.buscarPorId(id);
+
+        if(lojaAtualizada == null) {
+            return null;
+        }
+
+        loja.setId(id);
+        return repository.atualizar(loja);
     }
 }

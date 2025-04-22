@@ -30,4 +30,25 @@ public class FornecedorController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Fornecedor> buscarPorId(@PathVariable int id) {
+        Fornecedor fornecedor = service.buscarPorId(id);
+        if (fornecedor != null) {
+            return ResponseEntity.ok(fornecedor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Fornecedor> atualizar(@PathVariable int id, @RequestBody Fornecedor fornecedor) {
+        Fornecedor fornecedorAtualizado = service.atualizar(id, fornecedor);
+        if (fornecedorAtualizado != null) {
+            return ResponseEntity.ok(fornecedorAtualizado);
+        }
+
+        return ResponseEntity.notFound().build();
+
+    }
 }

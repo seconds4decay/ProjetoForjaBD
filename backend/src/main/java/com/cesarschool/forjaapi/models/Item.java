@@ -9,6 +9,8 @@ public class Item {
     private String raridade;
     private Ferreiro ferreiro;
 
+    public Item() {}
+
     public Item(int id, String nome, float valor, float peso, String raridade) {
         this.id = id;
         this.nome = nome;
@@ -43,5 +45,25 @@ public class Item {
 
     public void setId(int itemId) {
         this.id = itemId;
+    }
+
+    public void setFerreiro(Ferreiro ferreiro) {
+        this.ferreiro = ferreiro;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+
+    public void setRaridade(String raridade) {
+        this.raridade = raridade;
     }
 }

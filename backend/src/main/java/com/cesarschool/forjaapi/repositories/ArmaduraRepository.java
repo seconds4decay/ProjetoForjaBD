@@ -13,9 +13,11 @@ public class ArmaduraRepository {
         this.jdbc = jdbc;
     }
 
-    public Armadura salvar(Armadura armadura) {;
-        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade) VALUES (?, ?, ?, ?)",
-                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade());
+    public Armadura salvar(Armadura armadura) {
+        Integer ferreiroId = armadura.getFerreiro() != null ? armadura.getFerreiro().getId() : null;
+
+        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
+                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), ferreiroId);
 
         int itemId = jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class);
 
@@ -28,5 +30,23 @@ public class ArmaduraRepository {
 
     public void deletar(int id) {
         jdbc.update("DELETE FROM Item WHERE ID_item = ?", id);
+    }
+
+    public Armadura buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Armadura WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
+            Armadura armadura = new Armadura();
+            armadura.setId(rs.getInt("ID_item"));
+            armadura.setNome(rs.getString("Nome"));
+            armadura.setDefesa(rs.getInt("Defesa"));
+            armadura.setTipo(rs.getString("Tipo"));
+            return armadura;
+        });
+    }
+
+    public Armadura atualizar(Armadura armadura) {
+        jdbc.update("UPDATE Armadura SET Nome = ?, Defesa = ?, Tipo = ? WHERE ID_item = ?",
+                armadura.getNome(), armadura.getDefesa(), armadura.getTipo(), armadura.getId());
+
+        return armadura;
     }
 }

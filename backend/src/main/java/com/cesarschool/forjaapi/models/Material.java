@@ -8,6 +8,8 @@ public class Material {
     private String tipo;
     private Fornecedor fornecedor;
 
+    public Material() {}
+
     public Material(int id, String name, int quantidade, String qualidade, String tipo, Fornecedor fornecedor) {
         this.id = id;
         this.nome = name;
@@ -41,7 +43,27 @@ public class Material {
         return fornecedor;
     }
 
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public void setQualidade(String qualidade) {
+        this.qualidade = qualidade;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
