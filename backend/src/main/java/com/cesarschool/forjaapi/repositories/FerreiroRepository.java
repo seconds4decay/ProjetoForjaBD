@@ -17,8 +17,8 @@ public class FerreiroRepository {
     }
 
     public Ferreiro salvar(Ferreiro ferreiro) {
-        jdbc.update("INSERT INTO Ferreiro (nome, especializacao) VALUES (?, ?)",
-                ferreiro.getNome(), ferreiro.getEspecializacao());
+        jdbc.update("INSERT INTO Ferreiro (nome, especializacao, gerente, loja) VALUES (?, ?, ?, ?)",
+                ferreiro.getNome(), ferreiro.getEspecializacao(), ferreiro.getGerente().getId(), ferreiro.getLoja().getId());
 
         ferreiro.setId(jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class));
         return ferreiro;
@@ -26,5 +26,16 @@ public class FerreiroRepository {
 
     public void deletar(int id) {
         jdbc.update("DELETE FROM Ferreiro WHERE ID_ferreiro = ?", id);
+    }
+
+    public Ferreiro buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
+                (rs, rowNum) -> new Ferreiro(
+                        rs.getInt("ID_ferreiro"),
+                        rs.getString("nome"),
+                        rs.getString("especializacao"),
+                        null, // Aqui você pode adicionar a lógica para buscar o gerente
+                        null // Aqui você pode adicionar a lógica para buscar a loja
+                ), id);
     }
 }

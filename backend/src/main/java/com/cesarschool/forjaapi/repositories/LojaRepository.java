@@ -27,4 +27,14 @@ public class LojaRepository {
     public void deletar(int id) {
         jdbc.update("DELETE FROM Loja WHERE ID_loja = ?", id);
     }
+
+    public Loja buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Loja WHERE ID_loja = ?",
+                (rs, rowNum) -> new Loja(
+                        rs.getInt("ID_loja"),
+                        rs.getString("nome"),
+                        rs.getString("cidade"),
+                        rs.getString("rua")
+                ), id);
+    }
 }

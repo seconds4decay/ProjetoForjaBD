@@ -33,4 +33,14 @@ public class LojaController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Loja> buscarPorId(@PathVariable int id) {
+        Loja loja = service.buscarPorId(id);
+        if (loja != null) {
+            return ResponseEntity.ok(loja);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
