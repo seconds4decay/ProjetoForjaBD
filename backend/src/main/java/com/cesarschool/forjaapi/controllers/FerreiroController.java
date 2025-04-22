@@ -51,7 +51,7 @@ public class FerreiroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Ferreiro> atualizar(@RequestBody Ferreiro ferreiro) {
-        Ferreiro ferreiroAtualizado = service.atualizar(ferreiro.getId(), ferreiro);
+        Ferreiro ferreiroAtualizado = service.atualizar(ferreiro);
 
         if (ferreiroAtualizado != null) {
             return ResponseEntity.ok(ferreiroAtualizado); // HTTP 200

@@ -5,6 +5,8 @@ import com.cesarschool.forjaapi.services.LojaService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /*
 Repositories: É onde o acesso ao banco de dados é realizado e onde informações são cadastradas ou buscadas.
 */
@@ -35,16 +37,32 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
         jdbc.update("DELETE FROM Ferreiro WHERE ID_ferreiro = ?", id);
     }
 
-    public Ferreiro buscarPorId(int id) {
-        return jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
-                (rs, rowNum) -> new Ferreiro(
-                        rs.getInt("ID_ferreiro"),
-                        rs.getString("nome"),
-                        rs.getString("especializacao"),
-                        buscarPorId(rs.getInt("gerente")),
-                        lojaService.buscarPorId(rs.getInt("loja"))
+    public Ferreiro buscarPorId(Integer id) {
+        if (id == null) {
+            return null;
+        }
 
-                ), id);
+        Ferreiro ferreiro = jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
+                new Object[]{id}, (rs, rowNum) -> {
+                    Ferreiro f = new Ferreiro();
+                    f.setId(rs.getInt("ID_ferreiro"));
+                    f.setNome(rs.getString("nome"));
+                    f.setEspecializacao(rs.getString("especializacao"));
+
+                    Integer gerenteId = rs.getObject("gerente", Integer.class);
+                    if (gerenteId != null) {
+                        f.setGerente(buscarPorId(gerenteId));
+                    }
+
+                    Integer lojaId = rs.getObject("loja", Integer.class);
+                    if (lojaId != null) {
+                        f.setLoja(lojaService.buscarPorId(lojaId));
+                    }
+
+                    return f;
+                });
+
+        return ferreiro;
     }
 
     public Ferreiro atualizar(Ferreiro ferreiro) {
@@ -54,6 +72,7 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
         jdbc.update("UPDATE Ferreiro SET nome = ?, especializacao = ?, gerente = ?, loja = ? WHERE ID_ferreiro = ?",
                 ferreiro.getNome(), ferreiro.getEspecializacao(), gerenteId, lojaId, ferreiro.getId());
 
-        return ferreiro;
+        return buscarPorId(ferreiro.getId());
+
     }
 }

@@ -4,6 +4,6 @@ export const Ferreiro = {
       { nome: "nome", tipo: "string" },
       { nome: "especializacao", tipo: "string" },
       { nome: "gerente", tipo: "foreign", referencia: "ferreiro"},
-      { nome: "loja", tipo : "foreign", referencia: "loja"},
+      { nome: "loja", tipo : "foreign", referencia: "loja"}
     ]
 };

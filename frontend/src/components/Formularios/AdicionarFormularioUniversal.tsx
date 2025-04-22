@@ -37,7 +37,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
         if(!formData[attr.nome]) {
           payload[attr.nome] = null;  
         } else {
-          payload[attr.nome] = formData[attr.nome];
+          payload[attr.nome] = { id: Number(formData[attr.nome]) };
         }
       } else {
         payload[attr.nome] = formData[attr.nome];

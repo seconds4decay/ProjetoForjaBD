@@ -49,8 +49,8 @@ public class FerreiroService {
         return repository.buscarPorId(id);
     }
 
-    public Ferreiro atualizar(int id, Ferreiro ferreiro) {
-        Ferreiro ferreiroExistente = repository.buscarPorId(id);
+    public Ferreiro atualizar(Ferreiro ferreiro) {
+        Ferreiro ferreiroExistente = repository.buscarPorId(ferreiro.getId());
 
         if (ferreiroExistente == null) {
             return null;
