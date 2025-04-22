@@ -17,8 +17,8 @@ public class ItemRepository {
     }
 
     public Item salvar(Item item) {
-        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade) VALUES (?, ?, ?, ?)",
-                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade());
+        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade, ferreiro) VALUES (?, ?, ?, ?, ?)",
+                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), item.getFerreiro().getId());
 
         item.setId(jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class));
         return item;

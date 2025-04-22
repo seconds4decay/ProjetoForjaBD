@@ -8,11 +8,15 @@ public class Ferreiro {
     private int id;
     private String nome;
     private String especializacao;
+    private Ferreiro gerente;
+    private Loja loja;
 
-    public Ferreiro(int id, String nome, String especializacao) {
+    public Ferreiro(int id, String nome, String especializacao, Ferreiro gerente, Loja loja) {
         this.id = id;
         this.nome = nome;
         this.especializacao = especializacao;
+        this.gerente = gerente;
+        this.loja = loja;
     }
 
     public int getId() {
@@ -29,5 +33,13 @@ public class Ferreiro {
 
     public String getEspecializacao() {
         return especializacao;
+    }
+
+    public Ferreiro getGerente() {
+        return gerente;
+    }
+
+    public Loja getLoja() {
+        return loja;
     }
 }

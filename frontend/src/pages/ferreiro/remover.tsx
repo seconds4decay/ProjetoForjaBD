@@ -1,10 +1,11 @@
-import RemoverFerreiroForm from "@/components/Ferreiro/RemoverFerreiroForm";
+import RemoverFormularioUniversal from "@/components/Formularios/RemoverFormularioUniversal";
+import { Ferreiro } from "@/models/Ferreiro";
 
 export default function RemoverFerreiro() {
     return (
         <div>
             <h1>Remover Ferreiro</h1>
-            <RemoverFerreiroForm />
+            <RemoverFormularioUniversal entidade={Ferreiro} />
         </div>
     );
 }

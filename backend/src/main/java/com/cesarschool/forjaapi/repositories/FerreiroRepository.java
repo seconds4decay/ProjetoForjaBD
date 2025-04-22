@@ -17,8 +17,8 @@ public class FerreiroRepository {
     }
 
     public Ferreiro salvar(Ferreiro ferreiro) {
-        jdbc.update("INSERT INTO Ferreiro (nome, especializacao) VALUES (?, ?)",
-                ferreiro.getNome(), ferreiro.getEspecializacao());
+        jdbc.update("INSERT INTO Ferreiro (nome, especializacao, gerente, loja) VALUES (?, ?, ?, ?)",
+                ferreiro.getNome(), ferreiro.getEspecializacao(), ferreiro.getGerente().getId(), ferreiro.getLoja().getId());
 
         ferreiro.setId(jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class));
         return ferreiro;

@@ -17,8 +17,8 @@ public class MaterialRepository {
     }
 
     public Material salvar(Material material) {
-        jdbc.update("INSERT INTO Material (nome, quantidade, qualidade, tipo) VALUES (?, ?, ?, ?)",
-                material.getNome(), material.getQuantidade(), material.getQualidade(), material.getTipo());
+        jdbc.update("INSERT INTO Material (nome, quantidade, qualidade, tipo, fornecedor) VALUES (?, ?, ?, ?, ?)",
+                material.getNome(), material.getQuantidade(), material.getQualidade(), material.getTipo(), material.getFornecedor().getId());
 
         material.setId(jdbc.queryForObject("SELECT MAX(ID_material) FROM Material", Integer.class));
         return material;
