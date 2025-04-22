@@ -3,6 +3,7 @@ package com.cesarschool.forjaapi.services;
 import com.cesarschool.forjaapi.repositories.FerreiroRepository;
 
 import com.cesarschool.forjaapi.models.Ferreiro;
+import com.cesarschool.forjaapi.repositories.LojaRepository;
 import org.springframework.stereotype.Service;
 
 /*
@@ -15,16 +16,30 @@ ao banco de dados.
 public class FerreiroService {
 
     private final FerreiroRepository repository;
+    private final LojaRepository lojaRepository;
 
-    public FerreiroService(FerreiroRepository repository) {
+    public FerreiroService(FerreiroRepository repository, LojaRepository lojaRepository) {
         this.repository = repository;
+        this.lojaRepository = lojaRepository;
     }
 
     public Ferreiro salvar(Ferreiro ferreiro) {
+        if(ferreiro.getGerente() != null) {
+            ferreiro.setGerente(repository.buscarPorId(ferreiro.getGerente().getId()));
+        }
+
+        if(ferreiro.getLoja() != null) {
+            ferreiro.setLoja(lojaRepository.buscarPorId(ferreiro.getLoja().getId()));
+        }
+
         return repository.salvar(ferreiro);
     }
 
     public void deletar(int id) {
         repository.deletar(id);
+    }
+
+    public Ferreiro buscarPorId(int id) {
+        return repository.buscarPorId(id);
     }
 }

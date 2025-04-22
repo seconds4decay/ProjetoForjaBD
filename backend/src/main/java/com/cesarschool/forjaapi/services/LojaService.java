@@ -27,4 +27,8 @@ public class LojaService {
     public void deletar(int id) {
         repository.deletar(id);
     }
+
+    public Loja buscarPorId(int id) {
+        return repository.buscarPorId(id);
+    }
 }

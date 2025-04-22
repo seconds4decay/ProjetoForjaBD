@@ -11,6 +11,8 @@ public class Ferreiro {
     private Ferreiro gerente;
     private Loja loja;
 
+    public Ferreiro() {}
+
     public Ferreiro(int id, String nome, String especializacao, Ferreiro gerente, Loja loja) {
         this.id = id;
         this.nome = nome;
@@ -41,5 +43,21 @@ public class Ferreiro {
 
     public Loja getLoja() {
         return loja;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEspecializacao(String especializacao) {
+        this.especializacao = especializacao;
+    }
+
+    public void setGerente(Ferreiro gerente) {
+        this.gerente = gerente;
+    }
+
+    public void setLoja(Loja loja) {
+        this.loja = loja;
     }
 }

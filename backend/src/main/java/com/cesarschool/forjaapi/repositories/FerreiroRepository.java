@@ -27,4 +27,15 @@ public class FerreiroRepository {
     public void deletar(int id) {
         jdbc.update("DELETE FROM Ferreiro WHERE ID_ferreiro = ?", id);
     }
+
+    public Ferreiro buscarPorId(int id) {
+        return jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
+                (rs, rowNum) -> new Ferreiro(
+                        rs.getInt("ID_ferreiro"),
+                        rs.getString("nome"),
+                        rs.getString("especializacao"),
+                        null, // Aqui você pode adicionar a lógica para buscar o gerente
+                        null // Aqui você pode adicionar a lógica para buscar a loja
+                ), id);
+    }
 }

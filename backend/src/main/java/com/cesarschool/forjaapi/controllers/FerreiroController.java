@@ -32,4 +32,14 @@ public class FerreiroController {
 
         return ResponseEntity.noContent().build(); // HTTP 204
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Ferreiro> buscarPorId(@PathVariable int id) {
+        Ferreiro ferreiro = service.buscarPorId(id);
+        if (ferreiro != null) {
+            return ResponseEntity.ok(ferreiro); // HTTP 200
+        } else {
+            return ResponseEntity.notFound().build(); // HTTP 404
+        }
+    }
 }
