@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Loja;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,12 @@ public class LojaRepository {
         jdbc.update("DELETE FROM Loja WHERE ID_loja = ?", id);
     }
 
-    public Loja buscarPorId(int id) {
+    public Loja buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        try {
         return jdbc.queryForObject("SELECT * FROM Loja WHERE ID_loja = ?",
                 (rs, rowNum) -> new Loja(
                         rs.getInt("ID_loja"),
@@ -36,6 +42,9 @@ public class LojaRepository {
                         rs.getString("cidade"),
                         rs.getString("rua")
                 ), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Loja atualizar(Loja loja) {

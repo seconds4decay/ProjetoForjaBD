@@ -24,39 +24,39 @@ public class FerreiroController {
         if (novoFerreiro == null) {
             return ResponseEntity
                     .badRequest()
-                    .body(null); // HTTP 400
+                    .body(null);
         }
 
         return ResponseEntity
-                .created(URI.create("/ferreiros/" + novoFerreiro.getId())) // HTTP 201 + Location header
-                .body(novoFerreiro); // JSON no corpo da resposta
+                .created(URI.create("/ferreiros/" + novoFerreiro.getId()))
+                .body(novoFerreiro);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
 
-        return ResponseEntity.noContent().build(); // HTTP 204
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Ferreiro> buscarPorId(@PathVariable int id) {
         Ferreiro ferreiro = service.buscarPorId(id);
         if (ferreiro != null) {
-            return ResponseEntity.ok(ferreiro); // HTTP 200
+            return ResponseEntity.ok(ferreiro);
         } else {
-            return ResponseEntity.notFound().build(); // HTTP 404
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ferreiro> atualizar(@RequestBody Ferreiro ferreiro) {
-        Ferreiro ferreiroAtualizado = service.atualizar(ferreiro);
+    public ResponseEntity<Ferreiro> atualizar(@PathVariable int id, @RequestBody Ferreiro ferreiro) {
+        Ferreiro ferreiroAtualizado = service.atualizar(id, ferreiro);
 
         if (ferreiroAtualizado != null) {
-            return ResponseEntity.ok(ferreiroAtualizado); // HTTP 200
+            return ResponseEntity.ok(ferreiroAtualizado);
         } else {
-            return ResponseEntity.notFound().build(); // HTTP 404
+            return ResponseEntity.notFound().build();
         }
     }
 }

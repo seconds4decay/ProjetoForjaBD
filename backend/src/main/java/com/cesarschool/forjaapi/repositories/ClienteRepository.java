@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Cliente;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,13 +28,21 @@ public class ClienteRepository {
         jdbc.update("DELETE FROM Cliente WHERE ID_cliente = ?", id);
     }
 
-    public Cliente buscarPorId(int id) {
-        return jdbc.queryForObject("SELECT * FROM Cliente WHERE ID_cliente = ?", new Object[]{id}, (rs, rowNum) -> {
-            Cliente cliente = new Cliente();
-            cliente.setId(rs.getInt("ID_cliente"));
-            cliente.setNome(rs.getString("nome"));
-            return cliente;
-        });
+    public Cliente buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        try {
+            return jdbc.queryForObject("SELECT * FROM Cliente WHERE ID_cliente = ?", new Object[]{id}, (rs, rowNum) -> {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("ID_cliente"));
+                cliente.setNome(rs.getString("nome"));
+                return cliente;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Cliente atualizar(Cliente cliente) {

@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Arma;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -32,15 +33,27 @@ public class ArmaRepository {
         jdbc.update("DELETE FROM Item WHERE ID_item = ?", id);
     }
 
-    public Arma buscarPorId(int id) {
-        return jdbc.queryForObject("SELECT * FROM Arma WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
-            Arma arma = new Arma();
-            arma.setId(rs.getInt("ID_item"));
-            arma.setNome(rs.getString("Nome"));
-            arma.setDano(rs.getInt("Dano"));
-            arma.setTipo(rs.getString("Tipo"));
-            return arma;
-        });
+    public Arma buscarPorId(Integer id) {
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            return jdbc.queryForObject("SELECT * FROM Arma WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
+                Arma arma = new Arma();
+
+                Integer itemId = rs.getObject("ID_item", Integer.class);
+                if(itemId != null) {
+                    arma.setId(itemId);
+                }
+                arma.setNome(rs.getString("Nome"));
+                arma.setDano(rs.getInt("Dano"));
+                arma.setTipo(rs.getString("Tipo"));
+                return arma;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Arma atualizar(Arma arma) {

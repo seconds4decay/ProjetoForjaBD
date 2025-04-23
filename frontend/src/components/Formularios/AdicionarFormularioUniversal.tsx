@@ -1,20 +1,6 @@
 import ModelPost from "@/functions/ModelPost";
 import { useState } from "react";
-
-interface Atributo {
-  nome: string;
-  tipo: string;
-  referencia?: string;
-}
-
-interface Entidade {
-  nome: string;
-  atributos: Atributo[];
-}
-
-interface Props {
-  entidade: Entidade;
-}
+import { Atributo, Props } from "@/components/Interfaces";
 
 export default function AdicionarFormularioUniversal({ entidade }: Props) {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});

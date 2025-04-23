@@ -46,11 +46,6 @@ public class MaterialService {
     }
 
     public Material atualizar(int id, Material material) {
-        Material materialAtualizado = repository.buscarPorId(id);
-
-        if (materialAtualizado == null) {
-            return null;
-        }
 
         if(material.getFornecedor() != null) {
             material.setFornecedor(fornecedorRepository.buscarPorId(material.getFornecedor().getId()));

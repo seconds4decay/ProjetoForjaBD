@@ -37,12 +37,6 @@ public class ArmaService {
     }
 
     public Arma atualizar(int id, Arma arma) {
-        Arma armaExistente = armaRepository.buscarPorId(id);
-
-        if (armaExistente == null) {
-            return null;
-        }
-
         if(arma.getFerreiro() != null) {
             arma.setFerreiro(ferreiroService.buscarPorId(arma.getFerreiro().getId()));
         } else {

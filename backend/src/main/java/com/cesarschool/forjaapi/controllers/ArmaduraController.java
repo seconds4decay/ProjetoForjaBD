@@ -22,40 +22,42 @@ public class ArmaduraController {
         Armadura novaArmadura = service.salvar(armadura);
 
         if (novaArmadura == null) {
-            return ResponseEntity.badRequest().build(); // HTTP 400
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity
-                .created(URI.create("/armaduras/" + novaArmadura.getId())) // HTTP 201 + Location header
-                .body(novaArmadura); // JSON no corpo da resposta
+                .created(URI.create("/armaduras/" + novaArmadura.getId()))
+                .body(novaArmadura);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
 
-        return ResponseEntity.noContent().build(); // HTTP 204
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Armadura> buscarPorId(@PathVariable int id) {
         Armadura armadura = service.buscarPorId(id);
 
-        if (armadura == null) {
-            return ResponseEntity.notFound().build(); // HTTP 404
+        if (armadura != null) {
+            return ResponseEntity.ok(armadura);
+        } else {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(armadura); // HTTP 200 + JSON no corpo da resposta
+
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Armadura> atualizar(@PathVariable int id, @RequestBody Armadura armadura) {
         Armadura armaduraAtualizada = service.atualizar(id, armadura);
 
-        if (armaduraAtualizada == null) {
-            return ResponseEntity.notFound().build(); // HTTP 404
+        if (armaduraAtualizada != null) {
+            return ResponseEntity.ok(armaduraAtualizada);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(armaduraAtualizada); // HTTP 200 + JSON no corpo da resposta
     }
 }

@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Material;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +31,12 @@ public class MaterialRepository {
         jdbc.update("DELETE FROM Material WHERE ID_material = ?", id);
     }
 
-    public Material buscarPorId(int id) {
+    public Material buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        try {
         return jdbc.queryForObject("SELECT * FROM Material WHERE ID_material = ?",
                 (rs, rowNum) -> new Material(
                         rs.getInt("ID_material"),
@@ -40,6 +46,9 @@ public class MaterialRepository {
                         rs.getString("tipo"),
                         null
                 ), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Material atualizar(Material material) {

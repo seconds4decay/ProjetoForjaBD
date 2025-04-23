@@ -1,19 +1,6 @@
 import ModelDelete from "@/functions/ModelDelete";
 import { useState } from "react";
-
-interface Atributo {
-  nome: string;
-  tipo: string;
-}
-
-interface Entidade {
-  nome: string;
-  atributos: Atributo[];
-}
-
-interface Props {
-  entidade: Entidade;
-}
+import { Props } from "@/components/Interfaces";
 
 export default function FormularioDeleteUniversal({ entidade }: Props) {
   const [id, setId] = useState(0);

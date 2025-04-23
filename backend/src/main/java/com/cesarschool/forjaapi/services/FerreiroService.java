@@ -49,17 +49,19 @@ public class FerreiroService {
         return repository.buscarPorId(id);
     }
 
-    public Ferreiro atualizar(Ferreiro ferreiro) {
-        Ferreiro ferreiroExistente = repository.buscarPorId(ferreiro.getId());
-
-        if (ferreiroExistente == null) {
-            return null;
-        }
-
+    public Ferreiro atualizar(int id, Ferreiro ferreiro) {
         if(ferreiro.getGerente() != null) {
             ferreiro.setGerente(repository.buscarPorId(ferreiro.getGerente().getId()));
         }
 
+        if(ferreiro.getLoja() != null) {
+            ferreiro.setLoja(lojaRepository.buscarPorId(ferreiro.getLoja().getId()));
+        } else {
+            return null;
+        }
+
+        ferreiro.setId(id);
         return repository.atualizar(ferreiro);
+
     }
 }

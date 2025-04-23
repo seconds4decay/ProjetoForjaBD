@@ -1,20 +1,6 @@
 import ModelPut from "@/functions/ModelPut";
 import { useState } from "react";
-
-interface Atributo {
-  nome: string;
-  tipo: string;
-  referencia?: string;
-}
-
-interface Entidade {
-  nome: string;
-  atributos: Atributo[];
-}
-
-interface Props {
-  entidade: Entidade;
-}
+import { Props } from "@/components/Interfaces";
 
 export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
   const [id, setId] = useState("");
@@ -36,15 +22,12 @@ export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
     const payload: { [key: string]: any } = {};
 
     entidade.atributos.forEach((attr) => {
-  
       if (attr.tipo === "foreign") {
-
-        if (formData[attr.nome]) {
-          payload[attr.nome] = { id: Number(formData[attr.nome]) };
+        if(!formData[attr.nome]) {
+          payload[attr.nome] = null;  
         } else {
-          payload[attr.nome] = null;
+          payload[attr.nome] = { id: Number(formData[attr.nome]) };
         }
-
       } else {
         payload[attr.nome] = formData[attr.nome];
       }
@@ -55,11 +38,9 @@ export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
     try {
         const response = await ModelPut(id, payload, entidade.nome.toLowerCase())
         console.log(response)
-
-        alert(entidade.nome.toLowerCase() + " adicionado com sucesso!")
     } catch (error) {
-        console.error("Erro ao adicionar " + entidade.nome.toLowerCase() + ":", error)
-        alert("Erro ao adicionar " + entidade.nome.toLowerCase() + ".")
+        console.error("Erro ao atualizar " + entidade.nome.toLowerCase() + ":", error)
+        alert("Erro ao atualizar " + entidade.nome.toLowerCase() + ".")
     }
 
 

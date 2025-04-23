@@ -21,6 +21,12 @@ public class LojaController {
     public ResponseEntity<Loja> salvar(@RequestBody Loja loja) {
         Loja lojaSalva = service.salvar(loja);
 
+        if (lojaSalva == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(null);
+        }
+
         return ResponseEntity
                 .created(URI.create("/loja/" + lojaSalva.getId()))
                 .body(lojaSalva);
@@ -36,11 +42,12 @@ public class LojaController {
     @GetMapping("/{id}")
     public ResponseEntity<Loja> buscarPorId(@PathVariable int id) {
         Loja loja = service.buscarPorId(id);
+
         if (loja != null) {
             return ResponseEntity.ok(loja);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.notFound().build();
 
     }
 

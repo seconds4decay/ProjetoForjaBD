@@ -4,8 +4,14 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <Link href="/ferreiro/">Ferreiro</Link>
-      <Link href="/loja/">Loja</Link>
+
+      <ul>
+        <li><Link href="/ferreiro/">Ferreiro</Link></li>
+        <li><Link href="/loja/">Loja</Link></li>
+        <li><Link href="/cliente/">Cliente</Link></li>
+        <li><Link href="/item/">Item</Link></li>
+        <li><Link href="/venda/">Venda</Link></li>
+      </ul>
     </div>
   );
 }

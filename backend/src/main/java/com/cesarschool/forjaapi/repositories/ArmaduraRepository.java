@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Armadura;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -32,15 +33,26 @@ public class ArmaduraRepository {
         jdbc.update("DELETE FROM Item WHERE ID_item = ?", id);
     }
 
-    public Armadura buscarPorId(int id) {
-        return jdbc.queryForObject("SELECT * FROM Armadura WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
-            Armadura armadura = new Armadura();
-            armadura.setId(rs.getInt("ID_item"));
-            armadura.setNome(rs.getString("Nome"));
-            armadura.setDefesa(rs.getInt("Defesa"));
-            armadura.setTipo(rs.getString("Tipo"));
-            return armadura;
-        });
+    public Armadura buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        try {
+            return jdbc.queryForObject("SELECT * FROM Armadura WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
+                Armadura armadura = new Armadura();
+                Integer itemId = rs.getObject("ID_item", Integer.class);
+                if(itemId != null) {
+                    armadura.setId(itemId);
+                }
+                armadura.setNome(rs.getString("Nome"));
+                armadura.setDefesa(rs.getInt("Defesa"));
+                armadura.setTipo(rs.getString("Tipo"));
+                return armadura;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Armadura atualizar(Armadura armadura) {

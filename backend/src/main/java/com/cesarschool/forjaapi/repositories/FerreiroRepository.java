@@ -2,10 +2,9 @@ package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Ferreiro;
 import com.cesarschool.forjaapi.services.LojaService;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /*
 Repositories: É onde o acesso ao banco de dados é realizado e onde informações são cadastradas ou buscadas.
@@ -42,27 +41,32 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
             return null;
         }
 
-        Ferreiro ferreiro = jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
-                new Object[]{id}, (rs, rowNum) -> {
-                    Ferreiro f = new Ferreiro();
-                    f.setId(rs.getInt("ID_ferreiro"));
-                    f.setNome(rs.getString("nome"));
-                    f.setEspecializacao(rs.getString("especializacao"));
+        try {
+            Ferreiro ferreiro = jdbc.queryForObject("SELECT * FROM Ferreiro WHERE ID_ferreiro = ?",
+                    new Object[]{id}, (rs, rowNum) -> {
+                        Ferreiro f = new Ferreiro();
+                        f.setId(rs.getInt("ID_ferreiro"));
+                        f.setNome(rs.getString("nome"));
+                        f.setEspecializacao(rs.getString("especializacao"));
 
-                    Integer gerenteId = rs.getObject("gerente", Integer.class);
-                    if (gerenteId != null) {
-                        f.setGerente(buscarPorId(gerenteId));
-                    }
+                        Integer gerenteId = rs.getObject("gerente", Integer.class);
+                        if (gerenteId != null) {
+                            f.setGerente(buscarPorId(gerenteId));
+                        }
 
-                    Integer lojaId = rs.getObject("loja", Integer.class);
-                    if (lojaId != null) {
-                        f.setLoja(lojaService.buscarPorId(lojaId));
-                    }
+                        Integer lojaId = rs.getObject("loja", Integer.class);
+                        if (lojaId != null) {
+                            f.setLoja(lojaService.buscarPorId(lojaId));
+                        }
 
-                    return f;
-                });
+                        return f;
+                    });
 
-        return ferreiro;
+            return ferreiro;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+
     }
 
     public Ferreiro atualizar(Ferreiro ferreiro) {
@@ -73,6 +77,5 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
                 ferreiro.getNome(), ferreiro.getEspecializacao(), gerenteId, lojaId, ferreiro.getId());
 
         return buscarPorId(ferreiro.getId());
-
     }
 }

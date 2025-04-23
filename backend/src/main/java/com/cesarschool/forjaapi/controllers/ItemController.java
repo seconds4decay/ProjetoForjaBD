@@ -18,7 +18,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> salvar(Item item) {
+    public ResponseEntity<Item> salvar(@RequestBody Item item) {
         Item novoItem = service.salvar(item);
 
         if(novoItem == null) {
@@ -41,22 +41,23 @@ public class ItemController {
     public ResponseEntity<Item> buscarPorId(@PathVariable int id) {
         Item item = service.buscarPorId(id);
 
-        if(item == null) {
+        if(item != null) {
+            return ResponseEntity.ok(item);
+        } else {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(item);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Item> atualizar(@PathVariable int id, @RequestBody Item item) {
         Item itemAtualizado = service.atualizar(id, item);
 
-        if(itemAtualizado == null) {
+        if(itemAtualizado != null) {
+            return ResponseEntity.ok(itemAtualizado);
+        } else {
             return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(itemAtualizado);
     }
 
 }

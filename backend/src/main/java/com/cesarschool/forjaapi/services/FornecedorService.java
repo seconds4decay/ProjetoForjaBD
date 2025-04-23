@@ -28,8 +28,8 @@ public class FornecedorService {
         repository.deletar(id);
     }
 
-    public Fornecedor buscarPorId(int id) {
-        if(id == 0) {
+    public Fornecedor buscarPorId(Integer id) {
+        if(id == null) {
             return null;
         }
 
@@ -37,11 +37,6 @@ public class FornecedorService {
     }
 
     public Fornecedor atualizar(int id, Fornecedor fornecedor) {
-        Fornecedor fornecedorExistente = repository.buscarPorId(id);
-
-        if (fornecedorExistente == null) {
-            return null;
-        }
 
         fornecedor.setId(id);
         return repository.atualizar(fornecedor);

@@ -22,40 +22,41 @@ public class ArmaController {
         Arma novaArma = service.salvar(arma);
 
         if (novaArma == null) {
-            return ResponseEntity.badRequest().build(); // HTTP 400
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity
-                .created(URI.create("/armas/" + novaArma.getId())) // HTTP 201 + Location header
-                .body(novaArma); // JSON no corpo da resposta
+                .created(URI.create("/armas/" + novaArma.getId()))
+                .body(novaArma);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
 
-        return ResponseEntity.noContent().build(); // HTTP 204
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Arma> buscarPorId(@PathVariable int id) {
         Arma arma = service.buscarPorId(id);
 
-        if (arma == null) {
-            return ResponseEntity.notFound().build(); // HTTP 404
+        if (arma != null) {
+            return ResponseEntity.ok(arma);
+        } else {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(arma); // HTTP 200 + JSON no corpo da resposta
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Arma> atualizar(@PathVariable int id, @RequestBody Arma arma) {
         Arma armaAtualizada = service.atualizar(id, arma);
 
-        if (armaAtualizada == null) {
-            return ResponseEntity.notFound().build(); // HTTP 404
+        if (armaAtualizada != null) {
+            return ResponseEntity.ok(armaAtualizada);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.ok(armaAtualizada); // HTTP 200 + JSON no corpo da resposta
     }
 }

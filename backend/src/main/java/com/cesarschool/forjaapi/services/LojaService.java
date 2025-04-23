@@ -37,12 +37,6 @@ public class LojaService {
     }
 
     public Loja atualizar(int id, Loja loja) {
-        Loja lojaAtualizada = repository.buscarPorId(id);
-
-        if(lojaAtualizada == null) {
-            return null;
-        }
-
         loja.setId(id);
         return repository.atualizar(loja);
     }

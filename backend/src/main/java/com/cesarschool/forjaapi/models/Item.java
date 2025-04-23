@@ -1,7 +1,6 @@
 package com.cesarschool.forjaapi.models;
 
 public class Item {
-
     private int id;
     private String nome;
     private float valor;

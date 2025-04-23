@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Fornecedor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,13 +29,21 @@ public class FornecedorRepository {
         jdbc.update("DELETE FROM Fornecedor WHERE ID_fornecedor = ?", id);
     }
 
-    public Fornecedor buscarPorId(int id) {
+    public Fornecedor buscarPorId(Integer id) {
+        if(id == null) {
+            return null;
+        }
+
+        try {
         return jdbc.queryForObject("SELECT * FROM Fornecedor WHERE ID_fornecedor = ?",
                 (rs, rowNum) -> new Fornecedor(
                         rs.getInt("ID_fornecedor"),
                         rs.getString("nome"),
                         rs.getString("tipo_material")),
                 id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Fornecedor atualizar(Fornecedor fornecedor) {

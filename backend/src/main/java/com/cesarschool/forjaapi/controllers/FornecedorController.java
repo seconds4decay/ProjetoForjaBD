@@ -20,6 +20,13 @@ public class FornecedorController {
     @PostMapping
     public ResponseEntity<Fornecedor> salvar(@RequestBody Fornecedor fornecedor) {
         Fornecedor novoFornecedor = service.salvar(fornecedor);
+
+        if (novoFornecedor == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(null);
+        }
+
         return ResponseEntity
                 .created(URI.create("/fornecedores/" + novoFornecedor.getId()))
                 .body(novoFornecedor);
@@ -46,9 +53,9 @@ public class FornecedorController {
         Fornecedor fornecedorAtualizado = service.atualizar(id, fornecedor);
         if (fornecedorAtualizado != null) {
             return ResponseEntity.ok(fornecedorAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.notFound().build();
 
     }
 }

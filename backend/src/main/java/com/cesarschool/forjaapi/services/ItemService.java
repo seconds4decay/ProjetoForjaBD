@@ -24,6 +24,7 @@ public class ItemService {
     }
 
     public Item salvar(Item item) {
+
         if(item.getFerreiro() != null) {
             item.setFerreiro(ferreiroRepository.buscarPorId(item.getFerreiro().getId()));
         } else {
@@ -37,8 +38,8 @@ public class ItemService {
         repository.deletar(id);
     }
 
-    public Item buscarPorId(int id) {
-        if(id == 0) {
+    public Item buscarPorId(Integer id) {
+        if(id == null) {
             return null;
         }
 
@@ -46,11 +47,6 @@ public class ItemService {
     }
 
     public Item atualizar(int id, Item item) {
-        Item itemAtualizado = repository.buscarPorId(id);
-
-        if (itemAtualizado == null) {
-            return null;
-        }
 
         if(item.getFerreiro() != null) {
             item.setFerreiro(ferreiroRepository.buscarPorId(item.getFerreiro().getId()));

@@ -35,12 +35,6 @@ public class ArmaduraService {
     }
 
     public Armadura atualizar(int id, Armadura armadura) {
-        Armadura armaduraExistente = armaduraRepository.buscarPorId(id);
-
-        if (armaduraExistente == null) {
-            return null;
-        }
-
         if(armadura.getFerreiro() != null) {
             armadura.setFerreiro(armadura.getFerreiro());
         } else {

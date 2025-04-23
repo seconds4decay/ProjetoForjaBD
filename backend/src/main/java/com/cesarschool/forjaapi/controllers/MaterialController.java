@@ -22,7 +22,7 @@ public class MaterialController {
         Material novoMaterial = service.salvar(material);
 
         if(novoMaterial == null) {
-            return ResponseEntity.badRequest().build(); // HTTP 400
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity
@@ -34,16 +34,17 @@ public class MaterialController {
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         service.deletar(id);
 
-        return ResponseEntity.noContent().build(); // HTTP 204
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Material> buscarPorId(@PathVariable int id) {
         Material material = service.buscarPorId(id);
+
         if (material != null) {
-            return ResponseEntity.ok(material); // HTTP 200
+            return ResponseEntity.ok(material);
         } else {
-            return ResponseEntity.notFound().build(); // HTTP 404
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -52,11 +53,10 @@ public class MaterialController {
         Material materialAtualizado = service.atualizar(id, material);
 
         if (materialAtualizado != null) {
-            return ResponseEntity.ok(materialAtualizado); // HTTP 200
+            return ResponseEntity.ok(materialAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-
-        return ResponseEntity.notFound().build(); // HTTP 404
-
     }
 
 }
