@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/fornecedor")
@@ -50,6 +51,18 @@ public class FornecedorController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Fornecedor>> buscarTodos() {
+        List<Fornecedor> fornecedores = service.buscarTodos();
+
+        if (fornecedores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(fornecedores);
+
     }
 
     @PutMapping("/{id}")

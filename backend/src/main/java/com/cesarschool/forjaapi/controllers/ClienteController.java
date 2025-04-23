@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
@@ -51,6 +52,17 @@ public class ClienteController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Cliente>> buscarTodos() {
+        List<Cliente> clientes = service.buscarTodos();
+
+        if (clientes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(clientes);
     }
 
     @PutMapping("/{id}")

@@ -5,6 +5,8 @@ import com.cesarschool.forjaapi.repositories.ClienteRepository;
 import com.cesarschool.forjaapi.models.Cliente;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /*
 Camada de Serviços: É onde acontece a lógica de negócio da aplicação
 e onde as informações recebidas são validadas antes de serem adicionadas
@@ -34,6 +36,10 @@ public class ClienteService {
         }
 
         return repository.buscarPorId(id);
+    }
+
+    public List<Cliente> buscarTodos() {
+        return repository.buscarTodos();
     }
 
     public Cliente atualizar(int id, Cliente cliente) {

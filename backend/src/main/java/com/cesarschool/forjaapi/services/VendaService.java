@@ -4,6 +4,8 @@ import com.cesarschool.forjaapi.models.Venda;
 import com.cesarschool.forjaapi.repositories.VendaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VendaService {
 
@@ -41,6 +43,10 @@ public class VendaService {
         }
 
         return repository.buscarPorId(id_loja, id_item, id_cliente);
+    }
+
+    public List<Venda> buscarTodos() {
+        return repository.buscarTodos();
     }
 
     public Venda atualizar(int id_loja, int id_item, int id_cliente, Venda venda) {

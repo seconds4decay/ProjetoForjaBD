@@ -7,4 +7,4 @@ export default async function getModelAll(route: string) {
         })
 
         return response.json()
-    }
+    }   

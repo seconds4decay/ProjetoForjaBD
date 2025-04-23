@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ferreiro")
@@ -51,6 +52,17 @@ public class FerreiroController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Ferreiro>> buscarTodos() {
+        List<Ferreiro> ferreiros = service.buscarTodos();
+
+        if (ferreiros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(ferreiros);
     }
 
     @PutMapping("/{id}")

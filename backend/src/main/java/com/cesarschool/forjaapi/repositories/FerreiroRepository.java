@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /*
 Repositories: É onde o acesso ao banco de dados é realizado e onde informações são cadastradas ou buscadas.
 */
@@ -67,6 +69,27 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
             return null;
         }
 
+    }
+
+    public List<Ferreiro> buscarTodos() {
+        return jdbc.query("SELECT * FROM Ferreiro", (rs, rowNum) -> {
+            Ferreiro ferreiro = new Ferreiro();
+            ferreiro.setId(rs.getInt("ID_ferreiro"));
+            ferreiro.setNome(rs.getString("nome"));
+            ferreiro.setEspecializacao(rs.getString("especializacao"));
+
+            Integer gerenteId = rs.getObject("gerente", Integer.class);
+            if (gerenteId != null) {
+                ferreiro.setGerente(buscarPorId(gerenteId));
+            }
+
+            Integer lojaId = rs.getObject("loja", Integer.class);
+            if (lojaId != null) {
+                ferreiro.setLoja(lojaService.buscarPorId(lojaId));
+            }
+
+            return ferreiro;
+        });
     }
 
     public Ferreiro atualizar(Ferreiro ferreiro) {

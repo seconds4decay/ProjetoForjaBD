@@ -5,6 +5,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ArmaduraRepository {
 
@@ -53,6 +55,20 @@ public class ArmaduraRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public List<Armadura> buscarTodos() {
+        return jdbc.query("SELECT * FROM Armadura", (rs, rowNum) -> {
+            Armadura armadura = new Armadura();
+            Integer itemId = rs.getObject("ID_item", Integer.class);
+            if(itemId != null) {
+                armadura.setId(itemId);
+            }
+            armadura.setNome(rs.getString("Nome"));
+            armadura.setDefesa(rs.getInt("Defesa"));
+            armadura.setTipo(rs.getString("Tipo"));
+            return armadura;
+        });
     }
 
     public Armadura atualizar(Armadura armadura) {

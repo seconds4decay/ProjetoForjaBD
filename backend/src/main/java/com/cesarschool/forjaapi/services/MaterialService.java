@@ -6,6 +6,8 @@ import com.cesarschool.forjaapi.repositories.MaterialRepository;
 import com.cesarschool.forjaapi.models.Material;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /*
 Camada de Serviços: É onde acontece a lógica de negócio da aplicação
 e onde as informações recebidas são validadas antes de serem adicionadas
@@ -43,6 +45,10 @@ public class MaterialService {
         }
 
         return repository.buscarPorId(id);
+    }
+
+    public List<Material> buscarTodos() {
+        return repository.buscarTodos();
     }
 
     public Material atualizar(int id, Material material) {

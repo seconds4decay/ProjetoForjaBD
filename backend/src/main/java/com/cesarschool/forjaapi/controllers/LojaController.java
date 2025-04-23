@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/loja")
@@ -52,7 +53,17 @@ public class LojaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @GetMapping
+    public ResponseEntity<List<Loja>> buscarTodos() {
+        List<Loja> lojas = service.buscarTodos();
+
+        if(lojas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lojas);
     }
 
     @PutMapping("/{id}")

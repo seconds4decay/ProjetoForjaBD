@@ -11,6 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.awt.*;
+import java.util.List;
+
 @Repository
 public class VendaRepository {
 
@@ -55,6 +58,16 @@ public class VendaRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public List<Venda> buscarTodos() {
+        return jdbc.query("SELECT * FROM Venda", (rs, rowNum) -> {
+            Loja loja = lojaService.buscarPorId(rs.getInt("loja"));
+            Item item = itemService.buscarPorId(rs.getInt("item"));
+            Cliente cliente = clienteService.buscarPorId(rs.getInt("cliente"));
+
+            return new Venda(loja, item, cliente);
+        });
     }
 
     public Venda atualizar(int id_loja, int id_item, int id_cliente, Venda venda) {

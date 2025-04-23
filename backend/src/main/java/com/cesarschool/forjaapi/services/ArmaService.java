@@ -4,6 +4,8 @@ import com.cesarschool.forjaapi.models.Arma;
 import com.cesarschool.forjaapi.repositories.ArmaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ArmaService {
     private final ArmaRepository armaRepository;
@@ -34,6 +36,10 @@ public class ArmaService {
         }
 
         return armaRepository.buscarPorId(id);
+    }
+
+    public List<Arma> buscarTodos() {
+        return armaRepository.buscarTodos();
     }
 
     public Arma atualizar(int id, Arma arma) {

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/armadura")
@@ -51,7 +52,17 @@ public class ArmaduraController {
             return ResponseEntity.notFound().build();
         }
 
+    }
 
+    @GetMapping
+    public ResponseEntity<List<Armadura>> buscarTodos() {
+        List<Armadura> armaduras = service.buscarTodos();
+
+        if (armaduras.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(armaduras);
     }
 
     @PutMapping("/{id}")

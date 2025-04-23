@@ -5,6 +5,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ArmaRepository {
 
@@ -54,6 +56,20 @@ public class ArmaRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public List<Arma> buscarTodos() {
+        return jdbc.query("SELECT * FROM Arma", (rs, rowNum) -> {
+            Arma arma = new Arma();
+            Integer itemId = rs.getObject("ID_item", Integer.class);
+            if(itemId != null) {
+                arma.setId(itemId);
+            }
+            arma.setNome(rs.getString("Nome"));
+            arma.setDano(rs.getInt("Dano"));
+            arma.setTipo(rs.getString("Tipo"));
+            return arma;
+        });
     }
 
     public Arma atualizar(Arma arma) {

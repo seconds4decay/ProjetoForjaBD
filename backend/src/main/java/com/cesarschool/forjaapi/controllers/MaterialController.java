@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/material")
@@ -50,6 +51,17 @@ public class MaterialController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Material>> buscarTodos() {
+        List<Material> materiais = service.buscarTodos();
+
+        if(materiais.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(materiais);
     }
 
     @PutMapping("/{id}")

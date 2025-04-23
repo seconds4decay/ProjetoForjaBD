@@ -5,6 +5,7 @@ import com.cesarschool.forjaapi.services.ArmaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.net.URI;
 
 @RestController
@@ -51,6 +52,17 @@ public class ArmaController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Arma>> buscarTodos() {
+        List<Arma> armas = service.buscarTodos();
+
+        if(armas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(armas);
     }
 
     @PutMapping("/{id}")
