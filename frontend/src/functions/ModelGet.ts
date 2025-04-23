@@ -1,8 +1,8 @@
-import { URLSearchParams } from "url";
+import { capitalize } from "./Capitalize";
 
-export default async function ModelGet(id: string, route: string) {
+export default async function ModelGet(query: string, route: string) {
     try {
-        const response = await fetch(`http://localhost:8080/${route}/${id}`, {
+        const response = await fetch(`http://localhost:8080/${route}/${query}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -10,13 +10,14 @@ export default async function ModelGet(id: string, route: string) {
         });
 
         if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+            if(response.status === 404) {
+                alert(`${capitalize(route)} não encontrado.`);
+            }
           }
       
         return await response.json()
 
     } catch(error) {
         console.error("Erro ao enviar dados:", error);
-        throw error;
     }
 }

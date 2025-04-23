@@ -32,16 +32,20 @@ public class VendaController {
 
     }
 
-    @DeleteMapping("/{loja}/{id_item}/{id_cliente}")
-    public ResponseEntity<Void> deletar(@PathVariable int id_loja, @PathVariable int id_item, @PathVariable int id_cliente) {
-        service.deletar(id_loja, id_item, id_cliente);
+    @DeleteMapping("/{loja}/{item}/{cliente}")
+    public ResponseEntity<Void> deletar(@PathVariable int loja, @PathVariable int item, @PathVariable int cliente) {
+        if (service.buscarPorId(loja, item, cliente) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        service.deletar(loja, item, cliente);
 
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id_loja}/{id_item}/{id_cliente}")
-    public ResponseEntity<Venda> buscarPorId(@PathVariable int id_loja, @PathVariable int id_item, @PathVariable int id_cliente) {
-        Venda venda = service.buscarPorId(id_loja, id_item, id_cliente);
+    @GetMapping("/{loja}/{item}/{cliente}")
+    public ResponseEntity<Venda> buscarPorId(@PathVariable int loja, @PathVariable int item, @PathVariable int cliente) {
+        Venda venda = service.buscarPorId(loja, item, cliente);
 
         if (venda != null) {
             return ResponseEntity.ok(venda);
@@ -50,9 +54,9 @@ public class VendaController {
         }
     }
 
-    @PutMapping("/{id_loja}/{id_item}/{id_cliente}")
-    public ResponseEntity<Venda> atualizar(@PathVariable int id_loja, @PathVariable int id_item, @PathVariable int id_cliente, @RequestBody Venda venda) {
-        Venda vendaAtualizada = service.atualizar(id_loja, id_item, id_cliente, venda);
+    @PutMapping("/{loja}/{item}/{cliente}")
+    public ResponseEntity<Venda> atualizar(@PathVariable int loja, @PathVariable int item, @PathVariable int cliente, @RequestBody Venda venda) {
+        Venda vendaAtualizada = service.atualizar(loja, item, cliente, venda);
 
         if (vendaAtualizada != null) {
             return ResponseEntity.ok(vendaAtualizada);

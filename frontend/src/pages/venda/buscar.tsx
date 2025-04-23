@@ -1,11 +1,11 @@
 import { Venda } from "@/models/Venda";
-import BuscarFomularioUniversal from "@/components/Formularios/BuscarFormularioUniversal";
+import BuscarFomularioVenda from "@/components/Formularios/BuscarFormularioVenda";
 
 export default function Buscar() {
     return (
         <div>
             <h1>Buscar Venda</h1>
-            <BuscarFomularioUniversal entidade={Venda} />
+            <BuscarFomularioVenda entidade={Venda} />
         </div>
     );
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/item")
@@ -32,6 +33,10 @@ public class ItemController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
+        if (service.buscarPorId(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         service.deletar(id);
 
         return ResponseEntity.noContent().build();
@@ -47,6 +52,17 @@ public class ItemController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Item>> buscarTodos() {
+        List<Item> itens = service.buscarTodos();
+
+        if(itens.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(itens);
     }
 
     @PutMapping("/{id}")

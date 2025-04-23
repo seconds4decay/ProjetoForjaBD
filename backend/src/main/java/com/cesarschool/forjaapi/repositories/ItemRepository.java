@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /*
 Repositories: É onde o acesso ao banco de dados é realizado e onde informações são cadastradas ou buscadas.
 */
@@ -58,6 +60,23 @@ public class ItemRepository {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    public List<Item> buscarTodos() {
+        return jdbc.query("SELECT * FROM Item", (rs, rowNum) -> {
+            Item item = new Item();
+            item.setId(rs.getInt("ID_item"));
+            item.setNome(rs.getString("nome"));
+            item.setValor((float) rs.getDouble("valor"));
+            item.setPeso((float) rs.getDouble("peso"));
+            item.setRaridade(rs.getString("raridade"));
+
+            Integer ferreiroId = rs.getObject("ferreiro", Integer.class);
+            if (ferreiroId != null) {
+                item.setFerreiro(ferreiroService.buscarPorId(ferreiroId));
+            }
+            return item;
+        });
     }
 
     public Item atualizar(int id, Item item) {

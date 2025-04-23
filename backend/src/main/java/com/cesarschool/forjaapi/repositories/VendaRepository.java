@@ -46,9 +46,9 @@ public class VendaRepository {
         try {
             return jdbc.queryForObject("SELECT * FROM Venda WHERE loja = ? AND item = ? AND cliente = ?",
                     new Object[]{id_loja, id_item, id_cliente}, (rs, rowNum) -> {
-                        Loja loja = lojaService.buscarPorId(rs.getInt("ID_loja"));
-                        Item item = itemService.buscarPorId(rs.getInt("ID_item"));
-                        Cliente cliente = clienteService.buscarPorId(rs.getInt("ID_cliente"));
+                        Loja loja = lojaService.buscarPorId(rs.getInt("loja"));
+                        Item item = itemService.buscarPorId(rs.getInt("item"));
+                        Cliente cliente = clienteService.buscarPorId(rs.getInt("cliente"));
 
                         return new Venda(loja, item, cliente);
                     });

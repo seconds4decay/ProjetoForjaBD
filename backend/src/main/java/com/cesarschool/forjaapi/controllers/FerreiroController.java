@@ -34,6 +34,10 @@ public class FerreiroController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
+        if (service.buscarPorId(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         service.deletar(id);
 
         return ResponseEntity.noContent().build();

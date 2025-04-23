@@ -1,6 +1,7 @@
 import ModelPut from "@/functions/ModelPut";
 import { useState } from "react";
 import { Props } from "@/components/Interfaces";
+import { capitalize } from "@/functions/Capitalize";
 
 export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
   const [id, setId] = useState("");
@@ -38,6 +39,10 @@ export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
     try {
         const response = await ModelPut(id, payload, entidade.nome.toLowerCase())
         console.log(response)
+
+        if (response.status === 200) {
+            alert(entidade.nome.toLowerCase() + " atualizado com sucesso.")
+        }
     } catch (error) {
         console.error("Erro ao atualizar " + entidade.nome.toLowerCase() + ":", error)
         alert("Erro ao atualizar " + entidade.nome.toLowerCase() + ".")
@@ -48,7 +53,7 @@ export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
-      <h2 className="text-xl font-bold">Atualizar {entidade.nome}</h2>
+      <h2 className="text-xl font-bold">Atualizar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">
         ID do item

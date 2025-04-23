@@ -34,6 +34,10 @@ public class LojaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
+        if (service.buscarPorId(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         service.deletar(id);
 
         return ResponseEntity.noContent().build();
@@ -49,6 +53,17 @@ public class LojaController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Loja> atualizar(@PathVariable int id, @RequestBody Loja loja) {
+        Loja lojaAtualizada = service.atualizar(id, loja);
+
+        if (lojaAtualizada != null) {
+            return ResponseEntity.ok(lojaAtualizada);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

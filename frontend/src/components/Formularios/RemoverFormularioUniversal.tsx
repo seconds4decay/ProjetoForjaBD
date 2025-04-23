@@ -11,7 +11,6 @@ export default function FormularioDeleteUniversal({ entidade }: Props) {
     try {
         const response = await ModelDelete(id, entidade.nome.toLowerCase());
         if (!response) {
-            alert("Erro ao remover" + entidade.nome.toLowerCase() + ".");
             return;
         }
         setId(0); 

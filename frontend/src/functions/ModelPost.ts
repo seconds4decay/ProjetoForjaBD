@@ -1,3 +1,5 @@
+import { capitalize } from "./Capitalize";
+
 export default async function ModelPOST(data: any, route: string) {
     try {
         const response = await fetch("http://localhost:8080/" + route, {
@@ -9,7 +11,13 @@ export default async function ModelPOST(data: any, route: string) {
         });
 
         if (!response.ok) {
-            throw new Error('Erro ao enviar formulário')
+            if(response.status === 404) {
+                alert(`${capitalize(route)} não encontrado.`);
+            } else if (response.status === 500) {
+                alert(`Erro ao criar ${capitalize(route)}.`);
+            } else {
+                alert(`Erro desconhecido ao criar ${capitalize(route)}. Código: ${response.status}`);
+            }
           }
       
         return await response.json()

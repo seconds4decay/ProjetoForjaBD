@@ -1,11 +1,11 @@
-import RemoverFormularioUniversal from "@/components/Formularios/RemoverFormularioUniversal";
+import RemoverFormularioVenda from "@/components/Formularios/RemoverFormularioVenda";
 import { Venda } from "@/models/Venda";
 
 export default function Remover() {
     return (
         <div>
             <h1>Remover Venda</h1>
-            <RemoverFormularioUniversal entidade={Venda} />
+            <RemoverFormularioVenda entidade={Venda} />
         </div>
     );
 }
