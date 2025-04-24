@@ -40,9 +40,13 @@ export default function FormularioAtualizacaoUniversal({ entidade }: Props) {
         const response = await ModelPut(id, payload, entidade.nome.toLowerCase())
         console.log(response)
 
+        if(!response) {
+            return
+        }
+
         if (response.status === 200) {
             alert(entidade.nome.toLowerCase() + " atualizado com sucesso.")
-        }
+        } 
     } catch (error) {
         console.error("Erro ao atualizar " + entidade.nome.toLowerCase() + ":", error)
         alert("Erro ao atualizar " + entidade.nome.toLowerCase() + ".")

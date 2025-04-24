@@ -71,8 +71,9 @@ public class FerreiroController {
 
         if (ferreiroAtualizado != null) {
             return ResponseEntity.ok(ferreiroAtualizado);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.notFound().build();
+
     }
 }

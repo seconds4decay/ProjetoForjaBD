@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Material;
+import com.cesarschool.forjaapi.services.FornecedorService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,9 +15,11 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
 @Repository
 public class MaterialRepository {
     private final JdbcTemplate jdbc;
+    private final FornecedorService fornecedorService;
 
-    public MaterialRepository(JdbcTemplate jdbc) {
+    public MaterialRepository(JdbcTemplate jdbc, FornecedorService fornecedorService) {
         this.jdbc = jdbc;
+        this.fornecedorService = fornecedorService;
     }
 
     public Material salvar(Material material) {
@@ -39,29 +42,44 @@ public class MaterialRepository {
         }
 
         try {
-        return jdbc.queryForObject("SELECT * FROM Material WHERE ID_material = ?",
-                (rs, rowNum) -> new Material(
-                        rs.getInt("ID_material"),
-                        rs.getString("nome"),
-                        rs.getInt("quantidade"),
-                        rs.getString("qualidade"),
-                        rs.getString("tipo"),
-                        null
-                ), id);
+            return jdbc.queryForObject("SELECT * FROM Material WHERE ID_material = ?",
+                    new Object[]{id}, (rs, rowNum) -> {
+                        Material material = new Material();
+                        material.setId(rs.getInt("ID_material"));
+                        material.setNome(rs.getString("nome"));
+                        material.setQuantidade(rs.getInt("quantidade"));
+                        material.setQualidade(rs.getString("qualidade"));
+                        material.setTipo(rs.getString("tipo"));
+
+                        Integer fornecedorId = rs.getObject("fornecedor", Integer.class);
+                        if (fornecedorId != null) {
+                            material.setFornecedor(fornecedorService.buscarPorId(fornecedorId));
+                        }
+
+                        return material;
+                    });
+
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
 
     public List<Material> buscarTodos() {
-        return jdbc.query("SELECT * FROM Material", (rs, rowNum) -> new Material(
-                rs.getInt("ID_material"),
-                rs.getString("nome"),
-                rs.getInt("quantidade"),
-                rs.getString("qualidade"),
-                rs.getString("tipo"),
-                null
-        ));
+        return jdbc.query("SELECT * FROM Material", (rs, rowNum) -> {
+            Material material = new Material();
+            material.setId(rs.getInt("ID_material"));
+            material.setNome(rs.getString("nome"));
+            material.setQuantidade(rs.getInt("quantidade"));
+            material.setQualidade(rs.getString("qualidade"));
+            material.setTipo(rs.getString("tipo"));
+
+            Integer fornecedorId = rs.getObject("fornecedor", Integer.class);
+            if (fornecedorId != null) {
+                material.setFornecedor(fornecedorService.buscarPorId(fornecedorId));
+            }
+
+            return material;
+        });
     }
 
     public Material atualizar(Material material) {

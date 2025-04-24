@@ -1,3 +1,5 @@
+import VisualizarModel from "@/components/Tabelas/visualizarModel";
+import { Cliente } from "@/models/Cliente";
 import Link from "next/link"
 
 export default function Home() {
@@ -11,6 +13,8 @@ export default function Home() {
             <Link href="/cliente/atualizar">Atualizar Cliente</Link>
 
             <Link href="/cliente/buscar">Buscar Cliente</Link>
+
+             <VisualizarModel entidade={Cliente} />
         </div>
     );
 }

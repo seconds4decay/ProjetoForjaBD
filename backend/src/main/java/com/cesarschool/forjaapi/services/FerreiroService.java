@@ -56,6 +56,10 @@ public class FerreiroService {
     }
 
     public Ferreiro atualizar(int id, Ferreiro ferreiro) {
+        if(buscarPorId(id) == null) {
+            return null;
+        }
+
         if(ferreiro.getGerente() != null) {
             ferreiro.setGerente(repository.buscarPorId(ferreiro.getGerente().getId()));
         }

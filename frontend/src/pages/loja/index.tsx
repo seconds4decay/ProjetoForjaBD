@@ -1,6 +1,8 @@
+import VisualizarModel from "@/components/Tabelas/visualizarModel";
+import { Loja } from "@/models/Loja";
 import Link from "next/link"
 
-export default function Loja() {
+export default function Home() {
     return (
         <div>
             <h1>Loja</h1>
@@ -11,6 +13,8 @@ export default function Loja() {
             <Link href="/loja/atualizar">Atualizar Loja</Link>
 
             <Link href="/loja/buscar">Visualizar Loja</Link>
+
+            <VisualizarModel entidade={Loja}/>
         
         </div>
     );
