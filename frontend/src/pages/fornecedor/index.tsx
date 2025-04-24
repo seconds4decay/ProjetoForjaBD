@@ -1,10 +1,12 @@
 import VisualizarModel from "@/components/Tabelas/visualizarModel";
 import { Fornecedor } from "@/models/Fornecedor";
 import Link from "next/link"
+import Topbar from "@/components/Pages/topbar";
 
 export default function Home() {
     return (
         <div>
+            <Topbar/>
             <h1>Fornecedor</h1>
             <Link href="/fornecedor/adicionar">Adicionar Fornecedor</Link>
             

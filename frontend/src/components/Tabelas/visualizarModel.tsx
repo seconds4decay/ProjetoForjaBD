@@ -37,27 +37,31 @@ export default function VisualizarModel({ entidade }: Props) {
     }, [entidade.nome]);
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    {entidade.nome != "venda" && <th key={0}>ID</th>}
-                    {entidade.atributos.map((atributo: Atributo) => (
-                        <th key={atributo.nome}>{capitalize(atributo.nome)}</th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {dados && dados.map((item, index) => (
-                    <tr key={index}>
-                        <td key={0}>{item.id}</td>
+        <div className="overflow-x-auto rounded-xl shadow">
+            <table className="min-w-full divide-y divide-black-200" style={{ backgroundColor: "var(--elementcolor)" }}>
+                <thead className="text-white-700 uppercase text-xs" > 
+                    <tr>
+                        {entidade.nome != "venda" && <th key={0}>ID</th>}
                         {entidade.atributos.map((atributo: Atributo) => (
-                            <td key={atributo.nome}>
-                                {renderCellValue(item[atributo.nome])}
-                            </td>
+                            <th className="px-6 py-3 text-left" key={atributo.nome}>{capitalize(atributo.nome)}</th>
                         ))}
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody className="divide-y divide-black-200">
+                    {dados && dados.map((item, index) => (
+                        <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
+                            <td className="px-6 py-4" key={0}>
+                                {item.id}
+                            </td>
+                            {entidade.atributos.map((atributo: Atributo) => (
+                                <td className="px-6 py-4" key={atributo.nome}>
+                                    {renderCellValue(item[atributo.nome])}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }

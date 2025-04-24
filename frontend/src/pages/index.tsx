@@ -1,19 +1,23 @@
+import Card from "@/components/Pages/Card";
+import Topbar from "@/components/Pages/topbar";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
-      <h1>Home</h1>
+      <Topbar/>
 
-      <ul>
-        <li><Link href="/ferreiro/">Ferreiro</Link></li>
-        <li><Link href="/loja/">Loja</Link></li>
-        <li><Link href="/cliente/">Cliente</Link></li>
-        <li><Link href="/item/">Item</Link></li>
-        <li><Link href="/venda/">Venda</Link></li>
-        <li><Link href="/fornecedor/">Fornecedor</Link></li>
-        <li><Link href="/material/">Material</Link></li>
-      </ul>
+      <h1>CRUDs</h1>
+      <div className="flex flex-wrap justify-center">
+        <Link href="/ferreiro/"><Card>Ferreiro</Card></Link>
+        <Link href="/fornecedor/"><Card>Fornecedor</Card></Link>
+        <Link href="/item/"><Card>Item</Card></Link>
+        <Link href="/loja/"><Card>Loja</Card></Link>
+        <Link href="/material/"><Card>Material</Card></Link>
+        <Link href="/cliente/"><Card>Cliente</Card></Link>
+        <Link href="/venda/"><Card>Venda</Card></Link>
+
+      </div>
     </div>
   );
 }

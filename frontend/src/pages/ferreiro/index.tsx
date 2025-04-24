@@ -1,19 +1,25 @@
 import VisualizarModel from "@/components/Tabelas/visualizarModel";
 import { Ferreiro } from "@/models/Ferreiro";
 import Link from "next/link"
+import Topbar from "@/components/Pages/topbar";
+import Card from "@/components/Pages/Card";
 
 export default function Home() {
     return (
         <div>
+            <Topbar/>
             <h1>Ferreiro</h1>
-            <Link href="/ferreiro/adicionar">Adicionar Ferreiro</Link>
+            <div className="flex flex-wrap justify-center">
+                <Link href="/ferreiro/adicionar"><Card>Adicionar Ferreiro</Card></Link>
+                
+                <Link href="/ferreiro/remover"><Card>Remover Ferreiro</Card></Link>
+
+                <Link href="/ferreiro/atualizar"><Card>Atualizar Ferreiro</Card></Link>
+
+                <Link href="/ferreiro/buscar"><Card>Buscar Ferreiro</Card></Link>
+            </div>
             
-            <Link href="/ferreiro/remover">Remover Ferreiro</Link>
-
-            <Link href="/ferreiro/atualizar">Atualizar Ferreiro</Link>
-
-            <Link href="/ferreiro/buscar">Buscar Ferreiro</Link>
-
+z
             <VisualizarModel entidade={Ferreiro} />
         </div>
     );

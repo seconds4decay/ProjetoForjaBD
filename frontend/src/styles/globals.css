@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #505250;
+  --fontcolor: #ffffff;
+  --elementcolor: #333;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background);
+  color: var(--fontcolor);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html h1 {
+  text-align: center;
+  font-size: 2rem;
 }
