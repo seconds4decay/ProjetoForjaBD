@@ -1,9 +1,13 @@
 import ModelPost from "@/functions/ModelPost";
 import { useState } from "react";
 import { Atributo, Props } from "@/components/Interfaces";
+import { capitalize } from "@/functions/Capitalize";
+import { useRouter } from "next/router";
 
 export default function AdicionarFormularioUniversal({ entidade }: Props) {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
+
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -37,6 +41,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
         console.log(response)
 
         alert(entidade.nome.toLowerCase() + " adicionado com sucesso!")
+        router.back()
     } catch (error) {
         console.error("Erro ao adicionar " + entidade.nome.toLowerCase() + ":", error)
         alert("Erro ao adicionar " + entidade.nome.toLowerCase() + ".")
@@ -75,12 +80,12 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
-      <h2 className="text-xl font-bold">Formulário: {entidade.nome}</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+      <h2 className="text-xl font-bold">Adicionar {capitalize(entidade.nome)}</h2>
 
       {entidade.atributos.map((attr) => (
         <label key={attr.nome} className="flex flex-col gap-1">
-          {attr.nome}
+          {capitalize(attr.nome)}
           {renderCampo(attr)}
         </label>
       ))}

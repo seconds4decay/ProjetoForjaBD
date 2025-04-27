@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Props } from "@/components/Interfaces";
 import ModelDelete from "@/functions/ModelDelete";
+import { capitalize } from "@/functions/Capitalize";
+import { useRouter } from "next/router";
 
 export default function RemoverFormularioVenda({ entidade }: Props) {
   const [formData, setFormData] = useState({
@@ -8,6 +10,9 @@ export default function RemoverFormularioVenda({ entidade }: Props) {
     item: 0,
     cliente: 0,
   });
+
+  const router = useRouter();
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,6 +39,8 @@ export default function RemoverFormularioVenda({ entidade }: Props) {
             cliente: 0,
         });
 
+        router.back();
+
     } catch (error) {
         alert("Erro ao buscar " + entidade.nome.toLowerCase() + ".");
       
@@ -43,7 +50,7 @@ export default function RemoverFormularioVenda({ entidade }: Props) {
   return (
     <div className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
       <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold">Deletar {entidade.nome.toUpperCase()}</h2>
+      <h2 className="text-xl font-bold">Deletar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">
         ID Loja

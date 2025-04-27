@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Atributo, Props } from "@/components/Interfaces";
 import { capitalize } from "@/functions/Capitalize";
+import Image from "next/image";
+
+import styles from "@/styles/table.module.css";
+import { NextRouter, useRouter } from "next/router";
 
 async function getModelAll(route: string) {
     const response = await fetch(`http://localhost:8080/${route}`, {
@@ -23,8 +27,22 @@ function renderCellValue(value: any) {
     return String(value);
 }
 
+function deleteModel(route: string, id: number, router: NextRouter) {
+
+    fetch(`http://localhost:8080/${route}/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    router.reload();
+}
+
 export default function VisualizarModel({ entidade }: Props) {
     const [dados, setDados] = useState<any[]>([]);
+
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
@@ -37,27 +55,41 @@ export default function VisualizarModel({ entidade }: Props) {
     }, [entidade.nome]);
 
     return (
-        <div >
-            <table>
+        <div>
+            <table className={styles.table}>
                 <thead> 
                     <tr>
                         {entidade.nome != "venda" && <th key={0}>ID</th>}
                         {entidade.atributos.map((atributo: Atributo) => (
                             <th key={atributo.nome}>{capitalize(atributo.nome)}</th>
                         ))}
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {dados && dados.map((item, index) => (
                         <tr key={index}>
-                            <td key={0}>
+                            {entidade.nome != "venda" && <td key={0}>
                                 {item.id}
-                            </td>
+                            </td>}
                             {entidade.atributos.map((atributo: Atributo) => (
                                 <td key={atributo.nome}>
                                     {renderCellValue(item[atributo.nome])}
                                 </td>
                             ))}
+                            <td>
+                                <button>
+                                    <a href={`/${entidade.nome}s/atualizar/${item.id}`} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40">
+                                        <Image src={"/icons/update.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Atualizar
+                                    </a>
+                                </button>
+                            </td>
+                            <td>
+                                <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40">
+                                    <Image src={"/icons/delete.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

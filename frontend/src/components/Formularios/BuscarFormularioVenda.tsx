@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Props } from "@/components/Interfaces";
 import ModelGet from "@/functions/ModelGet";
+import { capitalize } from "@/functions/Capitalize";
 
 export default function BuscarFomularioVenda({ entidade }: Props) {
   const [resultado, setResultado] = useState<any>(null);
@@ -60,9 +61,9 @@ export default function BuscarFomularioVenda({ entidade }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
-      <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold">Buscar {entidade.nome.toUpperCase()}</h2>
+    <div className="flex flex-col">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+      <h2 className="text-xl font-bold">Buscar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">
         ID Loja

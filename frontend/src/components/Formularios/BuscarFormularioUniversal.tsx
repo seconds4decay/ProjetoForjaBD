@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Props } from "@/components/Interfaces";
 import ModelGet from "@/functions/ModelGet";
+import { capitalize } from "@/functions/Capitalize";
 
 export default function FormularioBuscaUniversal({ entidade }: Props) {
   const [resultado, setResultado] = useState<any>(null);
@@ -11,12 +12,12 @@ export default function FormularioBuscaUniversal({ entidade }: Props) {
     e.preventDefault();
 
     try {
-        const response = await ModelGet(id.toString(), entidade.nome.toLowerCase());
-        if(response.status === 404) {
-            return;
-        }
+      const response = await ModelGet(id.toString(), entidade.nome.toLowerCase());
+      if(response.status === 404) {
+          return;
+      }
 
-        setResultado(response);
+      setResultado(response);
 
     } catch (error) {
         alert("Erro ao buscar " + entidade.nome.toLowerCase() + ".");
@@ -28,18 +29,18 @@ export default function FormularioBuscaUniversal({ entidade }: Props) {
     return (
       <div className="bg-gray-100 p-4 rounded text-sm space-y-2">
         <strong>Resultado:</strong>
-  
+
         {Object.entries(resultado).map(([chave, valor]) => {
           if (valor && typeof valor === 'object') {
             return (
               <p key={chave}>
-                <strong>chave.toUpperCase()}:</strong>{' '}
+                <strong>{chave.toUpperCase()}:</strong>{' '}
                 {valor.nome ? valor.nome : '[objeto]'}
                 {valor.id !== undefined && ` (ID: ${valor.id})`}
               </p>
             );
           }
-  
+
           return (
             <p key={chave}>
               <strong>{chave.toUpperCase()}:</strong> {valor?.toString()}
@@ -51,9 +52,9 @@ export default function FormularioBuscaUniversal({ entidade }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
-      <form onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold">Buscar {entidade.nome.toUpperCase()}</h2>
+    <div className="flex flex-col">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+      <h2 className="text-xl font-bold">Buscar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">
         ID

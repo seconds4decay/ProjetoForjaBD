@@ -1,9 +1,13 @@
 import ModelDelete from "@/functions/ModelDelete";
 import { useState } from "react";
 import { Props } from "@/components/Interfaces";
+import { capitalize } from "@/functions/Capitalize";
+import { useRouter } from "next/router";
 
 export default function FormularioDeleteUniversal({ entidade }: Props) {
   const [id, setId] = useState(0);
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +19,7 @@ export default function FormularioDeleteUniversal({ entidade }: Props) {
         }
         setId(0); 
         alert(entidade.nome.toLowerCase() + " removido com sucesso!");
+        router.back(); // Volta para a página anterior após a remoção
     } catch (error) {
         console.error("Erro ao remover " + entidade.nome.toLowerCase() + ":", error);
         alert("Erro ao remover" + entidade.nome.toLowerCase() + ".");
@@ -23,7 +28,7 @@ export default function FormularioDeleteUniversal({ entidade }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded w-full max-w-md">
-      <h2 className="text-xl font-bold">Deletar {entidade.nome}</h2>
+      <h2 className="text-xl font-bold">Deletar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">
         ID

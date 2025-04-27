@@ -4,17 +4,21 @@
 :root {
   --background: #d8dee7;
   --background2: #f1efef;
+  --elementcolor: #ec4605;
+  
   --fontcolor: #000000;
-  --elementcolor: #333;
+  
+  --borderradius: 10px;
+  --bordercolor: #acacac;
 }
 
 html, body {
   margin: 0;
-  padding: 0;
+  padding: 25px;
   font-family: 'Inter', sans-serif;
   background-color: var(--background);
   color: var(--fontcolor);
-  height: 100vh;  
+  height: 80vh;  
   display: flex;
   flex-direction: column;
 }

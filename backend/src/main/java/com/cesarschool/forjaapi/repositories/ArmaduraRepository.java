@@ -1,6 +1,9 @@
 package com.cesarschool.forjaapi.repositories;
 
 import com.cesarschool.forjaapi.models.Armadura;
+import com.cesarschool.forjaapi.models.Item;
+import com.cesarschool.forjaapi.services.FerreiroService;
+import com.cesarschool.forjaapi.services.ItemService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,9 +14,13 @@ import java.util.List;
 public class ArmaduraRepository {
 
     private final JdbcTemplate jdbc;
+    private final ItemService itemService;
+    private final FerreiroService ferreiroService;
 
-    public ArmaduraRepository(JdbcTemplate jdbc) {
+    public ArmaduraRepository(JdbcTemplate jdbc, ItemService itemService, FerreiroService ferreiroService) {
         this.jdbc = jdbc;
+        this.itemService = itemService;
+        this.ferreiroService = ferreiroService;
     }
 
     public Armadura salvar(Armadura armadura) {
@@ -60,13 +67,22 @@ public class ArmaduraRepository {
     public List<Armadura> buscarTodos() {
         return jdbc.query("SELECT * FROM Armadura", (rs, rowNum) -> {
             Armadura armadura = new Armadura();
-            Integer itemId = rs.getObject("ID_item", Integer.class);
+            Integer itemId = rs.getObject("Item", Integer.class);
             if(itemId != null) {
                 armadura.setId(itemId);
             }
             armadura.setNome(rs.getString("Nome"));
             armadura.setDefesa(rs.getInt("Defesa"));
             armadura.setTipo(rs.getString("Tipo"));
+
+            Item item = itemService.buscarPorId(itemId);
+            if (item != null) {
+                armadura.setValor(item.getValor());
+                armadura.setPeso(item.getPeso());
+                armadura.setRaridade(item.getRaridade());
+                armadura.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
+            }
+
             return armadura;
         });
     }

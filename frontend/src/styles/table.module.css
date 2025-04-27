@@ -1,0 +1,23 @@
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    
+}
+
+.table thead {
+    background-color: var(--background2);
+    color: var(--textcolor);
+}
+
+.table tbody {
+    background-color: var(--background);
+    color: var(--fontcolor);
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--bordercolor);
+}

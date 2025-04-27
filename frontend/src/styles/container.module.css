@@ -1,0 +1,38 @@
+.supercontainer {
+    display: flex;
+}
+
+.container {
+    background-color: var(--background2);
+    border: 1px solid var(--bordercolor);
+    border-radius: var(--borderradius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-bottom: 10%;
+    width: 100%;
+    height: 80vh;
+    padding: 40px;
+}
+
+.container2 {
+    background-color: var(--background2);
+    border: 1px solid var(--bordercolor);
+    border-radius: var(--borderradius);
+    margin-left: 2%;
+    margin-bottom: 10%;
+    width: 100%;
+    height: 80vh;
+    padding: 2px;
+    overflow-y: auto;
+}
+
+.subcontainer { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    align-items: center; 
+    justify-content: center ;
+}
