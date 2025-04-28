@@ -19,7 +19,7 @@ export default function ModelPage(props: Props) {
       <Sidebar />
       <div className="bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] ml-[2%] mb-[10%] w-full h-[80vh] p-10 flex flex-col items-center justify-center">
         <BackButton />
-        <h1>{props.title}</h1>
+        <h1 className="absolute top-[15vh]">{props.title}</h1>
         <div className="flex flex-wrap gap-5 items-center justify-center">
           <Card href={`${props.href}/adicionar`}><Image src={"/icons/add.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/><h2>Adicionar</h2></Card>
           <Card href={`${props.href}/buscar`}><Image src={"/icons/glass.svg"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/><h2>Buscar</h2></Card>

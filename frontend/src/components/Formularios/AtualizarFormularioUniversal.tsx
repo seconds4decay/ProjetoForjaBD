@@ -2,8 +2,10 @@ import ModelPut from "@/functions/ModelPut";
 import { useEffect, useState } from "react";
 import { capitalize } from "@/functions/Capitalize";
 import { useRouter } from "next/router";
-import { Entidade } from "../Interfaces";
+import { Atributo, Entidade } from "../Interfaces";
 import ModelGet from "@/functions/ModelGet";
+import AutoCompleteInput from "./AutocompleteInput";
+import { useFetchModels } from "@/hooks/UseFetchModel";
 
 interface Props {
   entidade: Entidade;
@@ -14,22 +16,46 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
   const [id, setId] = useState("");
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
 
+  const data = useFetchModels(props.entidade.nome, props.entidade.atributos);
   const router = useRouter();
   const entidade = props.entidade;
 
+  // EFFECTS
+
   useEffect(() => {
     if (props.id) {
-      setId(props.id);
-      loadData(props.id);
+      setId(props.id)
+      loadData(props.id)
     }
-  }, [props.id]);
+  }, [props.id])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // FUNCTIONS
+
+  function renderCampo(atributo: Atributo) {
+    var { nome, tipo, required } = atributo;
+
+    if(required === undefined) {
+      required = true
+    }
+
+    switch (tipo) {
+      case "string":
+        return <input type="text" name={nome} required={required} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+      case "number":
+        return <input type="number" name={nome} required={required} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+      case "foreign":
+
+        return (
+          <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={(item) => handleNomeSelecionado(nome, item)} required={required} value={formData[nome] ?? ""} />
+        );
+      default:
+        return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
+    }
   };
 
-  const loadData = async (id: string) => {
+  // ASYNC FUNCTIONS
+
+  async function loadData(id: string) {
     try {
       var response = await ModelGet(id, entidade.nome.toLowerCase());
 
@@ -38,7 +64,6 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
           if (attr.tipo === "foreign" && response[attr.nome]) {
             setFormData((prev) => ({ ...prev, [attr.nome]: response[attr.nome].nome }));
           } else {
-            console.log(attr.nome, response[attr.nome])
             setFormData((prev) => ({ ...prev, [attr.nome]: response[attr.nome] }));
           }
         })
@@ -52,6 +77,17 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
       alert("Erro ao carregar dados.");
     }
   }
+
+  // HANDLERS
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  const handleNomeSelecionado = (atributoNome: string, item: any) => {
+    setFormData((prev) => ({ ...prev, [atributoNome]: item.id }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,40 +121,30 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
             return
         }
 
-        if (response.status === 200) {
-            alert(entidade.nome.toLowerCase() + " atualizado com sucesso.")
-            router.back()
-        } 
+        
+        alert(entidade.nome.toLowerCase() + " atualizado com sucesso.")
+        router.back()
+        
     } catch (error) {
         console.error("Erro ao atualizar " + entidade.nome.toLowerCase() + ":", error)
         alert("Erro ao atualizar " + entidade.nome.toLowerCase() + ".")
     }
-
-
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh] overflow-y-auto">
       
       <h2 className="text-xl font-bold">Atualizar {capitalize(entidade.nome)}</h2>
 
-      <label className="flex flex-col gap-1">
-        ID do item
+      {entidade.nome != "venda" && <label className="flex flex-col gap-1">
+        ID
         <input type="text" value={id} onChange={(e) => setId(e.target.value)} className="border p-1" />
-      </label>
+      </label>}
 
       {entidade.atributos.map((attr) => (
         <label key={attr.nome} className="flex flex-col gap-1">
           {capitalize(attr.nome)}
-          <input
-            type="text"
-            name={attr.nome}
-            onChange={handleChange}
-            className="border p-1"
-            placeholder={attr.tipo === "foreign" ? `ID de ${attr.referencia}` : ""}
-            value={formData[attr.nome] ?? ""}
-
-          />
+          {renderCampo(attr)}
         </label>
       ))}
 

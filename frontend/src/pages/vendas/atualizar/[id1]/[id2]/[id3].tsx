@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Venda } from "@/models/Venda";
         
 export default function Adicionar() {
-    const id = useRouter().query;
+    const id = useRouter().query.id1 + "/" + useRouter().query.id2 + "/" + useRouter().query.id3;
 
 
     return (

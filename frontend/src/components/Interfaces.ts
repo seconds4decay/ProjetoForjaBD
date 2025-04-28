@@ -1,7 +1,8 @@
 export interface Atributo {
-  nome: string;
-  tipo: string;
-  referencia?: string;
+  nome: string
+  tipo: string
+  referencia?: string
+  required?: boolean
 }
 
 export interface Entidade {

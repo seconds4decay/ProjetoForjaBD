@@ -5,7 +5,7 @@ export const Arma = {
       { nome: "valor", tipo: "number" },
       { nome: "peso", tipo: "number" },
       { nome: "raridade", tipo: "string" },
-      { nome: "ferreiro", tipo: "foreign", referencia: "ferreiro"},
+      { nome: "ferreiro", tipo: "foreign", referencia: "ferreiro" },
       { nome: "dano", tipo: "number" },
       { nome: "tipo", tipo: "string" }
     ]

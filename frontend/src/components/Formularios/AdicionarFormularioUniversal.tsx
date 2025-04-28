@@ -1,13 +1,37 @@
 import ModelPost from "@/functions/ModelPost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Atributo, Props } from "@/components/Interfaces";
 import { capitalize } from "@/functions/Capitalize";
 import { useRouter } from "next/router";
+import AutoCompleteInput from "./AutocompleteInput";
+import { useFetchModels } from "@/hooks/UseFetchModel";
 
 export default function AdicionarFormularioUniversal({ entidade }: Props) {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
-
   const router = useRouter();
+
+  const data = useFetchModels(entidade.nome, entidade.atributos);
+
+  // FUNCTIONS
+
+  function renderCampo(atributo: Atributo, required: boolean = false) {
+    const { nome, tipo } = atributo;
+
+    switch (tipo) {
+      case "string":
+        return <input type="text" name={nome} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+      case "number":
+        return <input type="number" name={nome} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+      case "foreign":
+        return (
+          <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={handleNomeSelecionado} required={required}/>
+        );
+      default:
+        return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
+    }
+  };
+
+  // HANDLERS 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -15,6 +39,10 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
       ...prev,
       [name]: type === "number" ? Number(value) : value,
     }));
+  };
+
+  const handleNomeSelecionado = (item: any) => {
+    setFormData((prev) => ({ ...prev, [item.nome]: item.id }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,39 +76,8 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
     }
   };
 
-  const renderCampo = (atributo: Atributo) => {
-    const { nome, tipo } = atributo;
-
-    switch (tipo) {
-      case "string":
-        return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
-      case "number":
-        return <input type="number" name={nome} onChange={handleChange} className="border p-1" />;
-      case "boolean":
-        return (
-          <select name={nome} onChange={handleChange} className="border p-1">
-            <option value="">Selecione</option>
-            <option value="true">Verdadeiro</option>
-            <option value="false">Falso</option>
-          </select>
-        );
-      case "foreign":
-        return (
-          <input
-            type="number"
-            name={nome}
-            onChange={handleChange}
-            className="border p-1"
-            placeholder={`ID de ${atributo.referencia}`}
-          />
-        );
-      default:
-        return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh] overflow-y-auto">
       <h2 className="text-xl font-bold">Adicionar {capitalize(entidade.nome)}</h2>
 
       {entidade.atributos.map((attr) => (

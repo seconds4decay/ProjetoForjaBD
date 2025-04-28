@@ -29,7 +29,7 @@ public class ArmaduraRepository {
         jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
                 armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), ferreiroId);
 
-        int itemId = jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class);
+        int itemId = jdbc.queryForObject("SELECT MAX(Item) FROM Item", Integer.class);
 
         jdbc.update("INSERT INTO Armadura (Item, Nome, Defesa, Tipo) VALUES (?, ?, ?, ?)",
                 itemId, armadura.getNome(), armadura.getDefesa(), armadura.getTipo());
@@ -39,7 +39,7 @@ public class ArmaduraRepository {
     }
 
     public void deletar(int id) {
-        jdbc.update("DELETE FROM Item WHERE ID_item = ?", id);
+        jdbc.update("DELETE FROM Item WHERE Item = ?", id);
     }
 
     public Armadura buscarPorId(Integer id) {
@@ -48,15 +48,24 @@ public class ArmaduraRepository {
         }
 
         try {
-            return jdbc.queryForObject("SELECT * FROM Armadura WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
+            return jdbc.queryForObject("SELECT * FROM Armadura WHERE Item = ?", new Object[]{id}, (rs, rowNum) -> {
                 Armadura armadura = new Armadura();
-                Integer itemId = rs.getObject("ID_item", Integer.class);
+                Integer itemId = rs.getObject("Item", Integer.class);
                 if(itemId != null) {
                     armadura.setId(itemId);
                 }
                 armadura.setNome(rs.getString("Nome"));
                 armadura.setDefesa(rs.getInt("Defesa"));
                 armadura.setTipo(rs.getString("Tipo"));
+
+                Item item = itemService.buscarPorId(itemId);
+                if (item != null) {
+                    armadura.setValor(item.getValor());
+                    armadura.setPeso(item.getPeso());
+                    armadura.setRaridade(item.getRaridade());
+                    armadura.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
+                }
+                
                 return armadura;
             });
         } catch (EmptyResultDataAccessException e) {
@@ -88,7 +97,7 @@ public class ArmaduraRepository {
     }
 
     public Armadura atualizar(Armadura armadura) {
-        jdbc.update("UPDATE Armadura SET Nome = ?, Defesa = ?, Tipo = ? WHERE ID_item = ?",
+        jdbc.update("UPDATE Armadura SET Nome = ?, Defesa = ?, Tipo = ? WHERE Item = ?",
                 armadura.getNome(), armadura.getDefesa(), armadura.getTipo(), armadura.getId());
 
         return armadura;

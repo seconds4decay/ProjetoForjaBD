@@ -111,7 +111,7 @@ export default function VisualizarModel({ entidade }: Props) {
         <div>
             <SearchBar onSearch={handleSearch}/>
 
-            <table className="w-1/1border-collapse">
+            <table className="w-1/1 border-collapse">
                 <thead className="bg-[var(--background2)] text-[var(--textcolor)]"> 
                     <tr>
                         {entidade.nome != "venda" && <th key={"id"} className={tdClass} onClick={() => handleSort("id")} >
@@ -136,16 +136,22 @@ export default function VisualizarModel({ entidade }: Props) {
                                 </td>
                             ))}
                             <td className={tdClass}>
-                                <button>
-                                    <a href={`/${entidade.nome}s/atualizar/${item.id}`} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[130%]">
+                                {entidade.nome != "venda" && <button>
+                                    <a href={`${router.route}/atualizar/${item.id}`} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[130%]">
                                         <Image src={"/icons/update.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Atualizar
                                     </a>
-                                </button>
+                                </button>}
+                                {entidade.nome == "venda" && <button>
+                                    <a href={`/vendas/atualizar/${item.loja.id}/${item.item.id}/${item.cliente.id}`} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[130%]">
+                                        <Image src={"/icons/update.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Atualizar
+                                    </a>
+                                </button>}
                             </td>
                             <td className={tdClass}>
                                 <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%]">
                                     <Image src={"/icons/delete.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Deletar
                                 </button>
+                                
                             </td>
                         </tr>
                     ))}

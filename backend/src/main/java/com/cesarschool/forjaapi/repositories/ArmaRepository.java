@@ -29,7 +29,7 @@ public class ArmaRepository {
         jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
                 arma.getNome(), arma.getValor(), arma.getPeso(), arma.getRaridade(), ferreiroId);
 
-        int itemId = jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class);
+        int itemId = jdbc.queryForObject("SELECT MAX(Item) FROM Item", Integer.class);
 
         jdbc.update("INSERT INTO Arma (Item, Nome, Dano, Tipo) VALUES (?, ?, ?, ?)",
                 itemId, arma.getNome(), arma.getDano(), arma.getTipo());
@@ -39,7 +39,7 @@ public class ArmaRepository {
     }
 
     public void deletar(int id) {
-        jdbc.update("DELETE FROM Item WHERE ID_item = ?", id);
+        jdbc.update("DELETE FROM Item WHERE Item = ?", id);
     }
 
     public Arma buscarPorId(Integer id) {
@@ -48,16 +48,27 @@ public class ArmaRepository {
         }
 
         try {
-            return jdbc.queryForObject("SELECT * FROM Arma WHERE ID_item = ?", new Object[]{id}, (rs, rowNum) -> {
+            return jdbc.queryForObject("SELECT * FROM Arma WHERE Item = ?", new Object[]{id}, (rs, rowNum) -> {
                 Arma arma = new Arma();
 
-                Integer itemId = rs.getObject("ID_item", Integer.class);
+                Integer itemId = rs.getObject("Item", Integer.class);
                 if(itemId != null) {
                     arma.setId(itemId);
+
                 }
+
                 arma.setNome(rs.getString("Nome"));
                 arma.setDano(rs.getInt("Dano"));
                 arma.setTipo(rs.getString("Tipo"));
+
+                Item item = itemService.buscarPorId(itemId);
+                if (item != null) {
+                    arma.setValor(item.getValor());
+                    arma.setPeso(item.getPeso());
+                    arma.setRaridade(item.getRaridade());
+                    arma.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
+                }
+
                 return arma;
             });
         } catch (EmptyResultDataAccessException e) {
@@ -90,7 +101,7 @@ public class ArmaRepository {
     }
 
     public Arma atualizar(Arma arma) {
-        jdbc.update("UPDATE Arma SET Nome = ?, Dano = ?, Tipo = ? WHERE ID_item = ?",
+        jdbc.update("UPDATE Arma SET Nome = ?, Dano = ?, Tipo = ? WHERE Item = ?",
                 arma.getNome(), arma.getDano(), arma.getTipo(), arma.getId());
 
         return arma;
