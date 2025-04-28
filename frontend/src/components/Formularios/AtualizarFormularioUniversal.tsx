@@ -35,7 +35,7 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
 
       if (response) {
         entidade.atributos.forEach((attr) => {
-          if (attr.tipo === "foreign") {
+          if (attr.tipo === "foreign" && response[attr.nome]) {
             setFormData((prev) => ({ ...prev, [attr.nome]: response[attr.nome].nome }));
           } else {
             console.log(attr.nome, response[attr.nome])
