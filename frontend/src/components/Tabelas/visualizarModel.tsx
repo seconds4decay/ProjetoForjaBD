@@ -148,7 +148,7 @@ export default function VisualizarModel({ entidade }: Props) {
                                 </button>}
                             </td>
                             <td className={tdClass}>
-                                <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%]">
+                                <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%] cursor-pointer">
                                     <Image src={"/icons/delete.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Deletar
                                 </button>
                                 

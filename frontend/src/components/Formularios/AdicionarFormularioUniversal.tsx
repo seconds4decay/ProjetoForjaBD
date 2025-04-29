@@ -9,7 +9,6 @@ import { useFetchModels } from "@/hooks/UseFetchModel";
 export default function AdicionarFormularioUniversal({ entidade }: Props) {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const router = useRouter();
-
   const data = useFetchModels(entidade.nome, entidade.atributos);
 
   // FUNCTIONS
@@ -19,12 +18,12 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
 
     switch (tipo) {
       case "string":
-        return <input type="text" name={nome} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+        return <input type="text" name={nome} onChange={handleChange}  className="border p-1" />;
       case "number":
-        return <input type="number" name={nome} onChange={handleChange} value={formData[nome] ?? ""} className="border p-1" />;
+        return <input type="number" name={nome} onChange={handleChange} className="border p-1" />;
       case "foreign":
         return (
-          <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={handleNomeSelecionado} required={required}/>
+          <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={(item) => handleNomeSelecionado(nome, item)} required={required}/>
         );
       default:
         return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
@@ -41,8 +40,8 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
     }));
   };
 
-  const handleNomeSelecionado = (item: any) => {
-    setFormData((prev) => ({ ...prev, [item.nome]: item.id }));
+  const handleNomeSelecionado = (atributoNome: string, item: any) => {
+    setFormData((prev) => ({ ...prev, [atributoNome]: item.id }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

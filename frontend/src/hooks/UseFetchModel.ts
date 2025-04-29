@@ -36,7 +36,6 @@ export function useFetchModels(entidadeNome: string, atributos: Atributo[]) {
   return data;
 }
 
-// função auxiliar
 async function getModelAll(route: string) {
   const response = await fetch(`http://localhost:8080/${route}`, {
     method: "GET",

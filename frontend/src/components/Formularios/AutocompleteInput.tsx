@@ -12,8 +12,10 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
   const [suggestions, setSuggestions] = useState<any[]>([])
 
   useEffect(() => {
-    setInputValue(value || '');
-  }, [value]);
+    if(value != undefined) {
+      setInputValue(value)
+    }
+  }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
