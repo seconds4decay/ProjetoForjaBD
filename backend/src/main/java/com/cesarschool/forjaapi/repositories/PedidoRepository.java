@@ -29,30 +29,34 @@ public class PedidoRepository {
     }
 
     public Pedido salvar(Pedido pedido) {
-        jdbc.update("INSERT INTO requisicao_pedido (ID_pedido, cliente, item, ferreiro, status) VALUES (?, ?, ?, ?, ?)",
-                pedido.getIdPedido(), pedido.getCliente().getId(), pedido.getItem().getId(), pedido.getFerreiro().getId(), pedido.getStatus());
+        jdbc.update("INSERT INTO requisicao_pedido (cliente, item, ferreiro, status) VALUES (?, ?, ?, ?)",
+                pedido.getCliente().getId(), pedido.getItem().getId(), pedido.getFerreiro().getId(), pedido.getStatus());
 
+        pedido.setId(jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class));
         return pedido;
     }
 
-    public void deletar(int idPedido, int idCliente, int idItem) {
-        jdbc.update("DELETE FROM requisicao_pedido WHERE ID_pedido = ? AND cliente = ? AND item = ?",
-                idPedido, idCliente, idItem);
+    public void deletar(int idPedido) {
+        jdbc.update("DELETE FROM requisicao_pedido WHERE ID_pedido = ?",
+                idPedido);
     }
 
-    public Pedido buscarPorId(Integer idPedido, Integer idCliente, Integer idItem) {
-        if (idPedido == null || idCliente == null || idItem == null) {
+    public Pedido buscarPorId(Integer idPedido) {
+        if (idPedido == null) {
             return null;
         }
 
         try {
-            return jdbc.queryForObject("SELECT * FROM requisicao_pedido WHERE ID_pedido = ? AND cliente = ? AND item = ?",
-                    new Object[]{idPedido, idCliente, idItem}, (rs, rowNum) -> {
-                    Pedido pedido = new Pedido();
-                    pedido.setIdPedido(idPedido);
-                    pedido.setCliente(clienteService.buscarPorId(rs.getInt("cliente")));
-                    pedido.setItem(itemService.buscarPorId(rs.getInt("item")));
-                    return pedido;
+            return jdbc.queryForObject("SELECT * FROM requisicao_pedido WHERE ID_pedido = ?",
+                    new Object[]{idPedido}, (rs, rowNum) -> {
+                        Pedido pedido = new Pedido();
+                        pedido.setId(rs.getInt("ID_pedido"));
+                        pedido.setCliente(clienteService.buscarPorId(rs.getInt("cliente")));
+                        pedido.setItem(itemService.buscarPorId(rs.getInt("item")));
+                        pedido.setFerreiro(ferreiroService.buscarPorId(rs.getInt("ferreiro")));
+                        pedido.setStatus(rs.getString("status"));
+
+                        return pedido;
                     }
             );
         }
@@ -64,20 +68,24 @@ public class PedidoRepository {
     public List<Pedido> buscarTodos() {
         return jdbc.query("SELECT * FROM requisicao_pedido", (rs, rowNum) -> {
             Pedido pedido = new Pedido();
-            pedido.setIdPedido(rs.getInt("ID_pedido"));
+            pedido.setId(rs.getInt("ID_pedido"));
             pedido.setCliente(clienteService.buscarPorId(rs.getInt("cliente")));
             pedido.setItem(itemService.buscarPorId(rs.getInt("item")));
+            pedido.setFerreiro(ferreiroService.buscarPorId(rs.getInt("ferreiro")));
+            pedido.setStatus(rs.getString("status"));
 
             return pedido;
 
         });
     }
 
-    public Pedido atualizar(int idPedido, int idCliente, int idItem, Pedido pedido) {
-        jdbc.update("UPDATE requisicao_pedido SET ID_pedido = ?, cliente = ?, item = ?, ferreiro = ?, status = ? " +
-                "WHERE ID_pedido = ? AND cliente = ? AND item = ?",
-                pedido.getIdPedido(), pedido.getCliente().getId(), pedido.getItem().getId(), pedido.getFerreiro().getId(), pedido.getStatus(),
-                idPedido, idCliente, idItem);
+    public Pedido atualizar(int idPedido, Pedido pedido) {
+        Integer clienteId = (pedido.getCliente() != null) ? pedido.getCliente().getId() : null;
+        Integer itemId = (pedido.getItem() != null) ? pedido.getItem().getId() : null;
+        Integer ferreiroId = (pedido.getFerreiro() != null) ? pedido.getFerreiro().getId() : null;
+
+        jdbc.update("UPDATE requisicao_pedido SET cliente = ?, item = ?, ferreiro = ?, status = ? WHERE ID_pedido = ?",
+                clienteId, itemId, ferreiroId, pedido.getStatus(), idPedido);
         return pedido;
     }
 }

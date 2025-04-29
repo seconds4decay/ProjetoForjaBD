@@ -22,34 +22,68 @@ public class PedidoService {
     }
 
     public Pedido salvar(Pedido pedido) {
-        if (pedido.getIdPedido() == null || pedido.getCliente() == null || pedido.getItem() == null || pedido.getFerreiro() == null || pedido.getStatus() == null) {
+        if (pedido.getCliente() != null) {
+            pedido.setCliente(clienteService.buscarPorId(pedido.getCliente().getId()));
+        } else {
+            return null;
+        }
+
+        if (pedido.getItem() != null) {
+            pedido.setItem(itemService.buscarPorId(pedido.getItem().getId()));
+        } else {
+            return null;
+        }
+
+        if (pedido.getFerreiro() != null) {
+            pedido.setFerreiro(ferreiroService.buscarPorId(pedido.getFerreiro().getId()));
+        } else {
             return null;
         }
 
         return pedidoRepository.salvar(pedido);
     }
 
-    public void deletar(int idPedido, int idCliente, int idItem) {
-        pedidoRepository.deletar(idPedido, idCliente, idItem);
+    public void deletar(int idPedido) {
+        pedidoRepository.deletar(idPedido);
     }
 
-    public Pedido buscarPorId(Integer idPedido, Integer idCliente, Integer idItem) {
-        if (idPedido == null || idCliente == null || idItem == null) {
+    public Pedido buscarPorId(Integer idPedido) {
+
+        if (idPedido == null) {
             return null;
         }
 
-        return pedidoRepository.buscarPorId(idPedido, idCliente, idItem);
+        return pedidoRepository.buscarPorId(idPedido);
     }
 
     public List<Pedido> buscarTodos() {
         return pedidoRepository.buscarTodos();
     }
 
-    public Pedido atualizar(int idPedido, int idCliente, int idItem, Pedido pedido) {
-        if (pedido.getIdPedido() == null || pedido.getCliente() == null || pedido.getItem() == null) {
+    public Pedido atualizar(Integer idPedido, Pedido pedido) {
+        if (buscarPorId(idPedido) == null) {
             return null;
         }
 
-        return pedidoRepository.atualizar(idPedido, idCliente, idItem, pedido);
+        if (pedido.getCliente() != null) {
+            pedido.setCliente(clienteService.buscarPorId(pedido.getCliente().getId()));
+        } else {
+            return null;
+        }
+
+        if (pedido.getItem() != null) {
+            pedido.setItem(itemService.buscarPorId(pedido.getItem().getId()));
+        } else {
+            return null;
+        }
+
+        if (pedido.getFerreiro() != null) {
+            pedido.setFerreiro(ferreiroService.buscarPorId(pedido.getFerreiro().getId()));
+        } else {
+            return null;
+        }
+
+        pedido.setId(idPedido);
+        return pedidoRepository.atualizar(idPedido, pedido);
     }
 }

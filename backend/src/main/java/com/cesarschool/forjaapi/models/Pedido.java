@@ -1,7 +1,7 @@
 package com.cesarschool.forjaapi.models;
 
 public class Pedido {
-    private Integer idPedido;
+    private Integer id;
     private Cliente cliente;
     private Item item;
     private Ferreiro ferreiro;
@@ -9,17 +9,17 @@ public class Pedido {
 
     public Pedido (){}
 
-    public Pedido(int idPedido, Cliente cliente, Item item, Ferreiro ferreiro, String status) {
-        this.idPedido = idPedido;
+    public Pedido(int id, Cliente cliente, Item item, Ferreiro ferreiro, String status) {
+        this.id = id;
         this.cliente = cliente;
         this.item = item;
         this.ferreiro = ferreiro;
         this.status = status;
     }
 
-    public Integer getIdPedido() { return idPedido; }
+    public Integer getId() { return id; }
 
-    public void setIdPedido(int idPedido) { this.idPedido = idPedido; }
+    public void setId(int idPedido) { this.id = idPedido; }
 
     public Cliente getCliente() { return cliente; }
 
