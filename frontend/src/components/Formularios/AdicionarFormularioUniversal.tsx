@@ -67,7 +67,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
         const response = await ModelPost(payload, entidade.nome.toLowerCase())
         console.log(response)
 
-        alert(entidade.nome.toLowerCase() + " adicionado com sucesso!")
+        alert(capitalize(entidade.nome) + " adicionado com sucesso!")
         router.back()
     } catch (error) {
         console.error("Erro ao adicionar " + entidade.nome.toLowerCase() + ":", error)

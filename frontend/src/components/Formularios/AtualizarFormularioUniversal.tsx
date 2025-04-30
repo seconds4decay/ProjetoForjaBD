@@ -127,7 +127,7 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
         }
 
         
-        alert(entidade.nome.toLowerCase() + " atualizado com sucesso.")
+        alert(capitalize(entidade.nome) + " atualizado com sucesso.")
         router.back()
         
     } catch (error) {
