@@ -46,7 +46,12 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
       case "foreign":
 
         return (
+          <div>
           <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={(item) => handleNomeSelecionado(nome, item)} required={required} value={formData[nome] ?? ""} />
+          {(entidade.nome == "arma" || entidade.nome == "armadura" || entidade.nome == "item" || entidade.nome == "material" || entidade.nome == "fornecedor") ?  
+          <button className="cursor-pointer" onClick={() => router.push(`/${atributo.nome}s/adicionar`, )}>Criar {atributo.nome}</button>
+           : <button className="cursor-pointer" onClick={() => router.push(`/estoque/${atributo.nome}s/adicionar`, )}>Criar {atributo.nome}</button>}
+          </div>
         );
       default:
         return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;

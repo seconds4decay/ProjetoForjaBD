@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Atributo, Props } from "@/components/Interfaces";
 import { capitalize } from "@/functions/Capitalize";
-import Image from "next/image";
-
-import styles from "@/styles/table.module.css";
 import { NextRouter, useRouter } from "next/router";
 import SearchBar from "../Elements/Searchbar";
+import Image from "next/image";
 
 async function getModelAll(route: string) {
     const response = await fetch(`http://localhost:8080/${route}`, {
@@ -28,7 +26,7 @@ function renderCellValue(value: any) {
     return String(value);
 }
 
-function deleteModel(route: string, id: number, router: NextRouter) {
+function deleteModel(route: string, id: string, router: NextRouter) {
 
     fetch(`http://localhost:8080/${route}/${id}`, {
         method: "DELETE",
@@ -131,7 +129,7 @@ export default function VisualizarModel({ entidade }: Props) {
                                 {item.id}
                             </td>}
                             {entidade.atributos.map((atributo: Atributo) => (
-                                <td key={atributo.nome} className={tdClass}>
+                                <td key={atributo.nome} className={tdClass} >
                                     {renderCellValue(item[atributo.nome])}
                                 </td>
                             ))}
@@ -148,9 +146,12 @@ export default function VisualizarModel({ entidade }: Props) {
                                 </button>}
                             </td>
                             <td className={tdClass}>
-                                <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%] cursor-pointer">
+                                {entidade.nome != "venda" && <button onClick={() => deleteModel(entidade.nome, item.id, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%] cursor-pointer">
                                     <Image src={"/icons/delete.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Deletar
-                                </button>
+                                </button>}
+                                {entidade.nome == "venda" && <button onClick={() => deleteModel(entidade.nome, `${item.loja.id}/${item.item.id}/${item.cliente.id}`, router)} className="group flex items-center hover:text-white hover:bg-[var(--elementcolor)] rounded-[var(--borderradius)] p-1 transform hover:scale-110 transition delay-40 w-[140%] cursor-pointer">
+                                    <Image src={"/icons/delete.png"} alt="search" width={20} height={20} className="transition delay-40 group-hover:invert-100"/>Deletar
+                                </button>}
                                 
                             </td>
                         </tr>

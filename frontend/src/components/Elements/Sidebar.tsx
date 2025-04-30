@@ -20,7 +20,6 @@ export default function Sidebar() {
                     { href: "/ferreiros", label: "Ferreiros", icon: "/icons/cliente.png" },
                     { href: "/lojas", label: "Lojas", icon: "/icons/lojas.png" },
                     { href: "/estoque", label: "Estoque", icon: "/icons/estoque.png" },
-                    { href: "/historico", label: "Histórico", icon: "/icons/historicos.png" },
                 ].map(({ href, label, icon }) => (
                     <li key={href}>
                         <Link 

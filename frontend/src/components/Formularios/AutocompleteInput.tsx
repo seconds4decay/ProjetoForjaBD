@@ -11,9 +11,17 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
   const [inputValue, setInputValue] = useState(value)
   const [suggestions, setSuggestions] = useState<any[]>([])
 
+  const [nome, setNome] = useState("")
+
   useEffect(() => {
-    if(value != undefined) {
-      setInputValue(value)
+    if(value != undefined && value.length >= 3) {
+      //setInputValue(value)
+      
+      const filtered = data.filter(item =>
+        item.nome.toLowerCase().includes(value.toLowerCase())
+      )
+
+      setSuggestions(filtered)
     }
   }, [value])
 
