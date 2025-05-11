@@ -68,3 +68,9 @@ INSERT INTO Requisicao_Pedido (cliente, item, ferreiro, status) VALUES
 (3, 3, 3, 'Em produção'),
 (4, 4, 4, 'Entregue'),
 (5, 5, 5, 'Cancelado');
+
+INSERT INTO Item (nome, valor, peso, raridade, ferreiro, data_fabricacao) VALUES ('Claymore', 130.0, 3.0, 'Comum', 3, '2024-03-21');
+INSERT INTO Arma (Item, nome, dano, tipo) values (6, 'Claymore', 60.0, 'Corte');
+
+INSERT INTO Venda (loja, item, cliente) values (3, 6, 1);
+
