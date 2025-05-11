@@ -8,7 +8,8 @@ group by l.nome, l.cidade
 order by sum(i.valor) desc
 ;
 
-/* Buscar por nome - Adapatar essa query para todas as entidades - substituir 'string' pela pesquisa do user */
+/* Buscar por nome - Adapatar essa query para todas as entidades - substituir 'string' pela pesquisa do user 
+ * É possível colocar a opção de pesquisa em qualquer uma das queries, basta por a.nome = 'string%' no final do where */
 select *
 from ferreiro f 
 where f.nome like 'string%'
