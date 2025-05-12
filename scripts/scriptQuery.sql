@@ -114,3 +114,9 @@ on v.cliente = c.ID_cliente
 group by c.ID_cliente, c.nome
 having count(v.item) > 1 -- valor X a ser dicidido
 ;
+
+/* Exibir itens fabricados em um ano fornecido pelo user */
+select *
+from item i
+where extract(year from i.data_fabricacao) = '2024' -- substituir por user input
+;
