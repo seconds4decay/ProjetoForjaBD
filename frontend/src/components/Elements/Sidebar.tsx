@@ -3,7 +3,8 @@ import Image from 'next/image';
 
 export default function Sidebar() {
     return (
-        <div className="sidebar bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] h-[80vh] w-64 min-w-64 max-w-64 p-5 hidden md:flex flex-col overflow-auto ga">
+        <div className="flexsidebar h-[100%] w-64 min-w-64 max-w-64">
+        <div className="sidebar fixed bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] h-[90%] w-64 min-w-64 max-w-64 p-5 hidden md:flex flex-col overflow-auto ga">
             <h1 className="mb-8">
                 <Link href="/" className="flex items-center gap-2">
                     <Image src="/images/icon.png" alt="Logo" width={50} height={50} />
@@ -38,6 +39,7 @@ export default function Sidebar() {
                     </li>
                 ))}
             </ul>
+        </div>
         </div>
     );
 }

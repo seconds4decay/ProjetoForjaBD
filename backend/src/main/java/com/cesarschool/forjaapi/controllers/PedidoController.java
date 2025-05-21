@@ -72,4 +72,15 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoAtualizado);
     }
 
+    @GetMapping("/qntPedidos")
+    public ResponseEntity<Object> qntPedidos() {
+        Object result = pedidoService.qntPedidos();
+
+        if (result != null) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -77,4 +77,97 @@ public class VendaRepository {
 
         return venda;
     }
+
+    public VendaDTO1 qntTotalVendas() {
+        String SQL = "CALL qntTotalVendas()";
+
+        return jdbc.queryForObject(SQL, (rs, rowNum) -> {
+            int qntVendas = rs.getInt("qnt_vendas");
+            float totalVendas = rs.getFloat("total_vendas");
+
+            return new VendaDTO1(qntVendas, totalVendas);
+        });
+    }
+
+    public VendaDTO2 tipoItemLucro() {
+        String SQL = "CALL tipoItemLucro()";
+
+        return jdbc.queryForObject(SQL, (rs, rowNum) -> {
+            float totalArma = rs.getFloat("total_arma");
+            float totalArmadura = rs.getFloat("total_armadura");
+
+            return new VendaDTO2(totalArma, totalArmadura);
+        });
+    }
+
+    public List<VendaDTO3> clientesMaisCompradores () {
+        String SQL = "CALL clientesMaisCompradores()";
+
+        List<VendaDTO3> result = jdbc.query(SQL, (rs, rowNum) -> {
+            String nome = rs.getString("nome");
+            int qntVendas = rs.getInt("qnt_vendas");
+
+            return new VendaDTO3(nome, qntVendas);
+        });
+
+        System.out.println(result.get(0).getNome());
+        return result;
+    }
+
+
+
+    public class VendaDTO1 {
+        public int qntVendas;
+        public float totalVendas;
+
+        public VendaDTO1(int qntVendas, float totalVendas) {
+            this.qntVendas = qntVendas;
+            this.totalVendas = totalVendas;
+        }
+
+        public int getQntVendas() {
+            return qntVendas;
+        }
+
+
+        public float getTotalVendas() {
+            return totalVendas;
+        }
+    }
+
+    public class VendaDTO2 {
+        public float totalArma;
+        public float totalArmadura;
+
+        public VendaDTO2(float totalArma, float totalArmadura) {
+            this.totalArma = totalArma;
+            this.totalArmadura = totalArmadura;
+        }
+
+        public float getTotalArma() {
+            return totalArma;
+        }
+
+        public float getTotalArmadura() {
+            return totalArmadura;
+        }
+    }
+
+    public class VendaDTO3 {
+        public String nome;
+        public int qntVendas;
+
+        public VendaDTO3 (String nome, int qntVendas) {
+            this.nome = nome;
+            this.qntVendas = qntVendas;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public int getQntVendas() {
+            return qntVendas;
+        }
+    }
 }

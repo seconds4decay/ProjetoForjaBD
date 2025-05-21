@@ -86,4 +86,8 @@ public class PedidoService {
         pedido.setId(idPedido);
         return pedidoRepository.atualizar(idPedido, pedido);
     }
+
+    public Object qntPedidos() {
+        return pedidoRepository.qntPedidos();
+    }
 }

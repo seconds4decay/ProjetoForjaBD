@@ -56,4 +56,16 @@ public class VendaService {
 
         return repository.atualizar(id_loja, id_item, id_cliente, venda);
     }
+
+    public Object qntTotalVendas() {
+        return repository.qntTotalVendas();
+    }
+
+    public Object tipoItemLucro() {
+        return repository.tipoItemLucro();
+    }
+
+    public List<VendaRepository.VendaDTO3> clientesMaisCompradores() {
+        return repository.clientesMaisCompradores();
+    }
 }

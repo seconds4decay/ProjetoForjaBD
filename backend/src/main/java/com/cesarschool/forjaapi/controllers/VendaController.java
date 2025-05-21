@@ -1,6 +1,7 @@
 package com.cesarschool.forjaapi.controllers;
 
 import com.cesarschool.forjaapi.models.Venda;
+import com.cesarschool.forjaapi.repositories.VendaRepository;
 import com.cesarschool.forjaapi.services.VendaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,37 @@ public class VendaController {
 
     }
 
+    @GetMapping("/qntTotalVendas")
+    public ResponseEntity<Object> qntTotalVendas() {
+        Object qntVendas = service.qntTotalVendas();
 
+        if (qntVendas != null) {
+            return ResponseEntity.ok(qntVendas);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/tipoItemLucro")
+    public ResponseEntity<Object> tipoItemLucro() {
+        Object tipoItemLucro = service.tipoItemLucro();
+
+        if (tipoItemLucro != null) {
+            return ResponseEntity.ok(tipoItemLucro);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/clientesMaisCompradores")
+    public ResponseEntity<List<VendaRepository.VendaDTO3>> clientesMaisCompradores() {
+        List<VendaRepository.VendaDTO3> clientesMaisCompradores = service.clientesMaisCompradores();
+
+        if (clientesMaisCompradores != null) {
+            return ResponseEntity.ok(clientesMaisCompradores);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

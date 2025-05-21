@@ -88,4 +88,51 @@ public class PedidoRepository {
                 clienteId, itemId, ferreiroId, pedido.getStatus(), idPedido);
         return pedido;
     }
+
+    public PedidoDTO1 qntPedidos() {
+        String SQL = "CALL qntPedidos()";
+
+        List<PedidoDTO1> result = jdbc.query(SQL, (rs, rowNum) -> {
+            int qntEmProducao = rs.getInt("qnt_emProducao");
+            int qntProduzido = rs.getInt("qnt_produzido");
+            int qntEntregue = rs.getInt("qnt_entregue");
+            int qntCancelado = rs.getInt("qnt_cancelado");
+
+            return new PedidoDTO1(qntEmProducao, qntProduzido, qntEntregue, qntCancelado);
+        });
+
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    public class PedidoDTO1 {
+        public int qntEmProducao;
+        public int qntProduzido;
+        public int qntEntregue;
+        public int qntCancelado;
+
+        public PedidoDTO1(int qntEmProducao, int qntProduzido, int qntEntregue, int qntCancelado) {
+            this.qntEmProducao = qntEmProducao;
+            this.qntProduzido = qntProduzido;
+            this.qntEntregue = qntEntregue;
+            this.qntCancelado = qntCancelado;
+        }
+
+        public int getQntEmProducao() {
+            return qntEmProducao;
+        }
+
+        public int getQntProduzido() {
+            return qntProduzido;
+        }
+
+        public int getQntEntregue() {
+            return qntEntregue;
+        }
+
+        public int getQntCancelado() {
+            return qntCancelado;
+        }
+    }
+
+
 }
