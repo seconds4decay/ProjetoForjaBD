@@ -6,7 +6,6 @@ export default function Home() {
         <Page title="Estoque">
             <Card href="/estoque/armas">Armas</Card>
             <Card href="/estoque/armaduras">Armaduras</Card>
-            <Card href="/estoque/items">Items</Card>
             <Card href="/estoque/materiais">Materiais</Card>
             <Card href="/estoque/fornecedores">Fornecedores</Card>
         </Page>
