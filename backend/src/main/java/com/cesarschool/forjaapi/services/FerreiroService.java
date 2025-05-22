@@ -74,4 +74,20 @@ public class FerreiroService {
         return repository.atualizar(ferreiro);
 
     }
+
+    public List<Object> ferreirosMaisRequisitados() {
+        return repository.ferreirosMaisRequisitados();
+    }
+
+    public List<Object> ferreirosMaisRentaveis() {
+        return repository.ferreirosMaisRentaveis();
+    }
+
+    public List<Object> qntFerreirosPorLoja() {
+        return repository.qntFerreirosPorLoja();
+    }
+
+    public List<Object> qntFerreirosEspecializados() {
+        return repository.qntFerreirosEspecializados();
+    }
 }

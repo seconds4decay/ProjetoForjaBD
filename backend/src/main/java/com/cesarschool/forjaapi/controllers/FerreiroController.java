@@ -76,4 +76,48 @@ public class FerreiroController {
         return ResponseEntity.notFound().build();
 
     }
+
+    @GetMapping("/ferreirosMaisRequisitados")
+    public ResponseEntity<List<Object>> ferreirosMaisRequisitados() {
+        List<Object> ferreiros = service.ferreirosMaisRequisitados();
+
+        if (ferreiros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(ferreiros);
+    }
+
+    @GetMapping("/ferreirosMaisRentaveis")
+    public ResponseEntity<List<Object>> ferreirosMaisRentaveis() {
+        List<Object> ferreiros = service.ferreirosMaisRentaveis();
+
+        if (ferreiros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(ferreiros);
+    }
+
+    @GetMapping("/qntFerreirosPorLoja")
+    public ResponseEntity<List<Object>> qntFerreirosPorLoja() {
+        List<Object> ferreiros = service.qntFerreirosPorLoja();
+
+        if (ferreiros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(ferreiros);
+    }
+
+    @GetMapping("/qntFerreirosEspecializados")
+    public ResponseEntity<List<Object>> qntFerreirosEspecializados() {
+        List<Object> ferreiros = service.qntFerreirosEspecializados();
+
+        if (ferreiros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(ferreiros);
+    }
 }

@@ -13,7 +13,7 @@ export default function ModelPage(props: Props) {
     <div className="flex">
       
       <Sidebar />
-      <div className="bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] ml-[2%] mb-[10%] w-full h-[80vh] p-10 flex flex-col items-center justify-center">
+      <div className="bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] ml-[2%] mb-[10%] w-full h-[80vh] p-10 flex flex-col items-center justify-center shadow-lg shadow-gray-500/50">
         <BackButton />
         <h1>{props.title}</h1>
         <div className="flex flex-wrap gap-5 items-center justify-center">

@@ -101,4 +101,136 @@ Repositories: É onde o acesso ao banco de dados é realizado e onde informaçõ
 
         return buscarPorId(ferreiro.getId());
     }
+
+    public List<Object> ferreirosMaisRequisitados() {
+        String SQL = "CALL ferreirosMaisRequisitados()";
+
+        List<Object> result = jdbc.query(SQL, (rs, rowNum) -> {
+                String loja = rs.getString("loja_nome");
+                String ferreiroNome = rs.getString("ferreiro_nome");
+                int totalRequisicoes = rs.getInt("total_requisicoes");
+
+                return new FerreiroDTO1(loja, ferreiroNome, totalRequisicoes);
+            });
+
+        return result;
+    }
+
+    public List<Object> ferreirosMaisRentaveis() {
+        String SQL = "CALL ferreirosMaisRentaveis()";
+
+        List<Object> result = jdbc.query(SQL, (rs, rowNum) -> {
+            String nome = rs.getString("nome");
+            int totalRequisicoes = rs.getInt("total_rentabilidade");
+
+            return new FerreiroDTO2(nome, totalRequisicoes);
+        });
+
+        return result;
+    }
+
+    public List<Object> qntFerreirosPorLoja() {
+        String SQL = "CALL qntFerreirosPorLoja()";
+
+        List<Object> result = jdbc.query(SQL, (rs, rowNum) -> {
+            String lojaNome = rs.getString("loja_nome");
+            int totalFerreiros = rs.getInt("total_ferreiros");
+
+            return new FerreiroDTO3(lojaNome, totalFerreiros);
+        });
+
+        return result;
+    }
+
+    public List<Object> qntFerreirosEspecializados() {
+        String SQL = "CALL qntFerreirosEspecializados()";
+
+        List<Object> result = jdbc.query(SQL, (rs, rowNum) -> {
+            String especializacao = rs.getString("especializacao");
+            int totalFerreiros = rs.getInt("total_ferreiros");
+
+            return new FerreiroDTO4(especializacao, totalFerreiros);
+        });
+
+        return result;
+
+    }
+
+    public class FerreiroDTO1 {
+        private String loja;
+        private String ferreiroNome;
+        private int totalRequisicoes;
+
+        public FerreiroDTO1(String loja, String ferreiroNome, int totalRequisicoes) {
+            this.loja = loja;
+            this.ferreiroNome = ferreiroNome;
+            this.totalRequisicoes = totalRequisicoes;
+        }
+
+        public String getLoja() {
+            return loja;
+        }
+
+        public String getFerreiroNome() {
+            return ferreiroNome;
+        }
+
+        public int getTotalRequisicoes() {
+            return totalRequisicoes;
+        }
+    }
+
+    public class FerreiroDTO2 {
+        private String nome;
+        private int totalRequisicoes;
+
+        public FerreiroDTO2(String nome, int totalRequisicoes) {
+            this.nome = nome;
+            this.totalRequisicoes = totalRequisicoes;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public int getTotalRequisicoes() {
+            return totalRequisicoes;
+        }
+    }
+
+    public class FerreiroDTO3 {
+        private String lojaNome;
+        private int totalFerreiros;
+
+        public FerreiroDTO3(String lojaNome, int totalFerreiros) {
+            this.lojaNome = lojaNome;
+            this.totalFerreiros = totalFerreiros;
+        }
+
+        public String getLojaNome() {
+            return lojaNome;
+        }
+
+        public int getTotalFerreiros() {
+            return totalFerreiros;
+        }
+    }
+
+    public class FerreiroDTO4 {
+        private String especializacao;
+        private int totalFerreiros;
+
+        public FerreiroDTO4(String especializacao, int totalFerreiros) {
+            this.especializacao = especializacao;
+            this.totalFerreiros = totalFerreiros;
+        }
+
+        public String getEspecializacao() {
+            return especializacao;
+        }
+
+        public int getTotalFerreiros() {
+            return totalFerreiros;
+        }
+    }
 }

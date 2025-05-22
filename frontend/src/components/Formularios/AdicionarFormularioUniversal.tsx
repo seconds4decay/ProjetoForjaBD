@@ -76,7 +76,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh] overflow-y-auto">
+    <form onSubmit={handleSubmit} className="shadow-lg shadow-gray-500/50 flex flex-col gap-4 p-4 border border-[var(--bordercolor)] rounded  min-w-[50vh] max-w-[50vh] overflow-y-auto">
       <h2 className="text-xl font-bold">Adicionar {capitalize(entidade.nome)}</h2>
 
       {entidade.atributos.map((attr) => (

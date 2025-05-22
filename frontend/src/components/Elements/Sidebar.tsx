@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function Sidebar() {
     return (
         <div className="flexsidebar h-[100%] w-64 min-w-64 max-w-64">
-        <div className="sidebar fixed bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] h-[90%] w-64 min-w-64 max-w-64 p-5 hidden md:flex flex-col overflow-auto ga">
+        <div className="sidebar shadow-lg shadow-gray-500/50 fixed bg-[var(--background2)] border border-[var(--bordercolor)] rounded-[var(--borderradius)] h-[90%] w-64 min-w-64 max-w-64 p-5 hidden md:flex flex-col overflow-auto ga">
             <h1 className="mb-8">
                 <Link href="/" className="flex items-center gap-2">
                     <Image src="/images/icon.png" alt="Logo" width={50} height={50} />
@@ -25,7 +25,7 @@ export default function Sidebar() {
                     <li key={href}>
                         <Link 
                             href={href}
-                            className="group flex items-center gap-3 p-3 rounded-[var(--borderradius)] hover:bg-[var(--elementcolor)] hover:text-white transition-colors"
+                            className="group flex items-center gap-3 p-3 rounded-[var(--borderradius)] hover:bg-[var(--elementcolor)] hover:text-white hover:shadow-lg hover:shadow-gray-500/50 transition-colors"
                         >
                             <Image 
                                 src={icon} 

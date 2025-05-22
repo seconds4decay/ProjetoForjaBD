@@ -47,7 +47,7 @@ export default function Home() {
       <div style={{ display: "flex" }}> 
         <Sidebar />
         <div className="flex flex-col gap-10 w-[100%]">
-          <div className="flex h-[45%] w-[97.5%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
+          <div className="flex h-[45%] w-[97.5%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-8 shadow-lg shadow-gray-500/50">
             <div className="self-center ml-10 mr-10">
               <strong className="text-[25px] text-[var(--elementcolor)]">Bem vindo ao Forja APP!</strong>
               <p className="text-[20px]">Sua forja possui atualmente . . .</p>
@@ -67,9 +67,9 @@ export default function Home() {
               />
           </div>
 
-          <div className="flex flex-row h-[100%]">
-            {Object.entries(data2)[0] != undefined && <div className="flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
-              <strong className="text-[35px] text-[var(--elementcolor)] mt-10">Ferreiro em Destaque</strong>
+          <div className="flex flex-row h-[100%] ">
+            {Object.entries(data2)[0] != undefined && <div className="shadow-lg shadow-gray-500/50 p-8 flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
+              <strong className="text-[35px] text-[var(--elementcolor)] ">Ferreiro em Destaque</strong>
               <Image
               src="/person.png"
               height={120}
@@ -83,8 +83,8 @@ export default function Home() {
               <p className="text-[20px] mt-4"><strong>{Object.entries(data2)[3][1]}</strong> Pedidos Realizados</p>
             </div>}
 
-            {Object.entries(data3)[0] != undefined && <div className="flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
-              <strong className="text-[35px] text-[var(--elementcolor)] mt-10">Item mais Vendido</strong>
+            {Object.entries(data3)[0] != undefined && <div className="shadow-lg shadow-gray-500/50 p-8 flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
+              <strong className="text-[35px] text-[var(--elementcolor)]">Item mais Vendido</strong>
               <Image
               src="/sword.png"
               height={120}

@@ -110,7 +110,6 @@ public class VendaRepository {
             return new VendaDTO3(nome, qntVendas);
         });
 
-        System.out.println(result.get(0).getNome());
         return result;
     }
 

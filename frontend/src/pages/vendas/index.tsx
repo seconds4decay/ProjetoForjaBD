@@ -36,18 +36,18 @@ export default function Home() {
         <div>
            <div className="flex flex-col ml-[2%] gap-7">
                 {Object.entries(data1)[0] != undefined && <div className="flex items-center justify-center gap-7">
-                    <div className="flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                    <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Quantidade de Vendas no ultimo mês</strong>
                         <strong className="text-[70px] font-bold text-[#51cc00] mt-10">{Object.entries(data1)[0][1]}</strong>
                     </div>
 
-                    <div className="flex flex-col items-center  w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                    <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center  w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Total Arrecadado no ultimo mês</strong>
                         <strong className="text-[70px] font-bold text-[#51cc00] mt-10">R${Object.entries(data1)[1][1]}.00</strong>
                     </div>
                 </div>}
                  <div className="flex items-center justify-center gap-7">
-                     <div className="flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                     <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Clientes mais Compradores</strong>
                         {data3 != undefined && <table className="w-full table-auto border-collapse overflow-y-auto">
                         <thead>
@@ -74,7 +74,7 @@ export default function Home() {
                         </table>}
                     </div>
 
-                    {Object.entries(data2)[0] != undefined &&<div className="flex flex-col self-stretch items-stren h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                    {Object.entries(data2)[0] != undefined &&<div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-stren h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Total Arrecadado por Tipo de Item</strong>
                         <p className="text-[35px] font-sans">Armas: <strong className="text-[35px] font-bold text-[#51cc00] mt-10">R${Object.entries(data2)[0][1]}.00</strong></p>
                         <p className="text-[35px] font-sans">Armaduras: <strong className="text-[35px] font-bold text-[#51cc00] mt-10">R${Object.entries(data2)[1][1]}.00</strong></p>
