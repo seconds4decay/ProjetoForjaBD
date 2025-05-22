@@ -6,6 +6,7 @@ public class Item {
     private float valor;
     private float peso;
     private String raridade;
+    private String dataFabricacao;
     private Ferreiro ferreiro;
 
     public Item() {}
@@ -42,6 +43,10 @@ public class Item {
         return ferreiro;
     }
 
+    public String getDataFabricacao() {
+        return dataFabricacao;
+    }
+
     public void setId(int itemId) {
         this.id = itemId;
     }
@@ -64,5 +69,9 @@ public class Item {
 
     public void setRaridade(String raridade) {
         this.raridade = raridade;
+    }
+
+    public void setDataFabricacao(String dataFabricacao) {
+        this.dataFabricacao = dataFabricacao;
     }
 }

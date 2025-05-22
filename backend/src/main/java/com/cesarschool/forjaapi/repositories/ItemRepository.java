@@ -26,8 +26,8 @@ public class ItemRepository {
     public Item salvar(Item item) {
         Integer idFerreiro = item.getFerreiro() != null ? item.getFerreiro().getId() : null;
 
-        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade, ferreiro) VALUES (?, ?, ?, ?, ?)",
-                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), idFerreiro);
+        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade, data_fabricacao, ferreiro) VALUES (?, ?, ?, ?, ?)",
+                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), item.getDataFabricacao(), idFerreiro);
 
         item.setId(jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class));
         return item;
@@ -50,6 +50,7 @@ public class ItemRepository {
                 item.setValor((float) rs.getDouble("valor"));
                 item.setPeso((float) rs.getDouble("peso"));
                 item.setRaridade(rs.getString("raridade"));
+                item.setDataFabricacao(rs.getString("data_fabricacao"));
 
                 Integer ferreiroId = rs.getObject("ferreiro", Integer.class);
                 if (ferreiroId != null) {
@@ -69,6 +70,7 @@ public class ItemRepository {
             item.setNome(rs.getString("nome"));
             item.setValor((float) rs.getDouble("valor"));
             item.setPeso((float) rs.getDouble("peso"));
+            item.setDataFabricacao(rs.getString("data_fabricacao"));
             item.setRaridade(rs.getString("raridade"));
 
             Integer ferreiroId = rs.getObject("ferreiro", Integer.class);
@@ -82,8 +84,8 @@ public class ItemRepository {
     public Item atualizar(int id, Item item) {
         Integer idFerreiro = item.getFerreiro() != null ? item.getFerreiro().getId() : null;
 
-        jdbc.update("UPDATE Item SET nome = ?, valor = ?, peso = ?, raridade = ?, ferreiro = ? WHERE ID_item = ?",
-                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), idFerreiro, id);
+        jdbc.update("UPDATE Item SET nome = ?, valor = ?, peso = ?, raridade = ?, data_fabricacao = ?, ferreiro = ? WHERE ID_item = ?",
+                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), item.getDataFabricacao(), idFerreiro, id);
 
         return buscarPorId(id);
     }

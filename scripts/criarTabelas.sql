@@ -68,6 +68,7 @@ CREATE TABLE Material (
 );
 
 CREATE TABLE Venda (
+	data_fabricacao DATE
 	loja INT,
 	FOREIGN KEY (loja) REFERENCES Loja(ID_loja),
 	item INT,
@@ -88,3 +89,9 @@ CREATE TABLE Requisicao_Pedido (
 	status VARCHAR (40),
 	PRIMARY KEY (ID_pedido, cliente, item)
 );
+
+ALTER TABLE Venda
+ADD COLUMN data_transacao DATE
+
+ALTER TABLE Requisicao_Pedido
+ADD COLUMN data_alteracao DATE

@@ -93,9 +93,9 @@ export default function Home() {
               className="mt-10"
               />
               <strong className="text-[25px] text-[var(--elementcolor)] mt-10">{Object.entries(data3)[0][1]}</strong>
-              <p className="text-[20px] mt-4">Tipo <strong>{Object.entries(data2)[1][1]}</strong></p>
-              <p className="text-[20px] mt-4">Forjado na <strong>{Object.entries(data2)[2][1]}</strong></p>
-              <p className="text-[20px] mt-4"><strong>{Object.entries(data2)[3][1]}</strong> {Object.entries(data3)[0][1]} vendidas </p>
+              <p className="text-[20px] mt-4">Tipo <strong>{Object.entries(data3)[3][1]}</strong></p>
+              <p className="text-[20px] mt-4">Forjado na <strong>{Object.entries(data3)[2][1]}</strong></p>
+              <p className="text-[20px] mt-4"><strong>{Object.entries(data3)[1][1]}</strong> {Object.entries(data3)[0][1]} vendidas </p>
             </div>}
           </div>
         

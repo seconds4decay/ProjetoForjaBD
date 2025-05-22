@@ -26,8 +26,8 @@ public class ArmaRepository {
     public Arma salvar(Arma arma) {
         Integer ferreiroId = arma.getFerreiro() != null ? arma.getFerreiro().getId() : null;
 
-        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
-                arma.getNome(), arma.getValor(), arma.getPeso(), arma.getRaridade(), ferreiroId);
+        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, data_fabricacao, Ferreiro) VALUES (?, ?, ?, ?, ?)",
+                arma.getNome(), arma.getValor(), arma.getPeso(), arma.getRaridade(), arma.getDataFabricacao(), ferreiroId);
 
         int itemId = jdbc.queryForObject("SELECT MAX(Item) FROM Item", Integer.class);
 
@@ -66,6 +66,7 @@ public class ArmaRepository {
                     arma.setValor(item.getValor());
                     arma.setPeso(item.getPeso());
                     arma.setRaridade(item.getRaridade());
+                    arma.setDataFabricacao(item.getDataFabricacao());
                     arma.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
                 }
 
@@ -93,6 +94,7 @@ public class ArmaRepository {
                 arma.setValor(item.getValor());
                 arma.setPeso(item.getPeso());
                 arma.setRaridade(item.getRaridade());
+                arma.setDataFabricacao(item.getDataFabricacao());
                 arma.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
             }
 

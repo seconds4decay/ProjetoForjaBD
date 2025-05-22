@@ -5,13 +5,15 @@ public class Venda {
     private Loja loja;
     private Item item;
     private Cliente cliente;
+    private String dataTransacao;
 
     public Venda () {}
 
-    public Venda(Loja loja, Item item, Cliente cliente) {
+    public Venda(Loja loja, Item item, Cliente cliente, String dataTransacao) {
         this.loja = loja;
         this.item = item;
         this.cliente = cliente;
+        this.dataTransacao = dataTransacao;
     }
 
     public Loja getLoja() {
@@ -36,5 +38,13 @@ public class Venda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public String getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public void setDataTransacao(String dataTransacao) {
+        this.dataTransacao = dataTransacao;
     }
 }

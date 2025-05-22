@@ -30,8 +30,8 @@ public class VendaRepository {
     }
 
     public Venda salvar(Venda venda) {
-        jdbc.update("INSERT INTO Venda (loja, cliente, item) VALUES (?, ?, ?)",
-                venda.getLoja().getId(), venda.getCliente().getId(), venda.getItem().getId());
+        jdbc.update("INSERT INTO Venda (loja, cliente, item, data_transacao) VALUES (?, ?, ?, ?)",
+                venda.getLoja().getId(), venda.getCliente().getId(), venda.getItem().getId(), venda.getDataTransacao());
 
         return venda;
     }
@@ -52,8 +52,9 @@ public class VendaRepository {
                         Loja loja = lojaService.buscarPorId(rs.getInt("loja"));
                         Item item = itemService.buscarPorId(rs.getInt("item"));
                         Cliente cliente = clienteService.buscarPorId(rs.getInt("cliente"));
+                        String dataTransacao = rs.getString("data_transacao");
 
-                        return new Venda(loja, item, cliente);
+                        return new Venda(loja, item, cliente, dataTransacao);
                     });
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -65,14 +66,15 @@ public class VendaRepository {
             Loja loja = lojaService.buscarPorId(rs.getInt("loja"));
             Item item = itemService.buscarPorId(rs.getInt("item"));
             Cliente cliente = clienteService.buscarPorId(rs.getInt("cliente"));
+            String dataTransacao = rs.getString("data_transacao");
 
-            return new Venda(loja, item, cliente);
+            return new Venda(loja, item, cliente, dataTransacao);
         });
     }
 
     public Venda atualizar(int id_loja, int id_item, int id_cliente, Venda venda) {
-        jdbc.update("UPDATE Venda SET loja = ?, item = ?, cliente = ? WHERE loja = ? AND item = ? AND cliente = ?",
-                venda.getLoja().getId(), venda.getItem().getId(), venda.getCliente().getId(),
+        jdbc.update("UPDATE Venda SET loja = ?, item = ?, cliente = ?, data_transacao = ? WHERE loja = ? AND item = ? AND cliente = ?",
+                venda.getLoja().getId(), venda.getItem().getId(), venda.getCliente().getId(), venda.getDataTransacao(),
                 id_loja, id_item, id_cliente);
 
         return venda;

@@ -65,4 +65,58 @@ public class LojaRepository {
 
         return loja;
     }
+
+    public LojaDTO1 rentabilidadeLojaPorNome(String nome) {
+        String SQL = "CALL rentabilidadeLojaPorNome(?)";
+
+        return jdbc.queryForObject(SQL, (rs, rowNum) -> new LojaDTO1(
+                rs.getString("nome"),
+                rs.getFloat("total_rentabilidade")
+        ), nome);
+    }
+
+    public List<Object> vendasRecentesPorLoja(String nome) {
+        String SQL = "CALL vendasRecentesPorLoja(?)";
+
+        return jdbc.query(SQL, (rs, rowNum) -> new LojaDTO2(
+                rs.getString("nome"),
+                rs.getString("data_transacao")
+        ), nome);
+    }
+
+    public class LojaDTO1 {
+        private String nome;
+        private float totalRentabilidade;
+
+        public LojaDTO1(String nome, float totalRentabilidade) {
+            this.nome = nome;
+            this.totalRentabilidade = totalRentabilidade;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public float getTotalRentabilidade() {
+            return totalRentabilidade;
+        }
+    }
+
+    public class LojaDTO2 {
+        private String nome;
+        private String dataTransacao;
+
+        public LojaDTO2(String nome, String dataTransacao) {
+            this.nome = nome;
+            this.dataTransacao = dataTransacao;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public String getDataTransacao() {
+            return dataTransacao;
+        }
+    }
 }

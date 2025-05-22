@@ -85,6 +85,7 @@ export default function VisualizarModel({ entidade }: Props) {
     useEffect(() => {
         async function fetchData() {
             const data = await getModelAll(entidade.nome);
+            console.log(data);
             setDados(data);
         }
         fetchData();

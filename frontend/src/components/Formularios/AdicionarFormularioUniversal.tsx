@@ -25,6 +25,8 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
         return (
           <AutoCompleteInput data={data.referencias?.[nome] || []} onSelect={(item) => handleNomeSelecionado(nome, item)} required={required}/>
         );
+      case "date":
+        return <></>
       default:
         return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
     }
@@ -81,7 +83,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
 
       {entidade.atributos.map((attr) => (
         <label key={attr.nome} className="flex flex-col gap-1">
-          {capitalize(attr.nome)}
+          {!(attr.nome.includes("data")) && capitalize(attr.nome)}
           {renderCampo(attr)}
         </label>
       ))}

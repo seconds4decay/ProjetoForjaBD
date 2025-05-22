@@ -6,6 +6,7 @@ public class Pedido {
     private Item item;
     private Ferreiro ferreiro;
     private String status;
+    private String dataAlteracao;
 
     public Pedido (){}
 
@@ -36,5 +37,9 @@ public class Pedido {
     public String getStatus() { return status; }
 
     public void setStatus(String status) { this.status = status; }
+
+    public String getDataAlteracao() { return dataAlteracao; }
+
+    public void setDataAlteracao(String dataAlteracao) { this.dataAlteracao = dataAlteracao;}
 
 }

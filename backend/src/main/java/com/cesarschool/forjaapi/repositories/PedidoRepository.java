@@ -54,6 +54,7 @@ public class PedidoRepository {
                         pedido.setCliente(clienteService.buscarPorId(rs.getInt("cliente")));
                         pedido.setItem(itemService.buscarPorId(rs.getInt("item")));
                         pedido.setFerreiro(ferreiroService.buscarPorId(rs.getInt("ferreiro")));
+                        pedido.setDataAlteracao(rs.getString("data_alteracao"));
                         pedido.setStatus(rs.getString("status"));
 
                         return pedido;
@@ -73,6 +74,7 @@ public class PedidoRepository {
             pedido.setItem(itemService.buscarPorId(rs.getInt("item")));
             pedido.setFerreiro(ferreiroService.buscarPorId(rs.getInt("ferreiro")));
             pedido.setStatus(rs.getString("status"));
+            pedido.setDataAlteracao(rs.getString("data_alteracao"));
 
             return pedido;
 

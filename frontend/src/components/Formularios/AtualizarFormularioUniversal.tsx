@@ -53,6 +53,8 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
            : <button className="cursor-pointer" onClick={() => router.push(`/estoque/${atributo.nome}s/adicionar`, )}>Criar {atributo.nome}</button>}
           </div>
         );
+      case "date":
+        return <></>
       default:
         return <input type="text" name={nome} onChange={handleChange} className="border p-1" />;
     }

@@ -49,9 +49,10 @@ public class DashboardRepository {
         List<DashboardDTO3> result = jdbc.query(SQL, (rs, rowNum) -> {
             String nome = rs.getString("nome");
             int qntVendas = rs.getInt("qnt_vendas");
-            float total_vendas = rs.getFloat("total_vendas");
+            String lojaNome = rs.getString("loja_nome");
+            String tipo = rs.getString("tipo");
 
-            return new DashboardDTO3(nome, qntVendas, total_vendas);
+            return new DashboardDTO3(nome, qntVendas, lojaNome, tipo);
         });
 
         return result.isEmpty() ? null : result.get(0);
@@ -121,12 +122,14 @@ public class DashboardRepository {
     public class DashboardDTO3 {
         private String nome;
         private int qntVendas;
-        private float totalVendas;
+        private String lojaNome;
+        private String tipo;
 
-        public DashboardDTO3(String nome, int qntVendas, float totalVendas) {
+        public DashboardDTO3(String nome, int qntVendas, String lojaNome, String tipo) {
             this.nome = nome;
             this.qntVendas = qntVendas;
-            this.totalVendas = totalVendas;
+            this.lojaNome = lojaNome;
+            this.tipo = tipo;
         }
 
         public String getNome() {
@@ -137,9 +140,15 @@ public class DashboardRepository {
             return qntVendas;
         }
 
-        public float getTotalVendas() {
-            return totalVendas;
+        public String getLojaNome() {
+            return lojaNome;
         }
+
+        public String getTipo() {
+            return tipo;
+        }
+
+
     }
 
 

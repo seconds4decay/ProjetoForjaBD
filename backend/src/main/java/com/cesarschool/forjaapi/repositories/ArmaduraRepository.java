@@ -26,8 +26,8 @@ public class ArmaduraRepository {
     public Armadura salvar(Armadura armadura) {
         Integer ferreiroId = armadura.getFerreiro() != null ? armadura.getFerreiro().getId() : null;
 
-        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
-                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), ferreiroId);
+        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Data_Fabricacao, Ferreiro) VALUES (?, ?, ?, ?, ?)",
+                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), armadura.getDataFabricacao(), ferreiroId);
 
         int itemId = jdbc.queryForObject("SELECT MAX(Item) FROM Item", Integer.class);
 
@@ -63,6 +63,7 @@ public class ArmaduraRepository {
                     armadura.setValor(item.getValor());
                     armadura.setPeso(item.getPeso());
                     armadura.setRaridade(item.getRaridade());
+                    armadura.setDataFabricacao(item.getDataFabricacao());
                     armadura.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
                 }
                 
@@ -89,6 +90,7 @@ public class ArmaduraRepository {
                 armadura.setValor(item.getValor());
                 armadura.setPeso(item.getPeso());
                 armadura.setRaridade(item.getRaridade());
+                armadura.setDataFabricacao(item.getDataFabricacao());
                 armadura.setFerreiro(ferreiroService.buscarPorId(item.getFerreiro().getId()));
             }
 
