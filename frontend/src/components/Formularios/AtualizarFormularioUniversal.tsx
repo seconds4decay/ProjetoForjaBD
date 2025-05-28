@@ -150,8 +150,8 @@ export default function FormularioAtualizacaoUniversal(props: Props) {
 
       {entidade.atributos.map((attr) => (
         <label key={attr.nome} className="flex flex-col gap-1">
-          { attr.nome != "dataAlteracao" && attr.nome != "dataTransacao" && capitalize(attr.nome)}
-          {renderCampo(attr)}
+          {!(attr.nome.includes("data")) && capitalize(attr.nome)}
+          {!(attr.nome.includes("data")) && renderCampo(attr)}
         </label>
       ))}
 

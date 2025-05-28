@@ -18,3 +18,19 @@ BEGIN
         SET NEW.data_alteracao = NOW();
     END;
 
+create definer = root@localhost trigger vendaBeforeInsert
+    before insert
+    on venda
+    for each row
+BEGIN
+    SET NEW.data_transacao = NOW();
+END;
+
+create definer = root@localhost trigger itemBeforeInsert
+    before insert
+    on item
+    for each row
+BEGIN
+    SET NEW.data_fabricacao = NOW();
+END;
+

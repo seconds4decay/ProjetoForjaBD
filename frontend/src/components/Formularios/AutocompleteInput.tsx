@@ -8,26 +8,28 @@ interface AutoCompleteInputProps {
 }
 
 export default function AutoCompleteInput({ data, onSelect, required, value}: AutoCompleteInputProps) {
-  const [inputValue, setInputValue] = useState(value)
   const [suggestions, setSuggestions] = useState<any[]>([])
 
-  const [nome, setNome] = useState("")
+  const [name, setName] = useState("")
 
   useEffect(() => {
-    if(value != undefined && value.length >= 3) {
-      //setInputValue(value)
-      
-      const filtered = data.filter(item =>
-        item.nome.toLowerCase().includes(value.toLowerCase())
-      )
+    if (value !== undefined) {
 
-      setSuggestions(filtered)
+      if (value.length >= 3) {
+        const filtered = data.filter(item =>
+          item.nome.toLowerCase().includes(value.toLowerCase())
+        );
+        setSuggestions(filtered);
+      } else {
+        setSuggestions([]);
+      }
     }
-  }, [value])
+  }, [value, data]);
+
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setInputValue(value)
 
     if (value.length >= 3) {
       const filtered = data.filter(item =>
@@ -40,7 +42,7 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
   }
 
   const handleSelect = (item: any) => {
-    setInputValue(item.nome)
+    setName(item.nome)
     setSuggestions([])
     onSelect(item)
   }
@@ -49,7 +51,7 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
     <div>
       <input
         type="text"
-        value={inputValue}
+        value={name}
         onChange={handleChange}
         className="border p-1 w-full"
         placeholder="Digite o nome..."

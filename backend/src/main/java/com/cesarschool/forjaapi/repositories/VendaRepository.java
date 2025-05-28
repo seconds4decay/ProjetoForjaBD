@@ -30,8 +30,8 @@ public class VendaRepository {
     }
 
     public Venda salvar(Venda venda) {
-        jdbc.update("INSERT INTO Venda (loja, cliente, item, data_transacao) VALUES (?, ?, ?, ?)",
-                venda.getLoja().getId(), venda.getCliente().getId(), venda.getItem().getId(), venda.getDataTransacao());
+        jdbc.update("INSERT INTO Venda (loja, cliente, item) VALUES (?, ?, ?)",
+                venda.getLoja().getId(), venda.getCliente().getId(), venda.getItem().getId());
 
         return venda;
     }
@@ -73,8 +73,8 @@ public class VendaRepository {
     }
 
     public Venda atualizar(int id_loja, int id_item, int id_cliente, Venda venda) {
-        jdbc.update("UPDATE Venda SET loja = ?, item = ?, cliente = ?, data_transacao = ? WHERE loja = ? AND item = ? AND cliente = ?",
-                venda.getLoja().getId(), venda.getItem().getId(), venda.getCliente().getId(), venda.getDataTransacao(),
+        jdbc.update("UPDATE Venda SET loja = ?, item = ?, cliente = ?, WHERE loja = ? AND item = ? AND cliente = ?",
+                venda.getLoja().getId(), venda.getItem().getId(), venda.getCliente().getId(),
                 id_loja, id_item, id_cliente);
 
         return venda;

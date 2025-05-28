@@ -12,6 +12,14 @@ export function capitalize(string: string) {
     if(string === "dataTransacao") {
         return "Data de Transação"
     }
+
+    if(string === "dataFabricacao") {
+        return "Data de Fabricação"
+    }
+
+    if(string === "id") {
+        return "ID";
+    }
     
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

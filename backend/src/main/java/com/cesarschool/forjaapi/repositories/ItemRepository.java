@@ -26,8 +26,8 @@ public class ItemRepository {
     public Item salvar(Item item) {
         Integer idFerreiro = item.getFerreiro() != null ? item.getFerreiro().getId() : null;
 
-        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade, data_fabricacao, ferreiro) VALUES (?, ?, ?, ?, ?)",
-                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), item.getDataFabricacao(), idFerreiro);
+        jdbc.update("INSERT INTO Item (nome, valor, peso, raridade, ferreiro) VALUES (?, ?, ?, ?, ?)",
+                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), idFerreiro);
 
         item.setId(jdbc.queryForObject("SELECT MAX(ID_item) FROM Item", Integer.class));
         return item;
@@ -84,8 +84,8 @@ public class ItemRepository {
     public Item atualizar(int id, Item item) {
         Integer idFerreiro = item.getFerreiro() != null ? item.getFerreiro().getId() : null;
 
-        jdbc.update("UPDATE Item SET nome = ?, valor = ?, peso = ?, raridade = ?, data_fabricacao = ?, ferreiro = ? WHERE ID_item = ?",
-                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), item.getDataFabricacao(), idFerreiro, id);
+        jdbc.update("UPDATE Item SET nome = ?, valor = ?, peso = ?, raridade = ?, ferreiro = ? WHERE ID_item = ?",
+                item.getNome(), item.getValor(), item.getPeso(), item.getRaridade(), idFerreiro, id);
 
         return buscarPorId(id);
     }

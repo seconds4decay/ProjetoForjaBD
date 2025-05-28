@@ -40,7 +40,7 @@ function renderResultado(resultado: any) {
             key={chave}
             className="flex flex-col sm:flex-row sm:items-center justify-between bg-[var(--background2)]-50 border border-[var(--bordercolor)]-200 rounded-lg px-4 py-3 hover:shadow-sm transition-shadow"
           >
-            <span className="text-gray-500 font-medium">{chave.toUpperCase()}</span>
+            <span className="text-gray-500 font-medium">{capitalize(chave)}</span>
 
             <span className="text-gray-800 font-semibold mt-1 sm:mt-0 text-right">
               {isObjeto

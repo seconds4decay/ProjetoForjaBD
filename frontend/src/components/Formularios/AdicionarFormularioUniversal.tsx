@@ -84,7 +84,7 @@ export default function AdicionarFormularioUniversal({ entidade }: Props) {
       {entidade.atributos.map((attr) => (
         <label key={attr.nome} className="flex flex-col gap-1">
           {!(attr.nome.includes("data")) && capitalize(attr.nome)}
-          {renderCampo(attr)}
+          {!(attr.nome.includes("data")) && renderCampo(attr)}
         </label>
       ))}
 

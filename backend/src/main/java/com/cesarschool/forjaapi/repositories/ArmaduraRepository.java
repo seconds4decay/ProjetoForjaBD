@@ -26,10 +26,10 @@ public class ArmaduraRepository {
     public Armadura salvar(Armadura armadura) {
         Integer ferreiroId = armadura.getFerreiro() != null ? armadura.getFerreiro().getId() : null;
 
-        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Data_Fabricacao, Ferreiro) VALUES (?, ?, ?, ?, ?)",
-                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), armadura.getDataFabricacao(), ferreiroId);
+        jdbc.update("INSERT INTO Item (Nome, Valor, Peso, Raridade, Ferreiro) VALUES (?, ?, ?, ?, ?)",
+                armadura.getNome(), armadura.getValor(), armadura.getPeso(), armadura.getRaridade(), ferreiroId);
 
-        int itemId = jdbc.queryForObject("SELECT MAX(Item) FROM Item", Integer.class);
+        int itemId = jdbc.queryForObject("SELECT MAX(ID_Item) FROM Item", Integer.class);
 
         jdbc.update("INSERT INTO Armadura (Item, Nome, Defesa, Tipo) VALUES (?, ?, ?, ?)",
                 itemId, armadura.getNome(), armadura.getDefesa(), armadura.getTipo());

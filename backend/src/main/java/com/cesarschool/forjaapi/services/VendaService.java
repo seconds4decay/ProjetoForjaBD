@@ -30,7 +30,6 @@ public class VendaService {
         venda.setLoja(lojaService.buscarPorId(venda.getLoja().getId()));
         venda.setItem(itemService.buscarPorId(venda.getItem().getId()));
         venda.setCliente(clienteService.buscarPorId(venda.getCliente().getId()));
-        venda.setDataTransacao(String.valueOf(LocalDate.now()));
 
         return repository.salvar(venda);
     }
