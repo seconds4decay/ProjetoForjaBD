@@ -71,7 +71,7 @@ export default function Home() {
                 <div className="flex items-center justify-center gap-7">
                     <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Pedidos</strong>
-                        { barChart() }
+                        <div className="w-[80vh] h-[100%] items-stretch">{ barChart() }</div>
                     </div>
                 </div>
             </div>}
