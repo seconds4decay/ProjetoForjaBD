@@ -47,11 +47,19 @@ public class LojaService {
         return repository.atualizar(loja);
     }
 
-    public Object rentabilidadeLojaPorNome(String nome) {
+    public List<Object> rentabilidadeLojaPorNome(String nome) {
         return repository.rentabilidadeLojaPorNome(nome);
+    }
+
+    public List<Object> rentabilidadeLoja() {
+        return repository.rentabilidadeLoja();
     }
 
     public List<Object> vendasRecentesPorLoja(String nome) {
         return repository.vendasRecentesPorLoja(nome);
+    }
+
+    public List<Object> vendasRecentes() {
+        return repository.vendasRecentes();
     }
 }

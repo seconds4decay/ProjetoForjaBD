@@ -78,14 +78,25 @@ public class LojaController {
     }
 
     @GetMapping("/rentabilidadeLojaPorNome/{nome}")
-    public ResponseEntity<Object> rentabilidadeLojaPorNome(@PathVariable String nome) {
-        Object loja = service.rentabilidadeLojaPorNome(nome);
+    public ResponseEntity<List<Object>> rentabilidadeLojaPorNome(@PathVariable String nome) {
+        List<Object> loja = service.rentabilidadeLojaPorNome(nome);
 
         if (loja != null) {
             return ResponseEntity.ok(loja);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/rentabilidadeLoja")
+    public ResponseEntity<List<Object>> rentabilidadeLoja() {
+        List<Object> lojas = service.rentabilidadeLoja();
+
+        if (lojas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lojas);
     }
 
     @GetMapping("/vendasRecentesPorLoja/{nome}")
@@ -97,6 +108,17 @@ public class LojaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/vendasRecentes")
+    public ResponseEntity<List<Object>> vendasRecentes() {
+        List<Object> lojas = service.vendasRecentes();
+
+        if (lojas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(lojas);
     }
 
 

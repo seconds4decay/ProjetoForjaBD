@@ -66,13 +66,26 @@ public class LojaRepository {
         return loja;
     }
 
-    public LojaDTO1 rentabilidadeLojaPorNome(String nome) {
+    public List<Object> rentabilidadeLojaPorNome(String nome) {
         String SQL = "CALL rentabilidadeLojaPorNome(?)";
 
-        return jdbc.queryForObject(SQL, (rs, rowNum) -> new LojaDTO1(
+        return jdbc.query(SQL, (rs, rowNum) -> new LojaDTO1(
                 rs.getString("nome"),
                 rs.getFloat("total_rentabilidade")
         ), nome);
+    }
+
+    public List<Object> rentabilidadeLoja() {
+        String SQL = "CALL rentabilidadeLoja()";
+
+        List<Object> result = jdbc.query(SQL, (rs, rowNum) -> new LojaDTO1(
+                rs.getString("nome"),
+                rs.getFloat("total_rentabilidade")
+        ));
+
+        System.out.println(result);
+
+        return result;
     }
 
     public List<Object> vendasRecentesPorLoja(String nome) {
@@ -80,8 +93,19 @@ public class LojaRepository {
 
         return jdbc.query(SQL, (rs, rowNum) -> new LojaDTO2(
                 rs.getString("nome"),
+                rs.getFloat("valor"),
                 rs.getString("data_transacao")
         ), nome);
+    }
+
+    public List<Object> vendasRecentes() {
+        String SQL = "CALL vendasRecentes()";
+
+        return jdbc.query(SQL, (rs, rowNum) -> new LojaDTO2(
+                rs.getString("nome"),
+                rs.getFloat("valor"),
+                rs.getString("data_transacao")
+        ));
     }
 
     public class LojaDTO1 {
@@ -104,10 +128,12 @@ public class LojaRepository {
 
     public class LojaDTO2 {
         private String nome;
+        private float valor;
         private String dataTransacao;
 
-        public LojaDTO2(String nome, String dataTransacao) {
+        public LojaDTO2(String nome, float valor,  String dataTransacao) {
             this.nome = nome;
+            this.valor = valor;
             this.dataTransacao = dataTransacao;
         }
 
@@ -117,6 +143,10 @@ public class LojaRepository {
 
         public String getDataTransacao() {
             return dataTransacao;
+        }
+
+        public float getValor() {
+            return valor;
         }
     }
 }
