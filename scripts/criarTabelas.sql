@@ -68,14 +68,14 @@ CREATE TABLE Material (
 );
 
 CREATE TABLE Venda (
-	data_fabricacao DATE
-	loja INT,
-	FOREIGN KEY (loja) REFERENCES Loja(ID_loja),
-	item INT,
-	FOREIGN KEY (item) REFERENCES Item(ID_item),
-	cliente INT,
-	FOREIGN KEY (cliente) REFERENCES Cliente(ID_cliente),
-	PRIMARY KEY (loja, item, cliente)
+       ID_venda INT PRIMARY KEY UNIQUE AUTO_INCREMENT,
+       data_transacao DATE,
+       loja INT,
+       FOREIGN KEY (loja) REFERENCES Loja(ID_loja),
+       item INT,
+       FOREIGN KEY (item) REFERENCES Item(ID_item),
+       cliente INT,
+       FOREIGN KEY (cliente) REFERENCES Cliente(ID_cliente)
 );
 
 CREATE TABLE Requisicao_Pedido (

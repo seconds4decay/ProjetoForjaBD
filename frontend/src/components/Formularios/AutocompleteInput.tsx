@@ -9,7 +9,7 @@ interface AutoCompleteInputProps {
 
 export default function AutoCompleteInput({ data, onSelect, required, value}: AutoCompleteInputProps) {
   const [suggestions, setSuggestions] = useState<any[]>([])
-
+  const [inputValue, setInputValue] = useState(value)
   const [name, setName] = useState("")
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
   }
 
   const handleSelect = (item: any) => {
-    setName(item.nome)
+    setInputValue(item.nome)
     setSuggestions([])
     onSelect(item)
   }
@@ -51,7 +51,7 @@ export default function AutoCompleteInput({ data, onSelect, required, value}: Au
     <div>
       <input
         type="text"
-        value={name}
+        value={inputValue}
         onChange={handleChange}
         className="border p-1 w-full"
         placeholder="Digite o nome..."

@@ -72,5 +72,10 @@ INSERT INTO Requisicao_Pedido (cliente, item, ferreiro, status) VALUES
 INSERT INTO Item (nome, valor, peso, raridade, ferreiro, data_fabricacao) VALUES ('Claymore', 130.0, 3.0, 'Comum', 3, '2024-03-21');
 INSERT INTO Arma (Item, nome, dano, tipo) values (6, 'Claymore', 60.0, 'Corte');
 
-INSERT INTO Venda (loja, item, cliente) values (3, 6, 1);
+INSERT INTO Venda (loja, item, cliente, data_transacao) VALUES
+(1, 1, 1, '2025-01-20'),
+(1, 2, 2, '2025-02-20'),
+(2, 3, 4, '2025-03-21'),
+(2, 4, 5, '2025-04-21'),
+(3, 5, 3, '2025-05-22');
 
