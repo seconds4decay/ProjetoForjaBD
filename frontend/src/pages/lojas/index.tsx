@@ -32,22 +32,19 @@ export default function Home() {
     
     useEffect(() => {
         const fetchData = async (name: string) => {
-            if(name !== "") {
-                console.log(name)
-                const response1 = await fetch(`${dashboardRoute1}${name}`)
-                const responseData1 = await response1.json()
-                console.log(responseData1)
-                if(responseData1.status !== 404) {
-                    setData1(responseData1)
-                }
+            
+            console.log(name)
+            const response1 = await fetch(`${dashboardRoute1}${name}`)
+            const responseData1 = await response1.json()
+            console.log(responseData1)
+            if(responseData1[0] !== undefined) {
+                setData1(responseData1)
             } else {
                 console.log(name)
                 const response1 = await fetch(dashboardRoute3)
                 const responseData1 = await response1.json()
                 console.log(responseData1)
-                if(responseData1.status !== 404) {
-                    setData1(responseData1)
-                }
+                setData1(responseData1)
             }
         }
 
@@ -56,25 +53,21 @@ export default function Home() {
 
     useEffect(() => {
         const fetchData = async (name: string) => {
-            if(name !== "") {
                 console.log(name)
                 const response2 = await fetch(`${dashboardRoute2}${name}`)
                 const responseData2 = await response2.json()
                 console.log(responseData2)
-                if(responseData2.status !== 404) {
+                if(responseData2[0] !== undefined) {
+                    setData2(responseData2)
+                } else {
+                    console.log("vazio")
+                    const response2 = await fetch(dashboardRoute4)
+                    const responseData2 = await response2.json()
+                    console.log(responseData2)
                     setData2(responseData2)
                 }
-            } else {
-                console.log("vazio")
-                const response2 = await fetch(dashboardRoute4)
-                const responseData2 = await response2.json()
-                console.log(responseData2)
-                if(responseData2.status !== 404) {
-                    setData2(responseData2)
-                }
-            }
            
-        }
+            }
 
         fetchData(storeName2)
     }, [storeName2])
