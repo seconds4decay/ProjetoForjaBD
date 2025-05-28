@@ -54,12 +54,12 @@ INSERT INTO Armadura (Item, nome, defesa, tipo) VALUES
 (4, 'Martelo de Guerra', 40.0, 'Mão');
 
 -- Inserindo vendas
-INSERT INTO Venda (loja, item, cliente) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(2, 3, 4),
-(2, 4, 5),
-(3, 5, 3);
+INSERT INTO Venda (loja, item, cliente, data_transacao) VALUES
+(1, 1, 1, '2025-05-20 10:00:00'),
+(1, 2, 2, '2025-05-20 11:00:00'),
+(2, 3, 4, '2025-05-21 09:30:00'),
+(2, 4, 5, '2025-05-21 14:45:00'),
+(3, 5, 3, '2025-05-22 16:00:00');
 
 -- Inserindo pedidos
 INSERT INTO Requisicao_Pedido (cliente, item, ferreiro, status) VALUES
