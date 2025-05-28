@@ -25,35 +25,41 @@ export default function FormularioBuscaUniversal({ entidade }: Props) {
     }
   };
 
-  function renderResultado(resultado: any) {
-    return (
-      <div className="bg-gray-100 p-4 rounded text-sm space-y-2">
-        <strong>Resultado:</strong>
-
-        {Object.entries(resultado).map(([chave, valor]) => {
-          if (valor && typeof valor === 'object') {
-            return (
-              <p key={chave}>
-                <strong>{chave.toUpperCase()}:</strong>{' '}
-                {valor.nome ? valor.nome : '[objeto]'}
-                {valor.id !== undefined && ` (ID: ${valor.id})`}
-              </p>
-            );
-          }
-
-          return (
-            <p key={chave}>
-              <strong>{chave.toUpperCase()}:</strong> {valor?.toString()}
-            </p>
-          );
-        })}
+function renderResultado(resultado: any) {
+  return (
+    <div className="p-6 shadow-md text-sm space-y-4 border-[var(--bordercolor)] border-[1px] rounded-[var(--borderradius)] mt-5">
+      <div className="flex items-center gap-2 mb-4">
+        <strong className="text-lg">Resultado</strong>
       </div>
-    );
-  }
+
+      {Object.entries(resultado).map(([chave, valor]) => {
+        const isObjeto = valor && typeof valor === 'object';
+
+        return (
+          <div
+            key={chave}
+            className="flex flex-col sm:flex-row sm:items-center justify-between bg-[var(--background2)]-50 border border-[var(--bordercolor)]-200 rounded-lg px-4 py-3 hover:shadow-sm transition-shadow"
+          >
+            <span className="text-gray-500 font-medium">{chave.toUpperCase()}</span>
+
+            <span className="text-gray-800 font-semibold mt-1 sm:mt-0 text-right">
+              {isObjeto
+                ? valor.nome
+                  ? `${valor.nome}${valor.id !== undefined ? ` (ID: ${valor.id})` : ''}`
+                  : '[objeto]'
+                : valor?.toString()}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 
   return (
     <div className="flex flex-col">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded  min-w-[50vh] max-w-[50vh]">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] rounded-[var(--borderradius)]  min-w-[50vh] max-w-[50vh]">
       <h2 className="text-xl font-bold">Buscar {capitalize(entidade.nome)}</h2>
 
       <label className="flex flex-col gap-1">

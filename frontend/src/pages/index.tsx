@@ -69,34 +69,56 @@ export default function Home() {
 
           <div className="flex flex-row h-[100%] ">
             {Object.entries(data2)[0] != undefined && <div className="shadow-lg shadow-gray-500/50 p-8 flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
-              <strong className="text-[35px] text-[var(--elementcolor)] ">Ferreiro em Destaque</strong>
+              <h2 className="text-[28px] font-bold text-orange-600 mb-6">Ferreiro em Destaque</h2>
+
               <Image
-              src="/person.png"
-              height={120}
-              width={120}
-              alt="person"
-              className="mt-10"
+                src="/person.png"
+                height={120}
+                width={120}
+                alt="person"
+                className="mb-6 opacity-80"
               />
-              <strong className="text-[25px] text-[var(--elementcolor)] mt-10">{Object.entries(data2)[0][1]}</strong>
-              <p className="text-[20px] mt-4">Especializado em <strong>{Object.entries(data2)[1][1]}</strong></p>
-              <p className="text-[20px] mt-4">Trabalha na Loja <strong>{Object.entries(data2)[2][1]}</strong></p>
-              <p className="text-[20px] mt-4"><strong>{Object.entries(data2)[3][1]}</strong> Pedidos Realizados</p>
-            </div>}
+
+              <div className="text-center space-y-2">
+                <p className="text-[22px] font-semibold text-blue-700">{Object.entries(data2)[0][1]}</p>
+                <p className="text-[18px] text-gray-700">
+                  Especializado em <span className="font-semibold">{Object.entries(data2)[1][1]}</span>
+                </p>
+                <p className="text-[18px] text-gray-700">
+                  Trabalha na loja <span className="font-semibold">{Object.entries(data2)[2][1]}</span>
+                </p>
+                <p className="text-[18px] text-gray-700">
+                  <span className="font-bold">{Object.entries(data2)[3][1]}</span> Pedidos Realizados
+                </p>
+              </div>
+            </div>
+            }
 
             {Object.entries(data3)[0] != undefined && <div className="shadow-lg shadow-gray-500/50 p-8 flex flex-col items-center h-[100%] w-[100%] ml-[40px] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px]">
-              <strong className="text-[35px] text-[var(--elementcolor)]">Item mais Vendido</strong>
+              <h2 className="text-[28px] font-bold text-orange-600 mb-6">Item mais Vendido</h2>
+
               <Image
-              src="/sword.png"
-              height={120}
-              width={120}
-              alt="sword"
-              className="mt-10"
+                src="/sword.png"
+                height={120}
+                width={120}
+                alt="sword"
+                className="mb-6 opacity-90"
               />
-              <strong className="text-[25px] text-[var(--elementcolor)] mt-10">{Object.entries(data3)[0][1]}</strong>
-              <p className="text-[20px] mt-4">Tipo <strong>{Object.entries(data3)[3][1]}</strong></p>
-              <p className="text-[20px] mt-4">Forjado na <strong>{Object.entries(data3)[2][1]}</strong></p>
-              <p className="text-[20px] mt-4"><strong>{Object.entries(data3)[1][1]}</strong> {Object.entries(data3)[0][1]} vendidas </p>
-            </div>}
+
+              <div className="text-center space-y-2">
+                <p className="text-[22px] font-semibold text-blue-700">{Object.entries(data3)[0][1]}</p>
+                <p className="text-[18px] text-gray-700">
+                  Tipo: <span className="font-semibold">{Object.entries(data3)[3][1]}</span>
+                </p>
+                <p className="text-[18px] text-gray-700">
+                  Forjado na <span className="font-semibold">{Object.entries(data3)[2][1]}</span>
+                </p>
+                <p className="text-[18px] text-gray-700">
+                  <span className="font-bold">{Object.entries(data3)[1][1]}</span> unidades de <span className="font-bold">{Object.entries(data3)[0][1]}</span> vendidas
+                </p>
+              </div>
+            </div>
+            }
           </div>
         
         </div>

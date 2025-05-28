@@ -1,6 +1,8 @@
 import ModelPage from "@/components/Templates/ModelPage";
 import { Ferreiro } from "@/models/Ferreiro";
 import { useEffect, useState } from "react";
+import { Doughnut, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 
 export default function Home() {
     const [data1, setData1] = useState<any[]>([])
@@ -12,6 +14,20 @@ export default function Home() {
     const dashboardRoute2 = "http://localhost:8080/ferreiro/ferreirosMaisRentaveis"
     const dashboardRoute3 = "http://localhost:8080/ferreiro/qntFerreirosEspecializados"
     const dashboardRoute4 = "http://localhost:8080/ferreiro/qntFerreirosPorLoja"
+
+    const graficoCores = [
+        '#4CAF50', // Verde
+        '#2196F3', // Azul
+        '#FF9800', // Laranja
+        '#F44336', // Vermelho
+        '#9C27B0', // Roxo
+        '#00BCD4', // Ciano
+        '#FFC107', // Amarelo
+    ];
+
+    
+
+    ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, Tooltip, Legend)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,66 +54,146 @@ export default function Home() {
         fetchData()
     }, [])
 
+    const doughnutChart1 = () => {
+        const dataset = {
+            // Ferreiros mais requisitados
+            labels: data1.map((item:any) => item.ferreiroNome),
+            datasets: [
+                {
+                    label: 'Total de Requisições',
+                    data: data1.map(item => item.totalRequisicoes),
+                    backgroundColor: graficoCores,
+                },
+            ],
+        }
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Ferreiros mais requisitados',
+                },
+            },
+        }
+
+        return <Doughnut data={dataset} options={options} />
+    }
+
+    const doughnutChart2 = () => {
+        const dataset = {
+            // Ferreiros mais rentaveis
+            labels: data4.map((item:any) => item.lojaNome),
+            datasets: [
+                {
+                    label: 'Lucro Total',
+                    data: data4.map(item => item.totalFerreiros),
+                    backgroundColor: graficoCores,
+                },
+            ],
+        }
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Ferreiros mais requisitados',
+                },
+            },
+        }
+
+        return <Doughnut data={dataset} options={options} />
+    }
+
+    const barChart1 = () => {
+        const dataset = {
+            // ferreiros mais rentaveis 
+            labels: data2.map((item: any) => item.nome),
+            datasets: [
+                {
+                    label: 'Total Arrecadado',
+                    data: data2.map((item: any) => item.totalRequisicoes),
+                    backgroundColor: graficoCores,
+                },
+            ],
+
+        }
+        const options = {
+
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    display: false
+                },
+                title: {
+                    display: false,
+                    text: 'Total Arrecadado por Tipo de Item',
+                },
+            },
+        }
+        return <Bar data={dataset} options={options} />
+    }
+
+    const barChart2 = () => {
+        const dataset = {
+            // ferreiros mais rentaveis 
+            labels: data3.map((item: any) => item.especializacao),
+            datasets: [
+                {
+                    label: 'Total Arrecadado',
+                    data: data3.map((item: any) => item.totalFerreiros),
+                    backgroundColor: graficoCores,
+                },
+            ],
+
+        }
+        const options = {
+
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    display: false
+                },
+                title: {
+                    display: false,
+                    text: 'Total Arrecadado por Tipo de Item',
+                },
+            },
+        }
+        return <Bar data={dataset} options={options} />
+    }
+
+
+
     const dashboard = (
         <div className="flex flex-col ml-[2%] gap-7">
             <div className="flex items-center justify-center gap-7">
                 <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                     <strong className="text-[15px] self-start font-sans">Ferreiros mais requisitados</strong>
-                    {data1 != undefined && <table className="w-full table-auto border-collapse overflow-y-auto">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="px-4 py-2 border border-gray-300"></th>
-                                <th className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">Nome</th>
-                                <th className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">Loja</th>
-                                <th className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">Requisições</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data1.map((item, index) => (
-                                <tr key={index} className="hover:bg-gray-100">
-                                    <td className="px-4 py-2 border border-gray-300 text-center">{index + 1}</td>
-                                    <td className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">{item.ferreiroNome}</td>
-                                    <td className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">{item.loja}</td>
-                                    <td className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">{item.totalRequisicoes}</td>
-                                </tr>))}
-                        </tbody>
-                    </table>}
+                    {data1 != undefined && <div className="h-[40vh] w-[40vh]">{doughnutChart1()}</div>}
                 </div>
 
-                {data4 != undefined && <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-stren h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                {data4 != undefined && <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-center h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                     <strong className="text-[15px] self-start font-sans">Quantidade de Ferreiros por Loja</strong>
-                    {data4.map((item, index) => (
-                        <p key={index} className="text-[35px] font-sans">{item.lojaNome}: <strong className="text-[35px] font-bold text-[#51cc00] mt-10">{item.totalFerreiros}</strong></p>
-                    ))}
+                    {data4 != undefined && <div className="items-center h-[40vh] w-[40vh]">{doughnutChart2()}</div>}
                 </div>}
             </div>
             <div className="flex items-center justify-center gap-7">
                 <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                     <strong className="text-[15px] self-start font-sans">Ferreiros mais rentaveis</strong>
-                    {data2 != undefined && <table className="w-full table-auto border-collapse overflow-y-auto">
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th className="px-4 py-2 border border-gray-300"></th>
-                                <th className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">Nome</th>
-                                <th className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">Requisições</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data2.map((item, index) => (
-                                <tr key={index} className="hover:bg-gray-100">
-                                    <td className="px-4 py-2 border border-gray-300 text-center">{index + 1}</td>
-                                    <td className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">{item.nome}</td>
-                                    <td className="px-4 py-2 border border-gray-300 text-left text-[15px] font-sans">R${item.totalRequisicoes}.00</td>
-                                </tr>))}
-                        </tbody>
-                    </table>}
+                    {data2 != undefined && <div className="h-[40vh] w-[60vh]">{barChart1()}</div>}
                 </div>
 
-                {data3 != undefined && <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-stren h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                {data3 != undefined && <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-center h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                     <strong className="text-[15px] self-start font-sans">Quantidade de Ferreiros por Especialização</strong>
-                    {data3.map((item, index) => (
-                        <p key={index} className="text-[35px] font-sans">{item.especializacao}: <strong className="text-[35px] font-bold text-[#51cc00] mt-10">{item.totalFerreiros}</strong></p>
-                    ))}
+                    {data3 != undefined && <div className="h-[40vh] w-[60vh]">{barChart2()}</div>}
                 </div>}
             </div>
         </div>
