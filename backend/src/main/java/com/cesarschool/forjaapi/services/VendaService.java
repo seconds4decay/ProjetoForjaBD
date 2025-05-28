@@ -59,8 +59,8 @@ public class VendaService {
         return repository.atualizar(id_loja, id_item, id_cliente, venda);
     }
 
-    public Object qntTotalVendas() {
-        return repository.qntTotalVendas();
+    public Object qntTotalVendas(int mes) {
+        return repository.qntTotalVendas(mes);
     }
 
     public Object tipoItemLucro() {

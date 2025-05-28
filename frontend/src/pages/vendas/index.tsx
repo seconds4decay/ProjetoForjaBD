@@ -23,9 +23,15 @@ export default function Home() {
     const [data3, setData3] = useState<any[]>([])
     const [data4, setData4] = useState<any[]>([])
 
-    const dashboardRoute1 = "http://localhost:8080/venda/qntTotalVendas"
+    const [data5, setData5] = useState<any[]>([])
+
+    const [storeName1, setStoreName1] = useState(new Date().getMonth() + 1)
+
+    const dashboardRoute1 = "http://localhost:8080/venda/qntTotalVendas/" + storeName1
     const dashboardRoute2 = "http://localhost:8080/venda/tipoItemLucro"
     const dashboardRoute3 = "http://localhost:8080/venda/clientesMaisCompradores"
+
+    const dashboardRoute5 = "http://localhost:8080/venda/qntTotalVendas/" + (storeName1 - 1)
 
     const graficoCores = [
         '#4CAF50', // Verde
@@ -64,10 +70,15 @@ export default function Home() {
             const response4 = await getModelAll("venda");
             const responseData4 = await response4.json();
             setData4(responseData4);
+
+            const response5 = await fetch(dashboardRoute5)
+            const responseData5 = await response5.json()
+            console.log(responseData5)
+            setData5(responseData5)
         }
 
         fetchData()
-    }, [])
+    }, [storeName1])
 
     const doughnutChart1 = () => {
         const dataset = {
@@ -198,15 +209,46 @@ export default function Home() {
         <div>
            <div className="flex flex-col ml-[2%] gap-7">
                 {Object.entries(data1)[0] != undefined && <div className="flex items-center justify-center gap-7">
-                    <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-start w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
-                        <strong className="text-[15px] self-start font-sans">Estátisticas de Vendas no mês de {meses.at(new Date().getMonth())}</strong>
-                        <p className="text-[45px] mt-3 font-sans">Quantidade de Vendas: <strong className="text-[70px] font-bold text-[#51cc00] mt-10"> {Object.entries(data1)[0][1]}</strong></p>
-                        <p className="text-[45px] mt-3 font-sans">Rendimento Total: <strong className="text-[70px] font-bold text-[#51cc00] mt-10"> R${Object.entries(data1)[1][1]}.00</strong></p>
+                    <div className="flex flex-col self-stretch items-center w-[100%] gap-y-7">
+                        <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-center h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                            <strong className="text-[15px] self-start font-sans">Quantidade de Vendas em {meses.at(storeName1 - 1)}</strong>
+                            <select
+                            id="mesSelecionado"
+                            className="p-2 border-[1px] mt-2 mb-1 border-[var(--bordercolor)] rounded-full text-gray-700"
+                            value={storeName1}
+                            onChange={(e) => setStoreName1(Number(e.target.value))}
+                            >
+                            <option value="" disabled>Selecione o Mês</option>
+                            <option value={1}>Janeiro</option>
+                            <option value={2}>Fevereiro</option>
+                            <option value={3}>Março</option>
+                            <option value={4}>Abril</option>
+                            <option value={5}>Maio</option>
+                            <option value={6}>Junho</option>
+                            <option value={7}>Julho</option>
+                            <option value={8}>Agosto</option>
+                            <option value={9}>Setembro</option>
+                            <option value={10}>Outubro</option>
+                            <option value={11}>Novembro</option>
+                            <option value={12}>Dezembro</option>
+                        </select>
+                            <strong className="text-[70px] font-bold text-gray-900 mt-10"> {Object.entries(data1)[0][1]}</strong>
+                            {(data1.qntVendas/data5.qntVendas)*100 - 100 >= 0 && <p className="text-green-500">+{Math.round((data1.qntVendas/data5.qntVendas)*100 - 100)}%</p>}
+                            {(data1.qntVendas/data5.qntVendas)*100 - 100 < 0 && <p className="text-red-500">-{Math.round((Math.abs((data1.qntVendas/data5.qntVendas)*100 - 100)))}%</p>}
+                            <p className="text-gray-500">Comparado ao mês anterior</p>
+                        </div>
+                        <div className="shadow-lg shadow-gray-500/50 flex flex-col self-stretch items-center h-[100%] w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                            <strong className="text-[15px] self-start font-sans">Rendimento de Vendas em {meses.at(storeName1 - 1)}</strong>
+                            <strong className="text-[70px] font-bold text-gray-900 mt-10"> R${Object.entries(data1)[1][1]}.00</strong>
+                            {(data1.totalVendas/data5.totalVendas)*100 - 100 > 0 && <p className="text-green-500">+{Math.round((data1.totalVendas/data5.totalVendas)*100 - 100)}%</p>}
+                            {(data1.totalVendas/data5.totalVendas)*100 - 100 < 0 && <p className="text-red-500">-{Math.round(Math.abs((data1.totalVendas/data5.totalVendas)*100 - 100))}%</p>}
+                            <p className="text-gray-500">Comparado ao mês anterior</p>
+                        </div>
                     </div>
 
-                    <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center  w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
+                    <div className="shadow-lg shadow-gray-500/50 flex flex-col items-center self-stretch  w-[100%] rounded-[var(--borderradius)] bg-[var(--background2)] border-[var(--bordercolor)] border-[1px] p-5">
                         <strong className="text-[15px] self-start font-sans">Vendas ao Longo dos Meses</strong>
-                        {lineChart()}
+                        <div className="w-[80vh] h-[40vh]">{lineChart()}</div>
                         
                     </div>
                 </div>}

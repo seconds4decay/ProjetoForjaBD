@@ -80,15 +80,15 @@ public class VendaRepository {
         return venda;
     }
 
-    public VendaDTO1 qntTotalVendas() {
-        String SQL = "CALL qntTotalVendas()";
+    public VendaDTO1 qntTotalVendas(int mes) {
+        String SQL = "CALL qntTotalVendas(?)";
 
         return jdbc.queryForObject(SQL, (rs, rowNum) -> {
             int qntVendas = rs.getInt("qnt_vendas");
             float totalVendas = rs.getFloat("total_vendas");
 
             return new VendaDTO1(qntVendas, totalVendas);
-        });
+        }, mes);
     }
 
     public VendaDTO2 tipoItemLucro() {

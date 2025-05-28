@@ -80,9 +80,9 @@ public class VendaController {
 
     }
 
-    @GetMapping("/qntTotalVendas")
-    public ResponseEntity<Object> qntTotalVendas() {
-        Object qntVendas = service.qntTotalVendas();
+    @GetMapping("/qntTotalVendas/{mes}")
+    public ResponseEntity<Object> qntTotalVendas(@PathVariable int mes) {
+        Object qntVendas = service.qntTotalVendas(mes);
 
         if (qntVendas != null) {
             return ResponseEntity.ok(qntVendas);
