@@ -150,16 +150,14 @@ BEGIN
 END;
 
 create
-    definer = root@localhost procedure drreirosMaisRequisitados()
+    definer = root@localhost procedure ferreirosMaisRequisitados()
 BEGIN
-    SELECT l.nome AS loja_nome, f.nome AS ferreiro_nome, COUNT(rp.ferreiro) AS total_requisicoes
+    SELECT l.nome AS loja_nome, f.nome AS ferreiro_nome, COUNT(rp.ID_pedido) AS total_requisicoes
     FROM ferreiro f
-             JOIN requisicao_pedido rp ON rp.ferreiro = f.ID_ferreiro
+             JOIN requisicao_pedido rp ON f.ID_ferreiro = rp.ferreiro
              JOIN loja l ON f.loja = l.ID_loja
     GROUP BY l.nome, f.nome
-    HAVING COUNT(rp.ferreiro) = (
-        SELECT MAX(total_requisicoes)
-    );
+    ORDER BY total_requisicoes DESC;
 END;
 
 create
